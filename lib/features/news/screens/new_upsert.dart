@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get/state_manager.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:smart_city/shared/hooks/use_preserved_state.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';
 
 class NewsUpsertScreen extends HookWidget {
@@ -16,7 +16,11 @@ class NewsUpsertScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    Rx<XFile?> pickedImage = Rxn<XFile>();
+    final pickedImage = usePreservedState('picked-new-image', context);
+    final hasSelectedImage = pickedImage.value is XFile;
+    final formState =
+        usePreservedState('new-form-state', context, <String, dynamic>{});
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Создание новости'),
@@ -30,10 +34,13 @@ class NewsUpsertScreen extends HookWidget {
           ],
         ),
         body: FormBuilder(
-          key: _formKey,
-          child: Obx(() {
-            final hasSelectedImage = pickedImage.value is XFile;
-            return ListView(
+            initialValue: formState.value,
+            onChanged: () {
+              _formKey.currentState?.save();
+              formState.value = _formKey.currentState?.value;
+            },
+            key: _formKey,
+            child: ListView(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
               children: [
                 Row(
@@ -86,8 +93,6 @@ class NewsUpsertScreen extends HookWidget {
                   minLines: 4,
                 ),
               ],
-            );
-          }),
-        ));
+            )));
   }
 }

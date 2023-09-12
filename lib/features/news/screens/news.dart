@@ -13,7 +13,7 @@ class NewsScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selectedTab = usePreservedState(0, 'news-tab', context);
+    final selectedTab = usePreservedState('news-tab', context, 0);
     return DefaultTabController(
       length: 2,
       initialIndex: selectedTab.value,
