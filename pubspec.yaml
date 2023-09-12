@@ -45,7 +45,7 @@ dependencies:
   intl: 0.18.1
   path_provider: 2.0.15
   uuid: 3.0.7
-  go_router: 10.0.0
+  go_router: 10.1.2
   form_builder_validators: 9.0.0
   form_builder_extra_fields: 10.0.0
   animate_do: 3.0.2

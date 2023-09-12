@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/news/screens/news.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
 import 'package:smart_city/features/services/screens/services.dart';
@@ -16,19 +15,21 @@ List<String> routes = [
 ];
 
 class CustomBottomNavigationBar extends StatelessWidget {
-  const CustomBottomNavigationBar({super.key, required this.location});
-  final String? location;
+  const CustomBottomNavigationBar({super.key, this.goBranch, this.index});
+
+  final int? index;
+  final goBranch;
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       child: NavigationBar(
+        selectedIndex: index as int,
         surfaceTintColor: Colors.transparent,
         indicatorColor: Colors.transparent,
-        selectedIndex: routes.indexWhere((element) => element == location),
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         onDestinationSelected: (value) {
-          context.go(routes[value]);
+          goBranch(value);
         },
         height: 50,
         destinations: <Widget>[

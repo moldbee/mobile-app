@@ -5,21 +5,23 @@ import 'package:smart_city/features/news/screens/event_upsert.dart';
 import 'package:smart_city/features/news/screens/new_upsert.dart';
 import 'package:smart_city/features/news/widgets/event_tile.dart';
 import 'package:smart_city/features/news/widgets/tile.dart';
+import 'package:smart_city/shared/hooks/use_preserved_state.dart';
 
 class NewsScreen extends HookWidget {
   const NewsScreen({Key? key}) : super(key: key);
-  final String route = '/news';
+  final String route = '/';
 
   @override
   Widget build(BuildContext context) {
-    final selectedTab = useState(0);
+    final selectedTab = usePreservedState(0, 'news-tab', context);
     return DefaultTabController(
       length: 2,
-      initialIndex: 0,
+      initialIndex: selectedTab.value,
       child: Scaffold(
           appBar: AppBar(
             title: const Text("Новости"),
             bottom: TabBar(
+              indicatorSize: TabBarIndicatorSize.tab,
               labelColor: Colors.orange.shade400,
               onTap: (index) {
                 selectedTab.value = index;
@@ -52,7 +54,6 @@ class NewsScreen extends HookWidget {
           body: TabBarView(children: [
             RefreshIndicator(
               onRefresh: () async {
-                print('Refreshing');
                 await Future.delayed(const Duration(seconds: 2));
 
                 return;

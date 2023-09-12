@@ -9,7 +9,6 @@ class NewsDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).viewInsets.bottom);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -170,26 +169,32 @@ class NewsDetailsScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
-                                              Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: [
-                                                  const Expanded(
-                                                    child: TextInput(
-                                                      name: 'dwadwa',
-                                                      hintText:
-                                                          'Введите комментарий',
-                                                      title: '',
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 10),
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: [
+                                                    const Expanded(
+                                                      child: TextInput(
+                                                        name: 'comment',
+                                                        hintText:
+                                                            'Введите комментарий',
+                                                        title: '',
+                                                      ),
                                                     ),
-                                                  ),
-                                                  IconButton(
-                                                      onPressed: () {},
-                                                      icon: Icon(
-                                                        Icons.send,
-                                                        color: Colors
-                                                            .grey.shade400,
-                                                      ))
-                                                ],
+                                                    IconButton(
+                                                        onPressed: () {},
+                                                        icon: Icon(
+                                                          Icons.send,
+                                                          color: Colors
+                                                              .grey.shade400,
+                                                        ))
+                                                  ],
+                                                ),
                                               ),
                                             ]),
                                       );
