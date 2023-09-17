@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smart_city/features/services/screens/company.dart';
+import 'package:smart_city/features/services/widgets/details.dart';
 
 class CompanyTile extends StatelessWidget {
   const CompanyTile({Key? key, required this.logoUrl, required this.title})
@@ -13,7 +13,7 @@ class CompanyTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.pushNamed(const ServiceCompanyScreen().route,
+        context.pushNamed(const ServiceDetailsScreen().route,
             queryParameters: {'logoUrl': logoUrl, 'title': title});
       },
       child: Column(
@@ -24,7 +24,7 @@ class CompanyTile extends StatelessWidget {
           Image.asset(
             logoUrl,
             width: 150,
-            height: 50,
+            height: 70,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10),

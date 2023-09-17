@@ -21,11 +21,11 @@ class ProfileSignInScreen extends StatelessWidget {
           child: FormBuilder(
             key: _formKey,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
+              padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const TextInput(name: 'login', title: 'Логин'),
+                  const TextInput(name: 'login', title: 'Почта'),
                   const Padding(
                     padding: EdgeInsets.only(top: 40),
                     child: TextInput(

@@ -22,7 +22,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
+    return Container(
       child: NavigationBar(
         selectedIndex: index as int,
         surfaceTintColor: Colors.transparent,
@@ -46,14 +46,12 @@ class CustomBottomNavigationBar extends StatelessWidget {
           ),
           NavigationDestination(
             selectedIcon: Icon(
-              Icons.apartment_rounded,
+              Icons.widgets_rounded,
               color: bottomNavbarSelectedIconColor,
-              size: 28,
             ),
             icon: Icon(
-              Icons.apartment_rounded,
+              Icons.widgets_rounded,
               color: bottomNavbarIconColor,
-              size: 28,
             ),
             label: '',
           ),

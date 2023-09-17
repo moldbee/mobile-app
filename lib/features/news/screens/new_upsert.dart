@@ -27,9 +27,8 @@ class NewsUpsertScreen extends HookWidget {
           actions: [
             IconButton(
                 onPressed: () {},
-                icon: Icon(
+                icon: const Icon(
                   Icons.done_rounded,
-                  color: Colors.orange.shade400,
                 ))
           ],
         ),

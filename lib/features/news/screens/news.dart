@@ -19,22 +19,18 @@ class NewsScreen extends HookWidget {
       initialIndex: selectedTab.value,
       child: Scaffold(
           appBar: AppBar(
-            title: const Text("Новости"),
+            title: const Text("Информация"),
             bottom: TabBar(
-              indicatorSize: TabBarIndicatorSize.tab,
-              labelColor: Colors.orange.shade400,
               onTap: (index) {
                 selectedTab.value = index;
               },
-              unselectedLabelColor: Colors.grey.shade500.withOpacity(0.3),
               tabs: const <Widget>[
                 Tab(
-                  icon: Icon(
-                    Icons.feed_rounded,
-                  ),
-                ),
+                    icon: Text(
+                  'Новости',
+                )),
                 Tab(
-                  icon: Icon(Icons.confirmation_number_rounded),
+                  icon: Text('Афиша'),
                 ),
               ],
             ),

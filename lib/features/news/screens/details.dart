@@ -169,11 +169,9 @@ class NewsDetailsScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 10),
+                                              Material(
+                                                elevation: 20,
+                                                shadowColor: Colors.black,
                                                 child: Row(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.end,

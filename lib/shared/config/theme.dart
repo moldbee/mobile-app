@@ -3,11 +3,25 @@ import 'package:flutter/material.dart';
 // Theme needs hot restart
 
 ThemeData themeData = ThemeData(
+  switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.all(Colors.orange.shade400),
+      trackColor:
+          MaterialStateProperty.all(Colors.grey.shade400.withOpacity(0.5)),
+      overlayColor:
+          MaterialStateProperty.all(Colors.orange.shade400.withOpacity(0.3))),
   outlinedButtonTheme: const OutlinedButtonThemeData(
       style: ButtonStyle(
           side: MaterialStatePropertyAll(BorderSide(color: Colors.orange)))),
   splashColor: Colors.orange.shade100.withOpacity(0.3),
   highlightColor: Colors.orange.shade100.withOpacity(0.3),
+  checkboxTheme: CheckboxThemeData(
+      fillColor: MaterialStateProperty.all(Colors.orange.shade400),
+      overlayColor: MaterialStatePropertyAll(Colors.orange.shade100),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+      side: MaterialStateBorderSide.resolveWith(
+        (states) => BorderSide(width: 2.0, color: Colors.orange.shade400),
+      ),
+      checkColor: const MaterialStatePropertyAll(Colors.white)),
   dialogTheme: DialogTheme(
       elevation: 0,
       titleTextStyle:
@@ -17,6 +31,14 @@ ThemeData themeData = ThemeData(
       fontSize: 22,
       color: Colors.grey.shade800,
     ),
+  ),
+  tabBarTheme: TabBarTheme(
+    dividerColor: Colors.transparent,
+    labelStyle: const TextStyle(fontSize: 16),
+    unselectedLabelStyle: const TextStyle(fontSize: 16),
+    indicatorSize: TabBarIndicatorSize.label,
+    labelColor: Colors.orange.shade400,
+    unselectedLabelColor: Colors.grey.shade100.withOpacity(0.8),
   ),
   timePickerTheme: const TimePickerThemeData(elevation: 0),
   scaffoldBackgroundColor: Colors.white,
@@ -55,7 +77,7 @@ ThemeData themeData = ThemeData(
     elevation: 0,
   ),
   appBarTheme: AppBarTheme(
-      shadowColor: Colors.white60,
+      shadowColor: Colors.transparent,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
       scrolledUnderElevation: 4,

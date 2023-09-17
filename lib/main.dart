@@ -9,12 +9,17 @@ import 'package:smart_city/features/news/screens/new_upsert.dart';
 import 'package:smart_city/features/news/screens/news.dart';
 import 'package:smart_city/features/profile/screens/profile.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
+import 'package:smart_city/features/profile/screens/sign_up.dart';
 import 'package:smart_city/features/services/screens/companies.dart';
-import 'package:smart_city/features/services/screens/company.dart';
+import 'package:smart_city/features/services/screens/other.dart';
 import 'package:smart_city/features/services/screens/services.dart';
+import 'package:smart_city/features/services/widgets/details.dart';
+import 'package:smart_city/features/settings/screens/about.dart';
 import 'package:smart_city/features/settings/screens/settings.dart';
+import 'package:smart_city/shared/animations/slide_page_transition.dart';
 import 'package:smart_city/shared/config/pallete.dart';
 import 'package:smart_city/shared/config/theme.dart';
+import 'package:smart_city/shared/screens/policy.dart';
 import 'package:smart_city/shared/widgets/bottom_navigation_bar.dart';
 
 void main() async {
@@ -23,24 +28,50 @@ void main() async {
   runApp(const MyApp());
 }
 
-final _rootNavigatorKey = GlobalKey<NavigatorState>();
-final _tabNavigatorKey = GlobalKey<NavigatorState>();
-
-final GoRouter router =
-    GoRouter(navigatorKey: _rootNavigatorKey, routes: <RouteBase>[
+final GoRouter router = GoRouter(routes: <RouteBase>[
   StatefulShellRoute.indexedStack(
     builder: (context, state, navigationShell) {
+      Future<bool> onBackPressed() async {
+        return await showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text('Confirm'),
+                  content: const Text('Do you want to exit the App'),
+                  actions: <Widget>[
+                    FilledButton(
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pop(false); //Will not exit the App
+                      },
+                      child: const Text(
+                        'No',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    OutlinedButton(
+                      child: const Text('Yes'),
+                      onPressed: () {
+                        Navigator.of(context).pop(true); //Will exit the App
+                      },
+                    )
+                  ],
+                );
+              },
+            ) ??
+            false;
+      }
+
       return Scaffold(
         bottomNavigationBar: CustomBottomNavigationBar(
           goBranch: navigationShell.goBranch,
           index: navigationShell.currentIndex,
         ),
-        body: navigationShell,
+        body: WillPopScope(onWillPop: onBackPressed, child: navigationShell),
       );
     },
     branches: [
       StatefulShellBranch(
-        navigatorKey: _tabNavigatorKey,
         routes: [
           GoRoute(
               path: const NewsScreen().route,
@@ -77,11 +108,15 @@ final GoRouter router =
               pageBuilder: (context, state) =>
                   const MaterialPage(child: ServicesCompaniesScreen())),
           GoRoute(
-              name: const ServiceCompanyScreen().route,
-              path: const ServiceCompanyScreen().route,
+              path: const ServicesOtherScreen().route,
+              pageBuilder: (context, state) =>
+                  const MaterialPage(child: ServicesOtherScreen())),
+          GoRoute(
+              name: const ServiceDetailsScreen().route,
+              path: const ServiceDetailsScreen().route,
               pageBuilder: (context, state) {
                 return MaterialPage(
-                    child: ServiceCompanyScreen(
+                    child: ServiceDetailsScreen(
                   logoUrl: state.uri.queryParameters['logoUrl'],
                   title: state.uri.queryParameters['title'] as String,
                 ));
@@ -96,13 +131,17 @@ final GoRouter router =
               pageBuilder: (context, state) =>
                   NoTransitionPage(child: ProfileSignInScreen())),
           GoRoute(
-              path: ProfileSignInScreen().route,
+              path: ProfileSignUpScreen().route,
               pageBuilder: (context, state) =>
-                  NoTransitionPage(child: ProfileSignInScreen())),
+                  NoTransitionPage(child: ProfileSignUpScreen())),
           GoRoute(
               path: const ProfileScreen().route,
               pageBuilder: (context, state) =>
                   const NoTransitionPage(child: ProfileScreen())),
+          GoRoute(
+              path: const PolicyScreen().route,
+              pageBuilder: (context, state) =>
+                  wrapPageSlideTransition(const PolicyScreen()))
         ],
       ),
       StatefulShellBranch(
@@ -112,42 +151,14 @@ final GoRouter router =
               path: const SettingsScreen().route,
               pageBuilder: (context, state) =>
                   const NoTransitionPage(child: SettingsScreen())),
+          GoRoute(
+              path: const AboutScreen().route,
+              pageBuilder: (context, state) =>
+                  wrapPageSlideTransition(const AboutScreen()))
         ],
       ),
     ],
   ),
-  // ShellRoute(
-  //     builder: (context, state, child) {
-  //       final pageViewController = PageController();
-  //       return Scaffold(
-  //           body: HomeScreen(pageViewController: pageViewController),
-  //           bottomNavigationBar: CustomBottomNavigationBar(
-  //             pageViewController: pageViewController,
-  //           ));
-  //     },
-  //     routes: [
-  //       GoRoute(
-  //           path: const ServicesScreen().route,
-  //           pageBuilder: (context, state) =>
-  //               const NoTransitionPage(child: ServicesScreen())),
-  //
-  //       GoRoute(
-  //           path: const ProfileScreen().route,
-  //           pageBuilder: (context, state) =>
-  //               const NoTransitionPage(child: ProfileScreen())),
-  //       GoRoute(
-  //           path: ProfileSignInScreen().route,
-  //           pageBuilder: (context, state) =>
-  //               NoTransitionPage(child: ProfileSignInScreen())),
-  //       GoRoute(
-  //           path: ProfileSignUpScreen().route,
-  //           pageBuilder: (context, state) =>
-  //               NoTransitionPage(child: ProfileSignUpScreen())),
-  //       GoRoute(
-  //           path: const SettingsScreen().route,
-  //           pageBuilder: (context, state) =>
-  //               const NoTransitionPage(child: SettingsScreen())),
-  //     ])
 ]);
 
 class MyApp extends StatelessWidget {

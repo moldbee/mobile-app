@@ -60,6 +60,7 @@ dependencies:
   flutter_svg: 2.0.7
   flutter_hooks: 0.20.1
   font_awesome_flutter: ^10.5.0
+  url_launcher: ^6.1.14
 
 dev_dependencies:
   flutter_test:
@@ -102,6 +103,7 @@ flutter:
   assets:
     - assets/new_image.jpg
     - assets/avatar.jpg
+    - assets/okinawa.png
     - assets/linella.png
     - assets/metro.png
 
