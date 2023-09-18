@@ -22,63 +22,61 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: NavigationBar(
-        selectedIndex: index as int,
-        surfaceTintColor: Colors.transparent,
-        indicatorColor: Colors.transparent,
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-        onDestinationSelected: (value) {
-          goBranch(value);
-        },
-        height: 50,
-        destinations: <Widget>[
-          NavigationDestination(
-            selectedIcon: Icon(
-              Icons.newspaper_rounded,
-              color: bottomNavbarSelectedIconColor,
-            ),
-            icon: Icon(
-              Icons.newspaper_rounded,
-              color: bottomNavbarIconColor,
-            ),
-            label: '',
+    return NavigationBar(
+      selectedIndex: index as int,
+      surfaceTintColor: Colors.transparent,
+      indicatorColor: Colors.transparent,
+      labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+      onDestinationSelected: (value) {
+        goBranch(value);
+      },
+      height: 50,
+      destinations: <Widget>[
+        NavigationDestination(
+          selectedIcon: Icon(
+            Icons.newspaper_rounded,
+            color: bottomNavbarSelectedIconColor,
           ),
-          NavigationDestination(
-            selectedIcon: Icon(
-              Icons.widgets_rounded,
-              color: bottomNavbarSelectedIconColor,
-            ),
-            icon: Icon(
-              Icons.widgets_rounded,
-              color: bottomNavbarIconColor,
-            ),
-            label: '',
+          icon: Icon(
+            Icons.newspaper_rounded,
+            color: bottomNavbarIconColor,
           ),
-          NavigationDestination(
-            selectedIcon: Icon(
-              Icons.account_circle,
-              color: bottomNavbarSelectedIconColor,
-            ),
-            icon: Icon(
-              Icons.account_circle,
-              color: bottomNavbarIconColor,
-            ),
-            label: '',
+          label: '',
+        ),
+        NavigationDestination(
+          selectedIcon: Icon(
+            Icons.widgets_rounded,
+            color: bottomNavbarSelectedIconColor,
           ),
-          NavigationDestination(
-            selectedIcon: Icon(
-              Icons.settings,
-              color: bottomNavbarSelectedIconColor,
-            ),
-            icon: Icon(
-              Icons.settings,
-              color: bottomNavbarIconColor,
-            ),
-            label: '',
+          icon: Icon(
+            Icons.widgets_rounded,
+            color: bottomNavbarIconColor,
           ),
-        ],
-      ),
+          label: '',
+        ),
+        NavigationDestination(
+          selectedIcon: Icon(
+            Icons.account_circle,
+            color: bottomNavbarSelectedIconColor,
+          ),
+          icon: Icon(
+            Icons.account_circle,
+            color: bottomNavbarIconColor,
+          ),
+          label: '',
+        ),
+        NavigationDestination(
+          selectedIcon: Icon(
+            Icons.settings,
+            color: bottomNavbarSelectedIconColor,
+          ),
+          icon: Icon(
+            Icons.settings,
+            color: bottomNavbarIconColor,
+          ),
+          label: '',
+        ),
+      ],
     );
   }
 }

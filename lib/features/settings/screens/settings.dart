@@ -9,7 +9,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double blockHeight = 50;
+    const double blockHeight = 40;
     return Scaffold(
         appBar: AppBar(
           title: const Text("Настройки"),

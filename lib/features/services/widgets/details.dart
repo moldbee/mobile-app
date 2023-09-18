@@ -18,7 +18,7 @@ class ServiceDetailsScreen extends StatelessWidget {
             color: Colors.grey.shade800,
             fontWeight: FontWeight.w600,
             fontSize: 22),
-        backgroundColor: Colors.grey.shade100,
+        backgroundColor: Colors.grey.shade200,
         title: Text(title as String),
         actions: [
           IconButton(

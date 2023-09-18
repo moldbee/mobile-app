@@ -169,28 +169,43 @@ class NewsDetailsScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
-                                              Material(
-                                                elevation: 20,
-                                                shadowColor: Colors.black,
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                    border: Border(
+                                                        top: BorderSide(
+                                                            width: .5,
+                                                            color: Colors.grey
+                                                                .shade300))),
                                                 child: Row(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.end,
                                                   children: [
                                                     const Expanded(
                                                       child: TextInput(
+                                                        contentPadding:
+                                                            EdgeInsets.fromLTRB(
+                                                                20, 0, 20, 20),
+                                                        disableBorders: true,
                                                         name: 'comment',
+                                                        minLines: 1,
+                                                        maxLines: 5,
                                                         hintText:
                                                             'Введите комментарий',
                                                         title: '',
                                                       ),
                                                     ),
-                                                    IconButton(
-                                                        onPressed: () {},
-                                                        icon: Icon(
-                                                          Icons.send,
-                                                          color: Colors
-                                                              .grey.shade400,
-                                                        ))
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              bottom: 6),
+                                                      child: IconButton(
+                                                          onPressed: () {},
+                                                          icon: Icon(
+                                                            Icons.send,
+                                                            color: Colors
+                                                                .grey.shade400,
+                                                          )),
+                                                    )
                                                   ],
                                                 ),
                                               ),

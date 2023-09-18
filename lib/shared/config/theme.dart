@@ -56,6 +56,7 @@ ThemeData themeData = ThemeData(
   datePickerTheme:
       const DatePickerThemeData(backgroundColor: Colors.white, elevation: 0),
   inputDecorationTheme: InputDecorationTheme(
+      floatingLabelBehavior: FloatingLabelBehavior.always,
       hintStyle: TextStyle(
           color: Colors.grey.shade400,
           fontSize: 14,

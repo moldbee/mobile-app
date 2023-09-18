@@ -13,6 +13,7 @@ import 'package:smart_city/features/profile/screens/sign_up.dart';
 import 'package:smart_city/features/services/screens/companies.dart';
 import 'package:smart_city/features/services/screens/other.dart';
 import 'package:smart_city/features/services/screens/services.dart';
+import 'package:smart_city/features/services/screens/upsert.dart';
 import 'package:smart_city/features/services/widgets/details.dart';
 import 'package:smart_city/features/settings/screens/about.dart';
 import 'package:smart_city/features/settings/screens/settings.dart';
@@ -31,35 +32,22 @@ void main() async {
 final GoRouter router = GoRouter(routes: <RouteBase>[
   StatefulShellRoute.indexedStack(
     builder: (context, state, navigationShell) {
-      Future<bool> onBackPressed() async {
-        return await showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Text('Confirm'),
-                  content: const Text('Do you want to exit the App'),
-                  actions: <Widget>[
-                    FilledButton(
-                      onPressed: () {
-                        Navigator.of(context)
-                            .pop(false); //Will not exit the App
-                      },
-                      child: const Text(
-                        'No',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    OutlinedButton(
-                      child: const Text('Yes'),
-                      onPressed: () {
-                        Navigator.of(context).pop(true); //Will exit the App
-                      },
-                    )
-                  ],
-                );
-              },
-            ) ??
-            false;
+      DateTime currentBackPressTime = DateTime.now();
+
+      Future<bool> onWillPop() {
+        DateTime now = DateTime.now();
+        if (now.difference(currentBackPressTime) > const Duration(seconds: 2)) {
+          currentBackPressTime = now;
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.grey.shade900,
+            content: const Text(
+              'Нажмите еще раз, чтобы выйти',
+              style: TextStyle(color: Colors.white),
+            ),
+          ));
+          return Future.value(false);
+        }
+        return Future.value(true);
       }
 
       return Scaffold(
@@ -67,7 +55,7 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
           goBranch: navigationShell.goBranch,
           index: navigationShell.currentIndex,
         ),
-        body: WillPopScope(onWillPop: onBackPressed, child: navigationShell),
+        body: WillPopScope(onWillPop: onWillPop, child: navigationShell),
       );
     },
     branches: [
@@ -103,6 +91,10 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               path: const ServicesScreen().route,
               pageBuilder: (context, state) =>
                   const NoTransitionPage(child: ServicesScreen())),
+          GoRoute(
+              path: ServiceUpsert().route,
+              pageBuilder: (context, state) =>
+                  MaterialPage(child: ServiceUpsert())),
           GoRoute(
               path: const ServicesCompaniesScreen().route,
               pageBuilder: (context, state) =>

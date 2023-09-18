@@ -10,17 +10,21 @@ class TextInput extends HookWidget {
       required this.title,
       this.validators = const [],
       this.icon,
+      this.disableBorders = false,
       this.maxLines,
       this.hintText = '',
       this.suffix,
+      this.contentPadding,
       this.isPassword = false,
       this.minLines})
       : super(key: key);
 
   final String title;
   final String name;
+  final bool disableBorders;
   final String hintText;
   final int? maxLines;
+  final EdgeInsets? contentPadding;
   final int? minLines;
   final Widget? icon;
   final Widget? suffix;
@@ -31,14 +35,14 @@ class TextInput extends HookWidget {
   Widget build(BuildContext context) {
     final showPassword = useState(false);
     return FormBuilderTextField(
-      name: name,
-      obscureText: isPassword ? !showPassword.value : false,
-      enableSuggestions: isPassword ? false : true,
-      autocorrect: isPassword ? false : true,
-      minLines: minLines,
-      maxLines: isPassword ? 1 : maxLines,
-      validator: FormBuilderValidators.compose(validators),
-      decoration: InputDecoration(
+        name: name,
+        obscureText: isPassword ? !showPassword.value : false,
+        enableSuggestions: isPassword ? false : true,
+        autocorrect: isPassword ? false : true,
+        minLines: minLines,
+        maxLines: isPassword ? 1 : maxLines,
+        validator: FormBuilderValidators.compose(validators),
+        decoration: InputDecoration(
           hintText: hintText,
           suffix: suffix,
           suffixIcon: isPassword
@@ -55,14 +59,18 @@ class TextInput extends HookWidget {
                     color: Colors.grey.shade400,
                   ))
               : null,
-          contentPadding:
+          contentPadding: contentPadding ??
               const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           iconColor: Colors.grey.shade800,
           icon: icon,
           label: Text(title),
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey.shade400))),
-    );
+          enabledBorder: disableBorders ? InputBorder.none : null,
+          border: disableBorders
+              ? InputBorder.none
+              : OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400)),
+          focusedBorder: disableBorders ? InputBorder.none : null,
+        ));
   }
 }

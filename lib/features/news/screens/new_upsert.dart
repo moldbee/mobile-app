@@ -26,6 +26,13 @@ class NewsUpsertScreen extends HookWidget {
           title: const Text('Создание новости'),
           actions: [
             IconButton(
+                onPressed: () async {
+                  final image =
+                      await _imagePicker.pickImage(source: ImageSource.gallery);
+                  pickedImage.value = image;
+                },
+                icon: const Icon(Icons.attach_file_rounded)),
+            IconButton(
                 onPressed: () {},
                 icon: const Icon(
                   Icons.done_rounded,
@@ -42,39 +49,12 @@ class NewsUpsertScreen extends HookWidget {
             child: ListView(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: FilledButton(
-                          onPressed: () async {
-                            final image = await _imagePicker.pickImage(
-                                source: ImageSource.gallery);
-                            pickedImage.value = image;
-                          },
-                          child: const Text(
-                            'Выбрать основную картинку',
-                            style: TextStyle(color: Colors.white),
-                          )),
-                    ),
-                    if (hasSelectedImage) ...[
-                      IconButton(
-                          onPressed: () {
-                            pickedImage.value = null;
-                          },
-                          icon: Icon(
-                            Icons.close_rounded,
-                            color: Colors.grey.shade400,
-                          ))
-                    ]
-                  ],
-                ),
                 if (hasSelectedImage) ...[
-                  const SizedBox(height: 20),
                   ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.file(File(pickedImage.value!.path))),
+                  const SizedBox(height: 30),
                 ],
-                SizedBox(height: itemsSpacing),
                 const TextInput(name: 'title', title: 'Заголовок'),
                 SizedBox(
                   height: itemsSpacing,
