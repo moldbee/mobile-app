@@ -103,7 +103,7 @@ class NewsDetailsScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 20, 10, 30),
+                padding: const EdgeInsets.fromLTRB(10, 40, 10, 20),
                 child: Row(
                   children: [
                     Expanded(

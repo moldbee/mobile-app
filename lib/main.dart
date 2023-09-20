@@ -36,9 +36,10 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
 
       Future<bool> onWillPop() {
         DateTime now = DateTime.now();
-        if (now.difference(currentBackPressTime) > const Duration(seconds: 2)) {
+        if (now.difference(currentBackPressTime) > const Duration(seconds: 1)) {
           currentBackPressTime = now;
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            duration: const Duration(seconds: 1),
             backgroundColor: Colors.grey.shade900,
             content: const Text(
               'Нажмите еще раз, чтобы выйти',
