@@ -28,13 +28,24 @@ class EventsUpsertScreen extends HookWidget {
           child: ListView(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
             children: [
-              const TextInput(name: 'title', title: 'Заголовок'),
+              const TextInput(name: 'title_ro', title: 'Заголовок (RO)'),
+              SizedBox(
+                height: itemsSpacing,
+              ),
+              const TextInput(name: 'title_ru', title: 'Заголовок (RU)'),
+              SizedBox(
+                height: itemsSpacing,
+              ),
+              const TextInput(
+                name: 'place_ro',
+                title: 'Место (RO)',
+              ),
               SizedBox(
                 height: itemsSpacing,
               ),
               const TextInput(
                 name: 'place',
-                title: 'Место',
+                title: 'Место (RU)',
               ),
               SizedBox(
                 height: itemsSpacing,

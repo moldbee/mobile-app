@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/features/news/screens/event_upsert.dart';
 import 'package:smart_city/features/news/screens/new_upsert.dart';
 import 'package:smart_city/features/news/widgets/event_tile.dart';
@@ -14,6 +16,8 @@ class NewsScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final selectedTab = usePreservedState('news-tab', context, 0);
+    final NewsController newsController = Get.find<NewsController>();
+
     return DefaultTabController(
       length: 2,
       initialIndex: selectedTab.value,
@@ -21,6 +25,7 @@ class NewsScreen extends HookWidget {
           appBar: AppBar(
             title: const Text("Информация"),
             bottom: TabBar(
+              physics: const NeverScrollableScrollPhysics(),
               onTap: (index) {
                 selectedTab.value = index;
               },
@@ -47,100 +52,53 @@ class NewsScreen extends HookWidget {
                   ))
             ],
           ),
-          body: TabBarView(children: [
-            RefreshIndicator(
-              onRefresh: () async {
-                await Future.delayed(const Duration(seconds: 2));
+          body: Obx(() {
+            return TabBarView(children: [
+              RefreshIndicator(
+                onRefresh: () async {
+                  await newsController.fetchNews();
+                },
+                child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      final news = newsController.news[index];
 
-                return;
-              },
-              child: const SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    NewsTile(
-                      title: 'Cillum in enim ullamco laborum anim.',
-                      imageUrl: 'assets/new_image.jpg',
-                    ),
-                    NewsTile(
-                      title:
-                          'Cillum in enim ullamco laborum anim in enim ullamco laborum 1',
-                      imageUrl: 'assets/new_image.jpg',
-                    ),
-                    NewsTile(
-                      title: 'Cillum in enim ullamco laborum anim.  1',
-                      imageUrl: 'assets/new_image.jpg',
-                    ),
-                    NewsTile(
-                      title:
-                          'Cillum in enim ullamco laborum anim in enim ullamco in enim ullamco. 2',
-                      imageUrl: 'assets/new_image.jpg',
-                    ),
-                    NewsTile(
-                      title: 'Cillum in enim ullamco laborum anim 1',
-                      imageUrl: 'assets/new_image.jpg',
-                    ),
-                    NewsTile(
-                      title:
-                          'Cillum in enim ullamco laborum anim in enim ullamco 4',
-                      imageUrl: 'assets/new_image.jpg',
-                    ),
-                    NewsTile(
-                      title:
-                          'Cillum in enim ullamco laborum anim in enim ullamco 5',
-                      imageUrl: 'assets/new_image.jpg',
-                    ),
-                    NewsTile(
-                      title:
-                          'Cillum in enim ullamco laborum anim in enim ullamco 6',
-                      imageUrl: 'assets/new_image.jpg',
-                    ),
-                    NewsTile(
-                      title:
-                          'Cillum in enim ullamco laborum anim in enim ullamco 8',
-                      imageUrl: 'assets/new_image.jpg',
-                    ),
-                    NewsTile(
-                      title:
-                          'Cillum in enim ullamco laborum anim in enim ullamco 44',
-                      imageUrl: 'assets/new_image.jpg',
-                    ),
-                    NewsTile(
-                      title:
-                          'Cillum in enim ullamco laborum anim in enim ullamco 22',
-                      imageUrl: 'assets/new_image.jpg',
-                    ),
+                      return NewsTile(
+                        id: news['id'],
+                        createdAt: DateTime.parse(news['created_at']),
+                        title: news['title_ru'],
+                        imageUrl: news['image'],
+                      );
+                    },
+                    itemCount: newsController.news.length),
+              ),
+              RefreshIndicator(
+                onRefresh: () async {
+                  print('Refreshing');
+                  await Future.delayed(const Duration(seconds: 2));
+
+                  return;
+                },
+                child: GridView.count(
+                  crossAxisCount: 1,
+                  childAspectRatio: 3.4 / 1,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  children: const [
+                    EventTile(),
+                    EventTile(),
+                    EventTile(),
+                    EventTile(),
+                    EventTile(),
+                    EventTile(),
+                    EventTile(),
+                    EventTile(),
+                    EventTile(),
+                    EventTile(),
                   ],
                 ),
-              ),
-            ),
-            RefreshIndicator(
-              onRefresh: () async {
-                print('Refreshing');
-                await Future.delayed(const Duration(seconds: 2));
-
-                return;
-              },
-              child: GridView.count(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                crossAxisCount: 1,
-                childAspectRatio: 3 / 1,
-                children: const [
-                  EventTile(),
-                  EventTile(),
-                  EventTile(),
-                  EventTile(),
-                  EventTile(),
-                  EventTile(),
-                  EventTile(),
-                  EventTile(),
-                  EventTile(),
-                  EventTile(),
-                ],
-              ),
-            )
-          ])),
+              )
+            ]);
+          })),
     );
   }
 }

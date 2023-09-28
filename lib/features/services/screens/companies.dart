@@ -8,7 +8,7 @@ class ServicesCompaniesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Услуги / Химчистки')),
+      appBar: AppBar(title: const Text('Химчистки')),
       body: GridView.count(
         childAspectRatio: 4 / 3,
         crossAxisCount: 2,

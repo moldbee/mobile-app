@@ -22,6 +22,7 @@ class ServicesScreen extends HookWidget {
           appBar: AppBar(
             title: const Text("Услуги"),
             bottom: TabBar(
+              physics: const NeverScrollableScrollPhysics(),
               onTap: (index) {
                 selectedTab.value = index;
               },
@@ -43,7 +44,7 @@ class ServicesScreen extends HookWidget {
                   context.push(ServiceUpsert().route);
                 },
                 icon: const Icon(
-                  Icons.add,
+                  Icons.add_rounded,
                   size: 30,
                 ),
               )

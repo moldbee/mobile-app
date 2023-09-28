@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 // Theme needs hot restart
 
 ThemeData themeData = ThemeData(
+  platform: TargetPlatform.iOS,
+  filledButtonTheme: const FilledButtonThemeData(
+      style: ButtonStyle(
+          textStyle: MaterialStatePropertyAll(TextStyle(color: Colors.white)))),
   switchTheme: SwitchThemeData(
       thumbColor: MaterialStateProperty.all(Colors.orange.shade400),
       trackColor:
@@ -56,12 +60,19 @@ ThemeData themeData = ThemeData(
   datePickerTheme:
       const DatePickerThemeData(backgroundColor: Colors.white, elevation: 0),
   inputDecorationTheme: InputDecorationTheme(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       floatingLabelBehavior: FloatingLabelBehavior.always,
       hintStyle: TextStyle(
           color: Colors.grey.shade400,
           fontSize: 14,
           fontWeight: FontWeight.w400),
       hoverColor: Colors.orange.shade400,
+      focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Colors.red, width: 2)),
+      errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Colors.red, width: 2)),
       focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: Colors.orange.shade400, width: 2)),
@@ -77,10 +88,11 @@ ThemeData themeData = ThemeData(
   bottomSheetTheme: const BottomSheetThemeData(
     elevation: 0,
   ),
+  snackBarTheme: const SnackBarThemeData(),
   appBarTheme: AppBarTheme(
-      shadowColor: Colors.transparent,
+      shadowColor: Colors.grey.withOpacity(.2),
       surfaceTintColor: Colors.transparent,
-      elevation: 0,
+      elevation: 1,
       scrolledUnderElevation: 4,
       iconTheme: const IconThemeData(color: Colors.white),
       backgroundColor: Colors.grey.shade900,

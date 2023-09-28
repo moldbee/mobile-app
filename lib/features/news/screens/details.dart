@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/features/news/screens/new_upsert.dart';
+import 'package:smart_city/features/news/screens/news.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';
 
 class NewsDetailsScreen extends StatelessWidget {
-  const NewsDetailsScreen({Key? key}) : super(key: key);
+  const NewsDetailsScreen({Key? key, this.id}) : super(key: key);
   final String route = '/news/details';
+  final String? id;
 
   @override
   Widget build(BuildContext context) {
+    final newsController = Get.find<NewsController>();
+    final newData = newsController.news.firstWhere((element) {
+      return element['id'].toString() == id;
+    });
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back_ios_rounded),
           onPressed: () {
             context.pop();
           },
@@ -21,7 +30,14 @@ class NewsDetailsScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                context.push(NewsUpsertScreen().route);
+                newsController.deleteNew(id);
+                context.go(const NewsScreen().route);
+              },
+              icon: const Icon(Icons.delete_rounded)),
+          IconButton(
+              onPressed: () {
+                context.pushNamed(NewsUpsertScreen().route,
+                    queryParameters: {'id': id});
               },
               icon: const Icon(
                 Icons.edit_rounded,
@@ -41,7 +57,7 @@ class NewsDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset('assets/new_image.jpg'),
+              Image.network(newData['image']),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                 child: Row(
@@ -53,13 +69,13 @@ class NewsDetailsScreen extends StatelessWidget {
                         Icon(
                           Icons.remove_red_eye,
                           size: 22,
-                          color: Colors.grey.shade300,
+                          color: Colors.grey.shade400,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 8),
                           child: Text(
                             '2503',
-                            style: TextStyle(color: Colors.grey.shade400),
+                            style: TextStyle(color: Colors.grey.shade500),
                           ),
                         )
                       ],
@@ -71,35 +87,36 @@ class NewsDetailsScreen extends StatelessWidget {
                           Icon(
                             Icons.comment,
                             size: 20,
-                            color: Colors.grey.shade300,
+                            color: Colors.grey.shade400,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: Text(
                               '28',
                               style: TextStyle(
-                                color: Colors.grey.shade400,
+                                color: Colors.grey.shade500,
                               ),
                             ),
                           )
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(10, 14, 10, 10),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 14, 10, 10),
                 child: Text(
-                  'Amet et ut cillum et culpa.',
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.w500),
+                  newData['title_ru'],
+                  style: const TextStyle(
+                      fontSize: 26, fontWeight: FontWeight.w500),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                 child: Text(
-                  'Commodo cupidatat fugiat veniam sint sunt. Fugiat occaecat incididunt velit ut. Pariatur nisi ipsum minim eiusmod reprehenderit aliqua nulla. Elit mollit officia culpa dolore irure dolore cillum mollit velit ipsum quis. Esse ut aute occaecat magna sit tempor elit ad nisi ut sunt. Deserunt irure laboris proident pariatur exercitation aliquip qui nostrud cupidatat voluptate aliqua excepteur incididunt excepteur. Deserunt ad occaecat exercitation enim aliqua. Dolore nulla ex irure nostrud minim nostrud ad.',
-                  style: TextStyle(fontSize: 18),
+                  newData['description_ru'],
+                  style: const TextStyle(fontSize: 18),
                 ),
               ),
               Padding(
@@ -125,7 +142,7 @@ class NewsDetailsScreen extends StatelessWidget {
                                         height:
                                             MediaQuery.of(context).size.height /
                                                 100 *
-                                                70,
+                                                80,
                                         child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.stretch,
@@ -175,7 +192,7 @@ class NewsDetailsScreen extends StatelessWidget {
                                                         top: BorderSide(
                                                             width: .5,
                                                             color: Colors.grey
-                                                                .shade300))),
+                                                                .shade400))),
                                                 child: Row(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.end,
@@ -184,7 +201,7 @@ class NewsDetailsScreen extends StatelessWidget {
                                                       child: TextInput(
                                                         contentPadding:
                                                             EdgeInsets.fromLTRB(
-                                                                20, 0, 20, 20),
+                                                                20, 0, 20, 19),
                                                         disableBorders: true,
                                                         name: 'comment',
                                                         minLines: 1,
@@ -197,7 +214,7 @@ class NewsDetailsScreen extends StatelessWidget {
                                                     Padding(
                                                       padding:
                                                           const EdgeInsets.only(
-                                                              bottom: 6),
+                                                              bottom: 5),
                                                       child: IconButton(
                                                           onPressed: () {},
                                                           icon: Icon(

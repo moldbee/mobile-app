@@ -13,13 +13,15 @@ class ServiceDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
+        elevation: 1,
         iconTheme: IconThemeData(color: Colors.grey.shade800),
-        titleTextStyle: TextStyle(
-            color: Colors.grey.shade800,
-            fontWeight: FontWeight.w600,
-            fontSize: 22),
         backgroundColor: Colors.grey.shade200,
-        title: Text(title as String),
+        title: Text(
+          title as String,
+          style: TextStyle(
+              color: Colors.grey.shade800, fontWeight: FontWeight.w600),
+        ),
         actions: [
           IconButton(
             icon: Image.asset(
@@ -68,7 +70,7 @@ class ServiceDetailsScreen extends StatelessWidget {
                           IconButton(
                               style: ButtonStyle(
                                   backgroundColor: MaterialStatePropertyAll(
-                                      Colors.orange.shade400)),
+                                      Colors.grey.shade400)),
                               onPressed: () async {
                                 await Clipboard.setData(
                                     const ClipboardData(text: '+37378346131'));

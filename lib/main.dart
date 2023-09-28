@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
+import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/features/news/screens/details.dart';
 import 'package:smart_city/features/news/screens/event_upsert.dart';
 import 'package:smart_city/features/news/screens/new_upsert.dart';
 import 'package:smart_city/features/news/screens/news.dart';
+import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/profile/screens/profile.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
 import 'package:smart_city/features/profile/screens/sign_up.dart';
@@ -22,12 +25,24 @@ import 'package:smart_city/shared/config/pallete.dart';
 import 'package:smart_city/shared/config/theme.dart';
 import 'package:smart_city/shared/screens/policy.dart';
 import 'package:smart_city/shared/widgets/bottom_navigation_bar.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
-  await GetStorage.init();
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: 'https://caxhkekoeloyujcsovba.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNheGhrZWtvZWxveXVqY3NvdmJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTQyMDM3MjUsImV4cCI6MjAwOTc3OTcyNX0.FwEigv5tFxLaKEfGZvvyg_JSSxYUkN3JFqKqNfTsavI',
+  );
   // await GetStorage().erase();
+  await GetStorage.init();
+  Get.put(ProfileController());
+  Get.put(NewsController());
   runApp(const MyApp());
 }
+
+final supabase = Supabase.instance.client;
 
 final GoRouter router = GoRouter(routes: <RouteBase>[
   StatefulShellRoute.indexedStack(
@@ -67,9 +82,12 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               pageBuilder: (context, state) =>
                   const NoTransitionPage(child: NewsScreen())),
           GoRoute(
+              name: NewsUpsertScreen().route,
               path: NewsUpsertScreen().route,
-              pageBuilder: (context, state) =>
-                  MaterialPage(child: NewsUpsertScreen())),
+              pageBuilder: (context, state) => MaterialPage(
+                      child: NewsUpsertScreen(
+                    id: state.uri.queryParameters['id'],
+                  ))),
           GoRoute(
               path: EventsUpsertScreen().route,
               pageBuilder: (context, state) =>
@@ -79,9 +97,9 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               path: const NewsDetailsScreen().route,
               pageBuilder: (context, state) {
                 return MaterialPage(
-                    child: Hero(
-                        tag: state.uri.queryParameters['heroKey'] as String,
-                        child: const NewsDetailsScreen()));
+                    child: NewsDetailsScreen(
+                  id: state.uri.queryParameters['id'],
+                ));
               }),
         ],
       ),
@@ -126,11 +144,11 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
           GoRoute(
               path: ProfileSignUpScreen().route,
               pageBuilder: (context, state) =>
-                  NoTransitionPage(child: ProfileSignUpScreen())),
+                  MaterialPage(child: ProfileSignUpScreen())),
           GoRoute(
-              path: const ProfileScreen().route,
+              path: ProfileScreen().route,
               pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: ProfileScreen())),
+                  NoTransitionPage(child: ProfileScreen())),
           GoRoute(
               path: const PolicyScreen().route,
               pageBuilder: (context, state) =>
@@ -156,6 +174,7 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -165,6 +184,7 @@ class MyApp extends StatelessWidget {
         systemNavigationBarIconBrightness: Brightness.dark));
     return SafeArea(
       child: MaterialApp.router(
+        scrollBehavior: const MaterialScrollBehavior(),
         routerConfig: router,
         theme: themeData,
         debugShowCheckedModeBanner: false,

@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/news/screens/details.dart';
+import 'package:timeago_flutter/timeago_flutter.dart' as timeago;
 
 class NewsTile extends StatelessWidget {
-  const NewsTile({Key? key, required this.title, required this.imageUrl})
+  const NewsTile(
+      {Key? key,
+      required this.title,
+      required this.imageUrl,
+      required this.id,
+      required this.createdAt})
       : super(key: key);
 
   final String title;
   final String imageUrl;
+  final int id;
+  final DateTime createdAt;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +24,7 @@ class NewsTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         context.pushNamed(const NewsDetailsScreen().route,
-            queryParameters: {'heroKey': heroKey});
+            queryParameters: {'heroKey': heroKey, 'id': id.toString()});
       },
       child: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
@@ -25,14 +33,14 @@ class NewsTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Hero(
-                tag: 'new_image$title',
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(
-                    imageUrl,
-                    width: 150,
-                  ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  imageUrl,
+                  width: 150,
+                  height: 80,
+                  filterQuality: FilterQuality.none,
+                  fit: BoxFit.cover,
                 ),
               ),
               Expanded(
@@ -53,11 +61,9 @@ class NewsTile extends StatelessWidget {
                             color: Colors.grey.shade900),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 6),
-                        child: Text(
-                          '10 минут назад',
-                          style: TextStyle(
-                              fontSize: 14, color: Colors.grey.shade600),
+                        padding: const EdgeInsets.only(top: 12),
+                        child: NewTime(
+                          time: createdAt,
                         ),
                       )
                     ],
@@ -66,6 +72,27 @@ class NewsTile extends StatelessWidget {
               )
             ]),
       ),
+    );
+  }
+}
+
+class NewTime extends StatelessWidget {
+  const NewTime({
+    super.key,
+    this.time,
+  });
+
+  final DateTime? time;
+
+  @override
+  Widget build(BuildContext context) {
+    final difference = time!.difference(DateTime.now());
+    timeago.setLocaleMessages('ro', timeago.RoMessages());
+    timeago.setLocaleMessages('ru', timeago.RuMessages());
+
+    return Text(
+      timeago.format(time!, locale: 'ru'),
+      style: TextStyle(color: Colors.grey.shade500),
     );
   }
 }

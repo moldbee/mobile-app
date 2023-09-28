@@ -11,13 +11,15 @@ import 'package:smart_city/shared/widgets/form/text_input.dart';
 final iconsByStatus = {
   'info': Icons.info_rounded,
   'warning': Icons.warning_rounded,
-  'discount': Icons.percent_rounded
+  'discount': Icons.percent_rounded,
+  'price': Icons.attach_money_rounded
 };
 
 final iconColorByStatus = {
   'info': Colors.blue,
   'warning': Colors.red,
-  'discount': Colors.red
+  'discount': Colors.red,
+  'price': Colors.cyan
 };
 
 class ServiceUpsert extends HookWidget {
@@ -64,7 +66,11 @@ class ServiceUpsert extends HookWidget {
                     child: Image.file(File(pickedImage.value!.path))),
                 const SizedBox(height: 30),
               ],
-              const TextInput(name: 'title', title: 'Название'),
+              const TextInput(name: 'title_ro', title: 'Название (RO)'),
+              SizedBox(
+                height: itemsSpacing,
+              ),
+              const TextInput(name: 'title_ru', title: 'Название (RU)'),
               SizedBox(
                 height: itemsSpacing,
               ),
@@ -118,8 +124,16 @@ class ServiceUpsert extends HookWidget {
                 height: itemsSpacing,
               ),
               const TextInput(
-                name: 'description',
-                title: 'Описание',
+                name: 'description_ro',
+                title: 'Описание (RO)',
+                minLines: 4,
+              ),
+              SizedBox(
+                height: itemsSpacing,
+              ),
+              const TextInput(
+                name: 'description_ru',
+                title: 'Описание (RU)',
                 minLines: 4,
               ),
               if (!aditionalFields.value.isEmpty) ...[
@@ -165,10 +179,8 @@ class ServiceUpsert extends HookWidget {
               SizedBox(
                 height: itemsSpacing,
               ),
-              Wrap(
-                direction: Axis.horizontal,
-                alignment: WrapAlignment.center,
-                spacing: 20,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   FilledButton(
                       onPressed: () {
@@ -179,10 +191,8 @@ class ServiceUpsert extends HookWidget {
                             'title': 'Информация',
                           }
                         ];
-                        scrollController.animateTo(
-                            scrollController.position.maxScrollExtent + 200,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeIn);
+                        scrollController.jumpTo(
+                            scrollController.position.maxScrollExtent + 80);
                       },
                       style: ButtonStyle(
                           backgroundColor:
@@ -200,10 +210,8 @@ class ServiceUpsert extends HookWidget {
                             'title': 'Предупреждение',
                           }
                         ];
-                        scrollController.animateTo(
-                            scrollController.position.maxScrollExtent + 200,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeIn);
+                        scrollController.jumpTo(
+                            scrollController.position.maxScrollExtent + 80);
                       },
                       style: ButtonStyle(
                           backgroundColor:
@@ -221,10 +229,8 @@ class ServiceUpsert extends HookWidget {
                             'title': 'Скидка',
                           }
                         ];
-                        scrollController.animateTo(
-                            scrollController.position.maxScrollExtent + 200,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeIn);
+                        scrollController.jumpTo(
+                            scrollController.position.maxScrollExtent + 80);
                       },
                       style: ButtonStyle(
                           backgroundColor:
@@ -233,8 +239,27 @@ class ServiceUpsert extends HookWidget {
                         Icons.percent_rounded,
                         color: Colors.white,
                       )),
+                  FilledButton(
+                      onPressed: () {
+                        aditionalFields.value = [
+                          ...aditionalFields.value,
+                          {
+                            'status': 'price',
+                            'title': 'Цены',
+                          }
+                        ];
+                        scrollController.jumpTo(
+                            scrollController.position.maxScrollExtent + 80);
+                      },
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.cyan)),
+                      child: const Icon(
+                        Icons.attach_money_rounded,
+                        color: Colors.white,
+                      )),
                 ],
-              )
+              ),
             ],
           )),
     );

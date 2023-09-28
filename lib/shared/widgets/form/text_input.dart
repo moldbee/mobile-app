@@ -10,6 +10,7 @@ class TextInput extends HookWidget {
       required this.title,
       this.validators = const [],
       this.icon,
+      this.type,
       this.disableBorders = false,
       this.maxLines,
       this.hintText = '',
@@ -21,6 +22,7 @@ class TextInput extends HookWidget {
 
   final String title;
   final String name;
+  final TextInputType? type;
   final bool disableBorders;
   final String hintText;
   final int? maxLines;
@@ -40,6 +42,7 @@ class TextInput extends HookWidget {
         enableSuggestions: isPassword ? false : true,
         autocorrect: isPassword ? false : true,
         minLines: minLines,
+        keyboardType: type,
         maxLines: isPassword ? 1 : maxLines,
         validator: FormBuilderValidators.compose(validators),
         decoration: InputDecoration(
