@@ -72,6 +72,9 @@ class NewsUpsertScreen extends HookWidget {
         if (formState != null && formState.validate()) {
           if (id != null) {
             if (pickedImage.value is XFile) {
+              await supabase.storage
+                  .from('news')
+                  .remove([editingNew['image'].split('/').last]);
               final uploadedImageFileUrl = await uploadImage(pickedImage);
               await newsController.updateNew(id!, {
                 ...formState.value,
