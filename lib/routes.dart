@@ -24,16 +24,15 @@ import 'shared/widgets/bottom_navigation_bar.dart';
 final GoRouter router = GoRouter(routes: <RouteBase>[
   StatefulShellRoute.indexedStack(
     builder: (context, state, navigationShell) {
-      DateTime currentBackPressTime =
-          DateTime.now().add(const Duration(seconds: 1));
-      final ProfileController profileController = Get.find<ProfileController>();
+      DateTime? currentBackPressTime = DateTime.now();
 
       Future<bool> onWillPop() {
         DateTime now = DateTime.now();
-        if (now.difference(currentBackPressTime) > const Duration(seconds: 1)) {
+        if (now.difference(currentBackPressTime as DateTime) >
+            const Duration(milliseconds: 500)) {
           currentBackPressTime = now;
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            duration: const Duration(seconds: 1),
+            duration: const Duration(milliseconds: 500),
             backgroundColor: Colors.grey.shade900,
             content: const Text(
               'Нажмите еще раз, чтобы выйти',

@@ -108,15 +108,17 @@ class NewsDetailsScreen extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(10, 14, 10, 10),
                 child: Text(
                   newData['title_ru'],
-                  style: const TextStyle(
-                      fontSize: 26, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey.shade800),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                 child: Text(
                   newData['description_ru'],
-                  style: const TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 18, color: Colors.grey.shade800),
                 ),
               ),
               Padding(
@@ -125,9 +127,6 @@ class NewsDetailsScreen extends StatelessWidget {
                   children: [
                     Expanded(
                         child: OutlinedButton(
-                            style: ButtonStyle(
-                                side: MaterialStateProperty.all(
-                                    BorderSide(color: Colors.grey.shade400))),
                             onPressed: () {
                               showModalBottomSheet(
                                   isScrollControlled: true,
@@ -217,7 +216,7 @@ class NewsDetailsScreen extends StatelessWidget {
                                                     Padding(
                                                       padding:
                                                           const EdgeInsets.only(
-                                                              bottom: 5),
+                                                              bottom: 4),
                                                       child: IconButton(
                                                           onPressed: () {},
                                                           icon: Icon(
@@ -234,7 +233,9 @@ class NewsDetailsScreen extends StatelessWidget {
                                     });
                                   });
                             },
-                            child: Text('Комментарии', style: TextStyle(color: Colors.grey.shade400),))),
+                            child: const Text(
+                              'Комментарии',
+                            ))),
                   ],
                 ),
               )

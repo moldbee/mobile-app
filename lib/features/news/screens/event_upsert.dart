@@ -20,8 +20,17 @@ class EventsUpsertScreen extends HookWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Создание события'),
+          title:
+              Text(id == null ? 'Создание события' : 'Редактирование события'),
           actions: [
+            IconButton(
+                onPressed: () {
+                  if (id != null) {
+                    eventsController.deleteEvent(id);
+                  }
+                  context.pop();
+                },
+                icon: const Icon(Icons.delete_rounded)),
             IconButton(
                 onPressed: () {
                   if (_formKey.currentState!.saveAndValidate()) {

@@ -68,6 +68,7 @@ class EventTile extends StatelessWidget {
                   Text(
                     DateFormat(fullDateFormat, locale)
                         .format(DateTime.parse(date)),
+                    style: TextStyle(color: Colors.grey.shade600),
                   )
                 ],
               ),
@@ -87,9 +88,7 @@ class EventTile extends StatelessWidget {
                         color: Colors.grey.shade400,
                       ),
                     ),
-                    Text(
-                      place,
-                    )
+                    Text(place, style: TextStyle(color: Colors.grey.shade600))
                   ],
                 ),
               ),

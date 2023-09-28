@@ -60,18 +60,26 @@ class NewsScreen extends HookWidget {
                 onRefresh: () async {
                   await newsController.fetchNews();
                 },
-                child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      final news = newsController.news[index];
+                child: ListView.separated(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  itemBuilder: (context, index) {
+                    final news = newsController.news[index];
 
-                      return NewsTile(
-                        id: news['id'],
-                        createdAt: DateTime.parse(news['created_at']),
-                        title: news['title_ru'],
-                        imageUrl: news['image'],
-                      );
-                    },
-                    itemCount: newsController.news.length),
+                    return NewsTile(
+                      id: news['id'],
+                      createdAt: DateTime.parse(news['created_at']),
+                      title: news['title_ru'],
+                      imageUrl: news['image'],
+                    );
+                  },
+                  itemCount: newsController.news.length,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(
+                      height: 20,
+                    );
+                  },
+                ),
               ),
               RefreshIndicator(
                 onRefresh: () async {
@@ -79,21 +87,25 @@ class NewsScreen extends HookWidget {
 
                   return;
                 },
-                child: GridView.count(
-                    crossAxisCount: 1,
-                    childAspectRatio: 3.4 / 1,
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
-                    children: eventsController.events
-                        .map((event) => EventTile(
-                              id: event['id'].toString(),
-                              infoUrl: event['info_url'],
-                              emoji: event['emoji'],
-                              date: event['date'],
-                              title: event['title_ru'],
-                              place: event['place_ru'],
-                              placeUrl: event['place_url'],
-                            ))
-                        .toList()),
+                child: ListView.separated(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 10),
+                    itemBuilder: (context, index) {
+                      final event = eventsController.events[index];
+
+                      return EventTile(
+                          id: event['id'].toString(),
+                          date: event['date'],
+                          emoji: event['emoji'],
+                          title: event['title_ru'],
+                          place: event['place_ru'],
+                          infoUrl: event['info_url'],
+                          placeUrl: event['place_url']);
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 14);
+                    },
+                    itemCount: eventsController.events.length),
               )
             ]);
           })),

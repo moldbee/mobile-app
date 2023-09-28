@@ -74,6 +74,13 @@ class ServiceDetailsScreen extends StatelessWidget {
                               onPressed: () async {
                                 await Clipboard.setData(
                                     const ClipboardData(text: '+37378346131'));
+                                if (!context.mounted) return;
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        backgroundColor: Colors.grey.shade900,
+                                        duration: const Duration(seconds: 1),
+                                        content: const Text(
+                                            'Номер скопирован в буфер обмена')));
                               },
                               icon: const Icon(
                                 Icons.copy_rounded,

@@ -28,7 +28,6 @@ class NewsTile extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +57,7 @@ class NewsTile extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: Colors.grey.shade900),
+                            color: Colors.grey.shade800),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 12),
