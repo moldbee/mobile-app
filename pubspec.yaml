@@ -64,6 +64,7 @@ dependencies:
   supabase_flutter: ^1.10.18
   timeago: ^3.5.0
   timeago_flutter: ^3.5.0
+  emoji_picker_flutter: ^1.6.1
 
 dev_dependencies:
   flutter_test:

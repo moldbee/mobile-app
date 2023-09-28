@@ -1,27 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:smart_city/features/news/screens/news.dart';
-import 'package:smart_city/features/profile/screens/sign_in.dart';
-import 'package:smart_city/features/services/screens/services.dart';
-import 'package:smart_city/features/settings/screens/settings.dart';
+import 'package:get/get.dart';
+import 'package:smart_city/features/profile/controller.dart';
 
 Color bottomNavbarIconColor = Colors.white;
 Color bottomNavbarSelectedIconColor = Colors.orange.shade400;
-
-List<String> routes = [
-  const NewsScreen().route,
-  const ServicesScreen().route,
-  ProfileSignInScreen().route,
-  const SettingsScreen().route,
-];
 
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({super.key, this.goBranch, this.index});
 
   final int? index;
-  final goBranch;
+  final dynamic goBranch;
 
   @override
   Widget build(BuildContext context) {
+    final ProfileController profileController = Get.find<ProfileController>();
+    final accountIcon = Icon(
+      Icons.account_circle,
+      color: bottomNavbarIconColor,
+    );
+    final selectedAccountIcon = Icon(
+      Icons.account_circle,
+      color: bottomNavbarSelectedIconColor,
+    );
+
+    final avatarIcon = Container(
+        decoration: const BoxDecoration(
+            color: Colors.transparent, shape: BoxShape.circle),
+        child: CircleAvatar(
+          backgroundColor: Colors.transparent,
+          radius: 13,
+          backgroundImage: NetworkImage(
+            profileController.avatar.value,
+          ),
+        ));
     return NavigationBar(
       selectedIndex: index as int,
       surfaceTintColor: Colors.transparent,
@@ -54,17 +65,16 @@ class CustomBottomNavigationBar extends StatelessWidget {
           ),
           label: '',
         ),
-        NavigationDestination(
-          selectedIcon: Icon(
-            Icons.account_circle,
-            color: bottomNavbarSelectedIconColor,
-          ),
-          icon: Icon(
-            Icons.account_circle,
-            color: bottomNavbarIconColor,
-          ),
-          label: '',
-        ),
+        Obx(() {
+          return NavigationDestination(
+            selectedIcon: profileController.uid.value != null
+                ? avatarIcon
+                : selectedAccountIcon,
+            icon:
+                profileController.uid.value != null ? avatarIcon : accountIcon,
+            label: '',
+          );
+        }),
         NavigationDestination(
           selectedIcon: Icon(
             Icons.settings,

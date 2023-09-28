@@ -86,7 +86,6 @@ class NewTime extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final difference = time!.difference(DateTime.now());
     timeago.setLocaleMessages('ro', timeago.RoMessages());
     timeago.setLocaleMessages('ru', timeago.RuMessages());
 

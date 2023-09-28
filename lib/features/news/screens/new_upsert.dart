@@ -7,7 +7,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:smart_city/features/news/controller.dart';
+import 'package:smart_city/features/news/news_controller.dart';
 import 'package:smart_city/features/news/screens/news.dart';
 import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/hooks/use_preserved_state.dart';

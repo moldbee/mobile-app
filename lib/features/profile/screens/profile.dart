@@ -59,28 +59,25 @@ class ProfileScreen extends StatelessWidget {
                                   .from('profiles')
                                   .update({'avatar': uploadedAvatarFileUrl}).eq(
                                       'uid', supabase.auth.currentUser!.id);
-                              if (currentAvatarUrl != null) {
-                                print(currentAvatarUrl);
-                                print(currentAvatarUrl.split('/').last);
-                                await supabase.storage
-                                    .from('avatars')
-                                    .remove([currentAvatarUrl.split('/').last]);
-                              }
+                              print(currentAvatarUrl);
+                              print(currentAvatarUrl.split('/').last);
+                              await supabase.storage
+                                  .from('avatars')
+                                  .remove([currentAvatarUrl.split('/').last]);
                             }
                           } catch (e) {
                             print(e);
                           }
                         },
                         child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              borderRadius: BorderRadius.circular(9000),
-                            ),
+                            decoration: const BoxDecoration(
+                                color: Colors.transparent,
+                                shape: BoxShape.circle),
                             child: CircleAvatar(
                               backgroundColor: Colors.transparent,
                               radius: 50,
                               backgroundImage: NetworkImage(
-                                profileController.avatar.value ?? defaultAvatar,
+                                profileController.avatar.value,
                               ),
                             )),
                       )),
@@ -124,8 +121,6 @@ class ProfileScreen extends StatelessWidget {
                           'Удалить аккаунт',
                           style: TextStyle(color: Colors.orange.shade400),
                         )),
-                    // кнопка политики конфиденциальности
-
                     const SizedBox(height: 10),
                     OutlinedButton(
                         onPressed: () async {
@@ -133,18 +128,18 @@ class ProfileScreen extends StatelessWidget {
                               .from('profiles')
                               .update({'avatar': null}).eq(
                                   'uid', supabase.auth.currentUser!.id);
-                          await supabase.storage.from('avatars').remove([
-                            profileController.avatar.value!.split('/').last
-                          ]);
-                          profileController.avatar.value = null;
+                          await supabase.storage.from('avatars').remove(
+                              [profileController.avatar.value.split('/').last]);
+                          profileController.avatar.value = defaultAvatar;
                         },
                         child: const Text('Удалить аватар')),
                     const SizedBox(height: 10),
                     OutlinedButton(
-                        onPressed: () {
-                          supabase.auth.signOut();
-                          context.go(ProfileSignInScreen().route);
+                        onPressed: () async {
+                          await supabase.auth.signOut();
+                          if (!context.mounted) return;
                           profileController.clearProfileData();
+                          context.go(ProfileSignInScreen().route);
                         },
                         child: Text(
                           'Выйти',

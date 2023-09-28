@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smart_city/features/news/controller.dart';
+import 'package:smart_city/features/news/news_controller.dart';
 import 'package:smart_city/features/news/screens/new_upsert.dart';
 import 'package:smart_city/features/news/screens/news.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';
@@ -120,11 +120,14 @@ class NewsDetailsScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 40, 10, 20),
+                padding: const EdgeInsets.fromLTRB(10, 30, 10, 20),
                 child: Row(
                   children: [
                     Expanded(
                         child: OutlinedButton(
+                            style: ButtonStyle(
+                                side: MaterialStateProperty.all(
+                                    BorderSide(color: Colors.grey.shade400))),
                             onPressed: () {
                               showModalBottomSheet(
                                   isScrollControlled: true,
@@ -231,7 +234,7 @@ class NewsDetailsScreen extends StatelessWidget {
                                     });
                                   });
                             },
-                            child: const Text('Комментарии'))),
+                            child: Text('Комментарии', style: TextStyle(color: Colors.grey.shade400),))),
                   ],
                 ),
               )

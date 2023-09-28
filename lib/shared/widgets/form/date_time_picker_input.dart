@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+import 'package:smart_city/shared/config/date_format.dart';
 import 'package:smart_city/shared/config/pallete.dart';
 
 class DateTimePickerInput extends StatelessWidget {
@@ -10,6 +11,7 @@ class DateTimePickerInput extends StatelessWidget {
       this.helperText,
       this.firstDate,
       this.lastDate,
+      this.format = fullDateFormat,
       this.onCleared,
       required this.label,
       this.icon,
@@ -19,6 +21,7 @@ class DateTimePickerInput extends StatelessWidget {
   final DateTime? lastDate;
   final String? helperText;
   final String name;
+  final String format;
   final String label;
   final Widget? icon;
   final InputType inputType;
@@ -31,7 +34,7 @@ class DateTimePickerInput extends StatelessWidget {
       name: name,
       firstDate: firstDate,
       lastDate: lastDate,
-      format: DateFormat('${DateFormat.WEEKDAY} dd MMMM, yyyy HH:mm', locale),
+      format: DateFormat(format, locale),
       helpText: helperText,
       locale: const Locale('ru', 'RU'),
       inputType: inputType,

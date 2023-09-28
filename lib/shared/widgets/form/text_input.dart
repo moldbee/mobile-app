@@ -10,6 +10,7 @@ class TextInput extends HookWidget {
       required this.title,
       this.validators = const [],
       this.icon,
+      this.decoration,
       this.type,
       this.disableBorders = false,
       this.maxLines,
@@ -22,6 +23,7 @@ class TextInput extends HookWidget {
 
   final String title;
   final String name;
+  final InputDecoration? decoration;
   final TextInputType? type;
   final bool disableBorders;
   final String hintText;

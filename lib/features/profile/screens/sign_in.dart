@@ -30,13 +30,17 @@ class ProfileSignInScreen extends HookWidget {
               email: data['login'], password: data['password']);
           final profile = await supabase
               .from('profiles')
-              .select()
+              // fetch role from table reference
+              .select('*, role(name)')
               .eq('uid', supabase.auth.currentUser!.id)
               .single();
+          print(profile);
           profileController.setProfileData(
+              role: profile['role']['name'],
               avatar: profile['avatar'],
               nick: profile['nick'],
-              email: profile['email']);
+              email: profile['email'],
+              uid: profile['uid']);
 
           if (!context.mounted) return;
           context.go(ProfileScreen().route);

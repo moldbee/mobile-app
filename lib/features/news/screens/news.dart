@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smart_city/features/news/controller.dart';
+import 'package:smart_city/features/news/events_controller.dart';
+import 'package:smart_city/features/news/news_controller.dart';
 import 'package:smart_city/features/news/screens/event_upsert.dart';
 import 'package:smart_city/features/news/screens/new_upsert.dart';
 import 'package:smart_city/features/news/widgets/event_tile.dart';
@@ -17,6 +18,7 @@ class NewsScreen extends HookWidget {
   Widget build(BuildContext context) {
     final selectedTab = usePreservedState('news-tab', context, 0);
     final NewsController newsController = Get.find<NewsController>();
+    final EventsController eventsController = Get.find<EventsController>();
 
     return DefaultTabController(
       length: 2,
@@ -73,29 +75,25 @@ class NewsScreen extends HookWidget {
               ),
               RefreshIndicator(
                 onRefresh: () async {
-                  print('Refreshing');
-                  await Future.delayed(const Duration(seconds: 2));
+                  await eventsController.fetchEvents();
 
                   return;
                 },
                 child: GridView.count(
-                  crossAxisCount: 1,
-                  childAspectRatio: 3.4 / 1,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                  children: const [
-                    EventTile(),
-                    EventTile(),
-                    EventTile(),
-                    EventTile(),
-                    EventTile(),
-                    EventTile(),
-                    EventTile(),
-                    EventTile(),
-                    EventTile(),
-                    EventTile(),
-                  ],
-                ),
+                    crossAxisCount: 1,
+                    childAspectRatio: 3.4 / 1,
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+                    children: eventsController.events
+                        .map((event) => EventTile(
+                              id: event['id'].toString(),
+                              infoUrl: event['info_url'],
+                              emoji: event['emoji'],
+                              date: event['date'],
+                              title: event['title_ru'],
+                              place: event['place_ru'],
+                              placeUrl: event['place_url'],
+                            ))
+                        .toList()),
               )
             ]);
           })),
