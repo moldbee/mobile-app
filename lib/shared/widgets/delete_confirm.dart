@@ -10,12 +10,12 @@ class DeleteConfirmAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Delete'),
-      content: const Text('Are you sure you want to delete this item?'),
+      title: const Text('Удаление'),
+      content: const Text('Вы уверены что хотите удалить?'),
       actions: [
         TextButton(
           onPressed: () => context.pop(false),
-          child: const Text('No'),
+          child: Text('Нет', style: TextStyle(color: Colors.grey.shade600)),
         ),
         TextButton(
           onPressed: () async {
@@ -24,7 +24,7 @@ class DeleteConfirmAlert extends StatelessWidget {
             context.pop(true);
             context.pop();
           },
-          child: const Text('Yes'),
+          child: const Text('Да', style: TextStyle(color: Colors.red)),
         ),
       ],
     );
