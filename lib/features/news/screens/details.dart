@@ -62,7 +62,12 @@ class NewsDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(newData['image']),
+              Image.network(
+                newData['image'],
+                height: 220,
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                 child: Row(

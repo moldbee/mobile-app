@@ -153,8 +153,14 @@ class NewsUpsertScreen extends HookWidget {
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: id != null && isRemoteImage
-                            ? Image.network(editingNew['image'])
-                            : Image.file(File(pickedImage.value!.path))),
+                            ? Image.network(editingNew['image'],
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                                height: 220)
+                            : Image.file(File(pickedImage.value!.path),
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                                height: 220)),
                   ),
                   const SizedBox(height: 30),
                 ],
