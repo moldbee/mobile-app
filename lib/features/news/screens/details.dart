@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:smart_city/features/news/news_controller.dart';
 import 'package:smart_city/features/news/screens/new_upsert.dart';
 import 'package:smart_city/shared/widgets/delete_confirm.dart';
@@ -65,6 +66,18 @@ class NewsDetailsScreen extends StatelessWidget {
               Image.network(
                 newData['image'],
                 height: 220,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade100,
+                    child: Container(
+                      height: 220,
+                      width: double.infinity,
+                      color: Colors.white,
+                    ),
+                  );
+                },
                 fit: BoxFit.cover,
                 width: double.infinity,
               ),
