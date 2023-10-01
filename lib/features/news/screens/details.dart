@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/news/news_controller.dart';
 import 'package:smart_city/features/news/screens/new_upsert.dart';
-import 'package:smart_city/features/news/screens/news.dart';
+import 'package:smart_city/shared/widgets/delete_confirm.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';
 
 class NewsDetailsScreen extends StatelessWidget {
@@ -29,9 +29,14 @@ class NewsDetailsScreen extends StatelessWidget {
         title: const Text('Статья'),
         actions: [
           IconButton(
-              onPressed: () {
-                newsController.deleteNew(id);
-                context.go(const NewsScreen().route);
+              onPressed: () async {
+                await showDialog(
+                    context: context,
+                    builder: (context) => DeleteConfirmAlert(
+                          onDelete: () async {
+                            await newsController.deleteNew(id);
+                          },
+                        ));
               },
               icon: const Icon(Icons.delete_rounded)),
           IconButton(

@@ -105,6 +105,7 @@ class EventTile extends StatelessWidget {
                 },
                 icon: Icon(
                   Icons.edit,
+                  size: 25,
                   color: Colors.grey.shade400.withOpacity(0.9),
                 )),
             IconButton(
@@ -113,6 +114,7 @@ class EventTile extends StatelessWidget {
                 },
                 icon: Icon(
                   Icons.info,
+                  size: 25,
                   color: Colors.grey.shade400.withOpacity(0.7),
                 ))
           ],

@@ -10,7 +10,6 @@ import 'package:smart_city/routes.dart';
 import 'package:smart_city/shared/config/pallete.dart';
 import 'package:smart_city/shared/config/theme.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -40,7 +39,7 @@ class MyApp extends StatelessWidget {
         systemNavigationBarDividerColor: blackColor,
         systemNavigationBarIconBrightness: Brightness.dark));
     return SafeArea(
-      child: MaterialApp.router(
+      child: MaterialApp.router(  
         scrollBehavior: const MaterialScrollBehavior(),
         routerConfig: router,
         theme: themeData,
@@ -50,7 +49,10 @@ class MyApp extends StatelessWidget {
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate
         ],
-        supportedLocales: const [Locale('ru'), Locale('ro')],
+        supportedLocales: const [
+          Locale('ru'), 
+          Locale('ro')
+          ],
       ),
     );
   }

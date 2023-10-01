@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:smart_city/main.dart';
 
 const defaultAvatar =
     'https://caxhkekoeloyujcsovba.supabase.co/storage/v1/object/public/avatars/avatar.jpg';
@@ -12,29 +13,19 @@ class ProfileController extends GetxController {
   final RxnString uid = RxnString();
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     final box = GetStorage();
-    final nickFromStorage = box.read('nick');
-    final emailFromStorage = box.read('email');
-    final avatarFromStorage = box.read('avatar');
-    final roleFromStorage = box.read('role');
-    final uidFromStorage = box.read('uid');
-
-    if (nickFromStorage != null) {
-      nick.value = nickFromStorage;
-    }
-    if (emailFromStorage != null) {
-      email.value = emailFromStorage;
-    }
-    if (avatarFromStorage != null) {
-      avatar.value = avatarFromStorage;
-    }
-    if (roleFromStorage != null) {
-      role.value = roleFromStorage;
-    }
-    if (uidFromStorage != null) {
-      uid.value = uidFromStorage;
+    if (supabase.auth.currentUser?.id != null &&
+        supabase.auth.currentUser?.id == box.read('uid')) {
+      setProfileData(
+          nick: box.read('nick'),
+          email: box.read('email'),
+          avatar: box.read('avatar'),
+          role: box.read('role'),
+          uid: box.read('uid'));
+    } else {
+      clearProfileData();
     }
 
     ever(nick, (String? value) {

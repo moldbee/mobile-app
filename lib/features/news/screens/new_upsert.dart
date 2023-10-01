@@ -17,7 +17,7 @@ import 'package:uuid/uuid.dart';
 Future<String?> uploadImage(ValueNotifier pickedImage) async {
   final image = pickedImage.value as XFile;
   final imageKeyInBucket =
-      'news-${supabase.auth.currentUser!.id}-${const Uuid().v4()}';
+      'news-${supabase.auth.currentUser?.id}-${const Uuid().v4()}';
   await supabase.storage
       .from('news')
       .upload(imageKeyInBucket, File(image.path));

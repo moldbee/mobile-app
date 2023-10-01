@@ -103,7 +103,7 @@ class NewsScreen extends HookWidget {
                           placeUrl: event['place_url']);
                     },
                     separatorBuilder: (context, index) {
-                      return const SizedBox(height: 14);
+                      return const SizedBox(height: 20);
                     },
                     itemCount: eventsController.events.length),
               )

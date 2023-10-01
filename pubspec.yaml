@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.6 <4.0.0'
+  sdk: '>=3.0.5 <4.0.0'
 flutter_localizations:
   sdk: flutter
 
@@ -65,6 +65,8 @@ dependencies:
   timeago: ^3.5.0
   timeago_flutter: ^3.5.0
   emoji_picker_flutter: ^1.6.1
+  skeletonizer: ^0.8.0
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

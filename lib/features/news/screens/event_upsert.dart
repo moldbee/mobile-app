@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/news/events_controller.dart';
+import 'package:smart_city/shared/widgets/delete_confirm.dart';
 import 'package:smart_city/shared/widgets/form/date_time_picker_input.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';
 
@@ -23,14 +24,20 @@ class EventsUpsertScreen extends HookWidget {
           title:
               Text(id == null ? 'Создание события' : 'Редактирование события'),
           actions: [
-            IconButton(
-                onPressed: () {
-                  if (id != null) {
-                    eventsController.deleteEvent(id);
-                  }
-                  context.pop();
-                },
-                icon: const Icon(Icons.delete_rounded)),
+            if (id != null) ...[
+              IconButton(
+                  onPressed: () async {
+                    await showDialog(
+                        context: context,
+                        builder: (context) =>
+                            DeleteConfirmAlert(onDelete: () async {
+                              await eventsController.deleteEvent(id);
+                            }));
+                  },
+                  icon: const Icon(
+                    Icons.delete_rounded,
+                  ))
+            ],
             IconButton(
                 onPressed: () {
                   if (_formKey.currentState!.saveAndValidate()) {

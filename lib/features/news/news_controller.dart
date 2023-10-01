@@ -3,6 +3,7 @@ import 'package:smart_city/main.dart';
 
 class NewsController extends GetxController {
   RxList<dynamic> news = <dynamic>[].obs;
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() {
@@ -12,8 +13,12 @@ class NewsController extends GetxController {
   }
 
   Future<dynamic> fetchNews() async {
-    final news = await supabase.from('news').select();
-    this.news.value = news;
+    try {
+      isLoading.value = true;
+      news.value = await supabase.from('news').select();
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   Future<dynamic> createNew(Map<String, dynamic> data) async {

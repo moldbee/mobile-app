@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:smart_city/features/news/screens/details.dart';
 import 'package:timeago_flutter/timeago_flutter.dart' as timeago;
 
@@ -35,6 +36,18 @@ class NewsTile extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.network(
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Shimmer.fromColors(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade100,
+                      child: Container(
+                        height: 80,
+                        width: 150,
+                        color: Colors.white,
+                      ),
+                    );
+                  },
                   imageUrl,
                   width: 150,
                   height: 80,
