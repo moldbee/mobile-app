@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class DeleteConfirmAlert extends StatelessWidget {
-  const DeleteConfirmAlert({Key? key, required this.onDelete})
+  const DeleteConfirmAlert(
+      {Key? key, required this.onDelete, this.disableDoublePop = false})
       : super(key: key);
 
+  final bool disableDoublePop;
   final dynamic onDelete;
 
   @override
@@ -22,7 +24,9 @@ class DeleteConfirmAlert extends StatelessWidget {
             await onDelete();
             if (!context.mounted) return;
             context.pop(true);
-            context.pop();
+            if (!disableDoublePop) {
+              context.pop();
+            }
           },
           child: const Text('Да', style: TextStyle(color: Colors.red)),
         ),

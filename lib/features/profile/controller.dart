@@ -11,25 +11,29 @@ class ProfileController extends GetxController {
   final RxString avatar = RxString(defaultAvatar);
   final RxnString role = RxnString();
   final RxnString uid = RxnString();
+  final RxnString id = RxnString();
 
   @override
   void onInit() async {
     super.onInit();
     final box = GetStorage();
-    if (supabase.auth.currentUser?.id != null &&
-        supabase.auth.currentUser?.id == box.read('uid')) {
+    if (supabase.auth.currentUser != null) {
       setProfileData(
           nick: box.read('nick'),
           email: box.read('email'),
           avatar: box.read('avatar'),
           role: box.read('role'),
-          uid: box.read('uid'));
+          uid: box.read('uid'),
+          id: box.read('id'));
     } else {
       clearProfileData();
     }
 
     ever(nick, (String? value) {
       box.write('nick', value);
+    });
+    ever(id, (String? value) {
+      box.write('id', value);
     });
     ever(email, (String? value) {
       box.write('email', value);
@@ -48,6 +52,7 @@ class ProfileController extends GetxController {
   void setProfileData(
       {String? nick,
       String? email,
+      String? id,
       String avatar = defaultAvatar,
       String? role,
       String? uid}) async {
@@ -56,6 +61,7 @@ class ProfileController extends GetxController {
     this.avatar.value = avatar;
     this.role.value = role;
     this.uid.value = uid;
+    this.id.value = id;
   }
 
   void clearProfileData() {
@@ -64,6 +70,7 @@ class ProfileController extends GetxController {
     avatar.value = defaultAvatar;
     role.value = null;
     uid.value = null;
+    id.value = null;
   }
 
   void updateAvatar(String avatarUrl) {

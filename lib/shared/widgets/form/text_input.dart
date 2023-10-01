@@ -14,6 +14,7 @@ class TextInput extends HookWidget {
       this.type,
       this.disableBorders = false,
       this.maxLines,
+      this.errorText,
       this.hintText = '',
       this.suffix,
       this.contentPadding,
@@ -23,6 +24,7 @@ class TextInput extends HookWidget {
 
   final String title;
   final String name;
+  final String? errorText;
   final InputDecoration? decoration;
   final TextInputType? type;
   final bool disableBorders;
@@ -50,6 +52,7 @@ class TextInput extends HookWidget {
         decoration: InputDecoration(
           hintText: hintText,
           suffix: suffix,
+          errorText: errorText,
           suffixIcon: isPassword
               ? IconButton(
                   onPressed: () {
