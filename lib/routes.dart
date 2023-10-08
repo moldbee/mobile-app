@@ -130,6 +130,7 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
                 return ProfileSignInScreen().route;
               },
               path: ProfileSignInScreen().route,
+              name: ProfileSignInScreen().route,
               pageBuilder: (context, state) =>
                   NoTransitionPage(child: ProfileSignInScreen())),
           GoRoute(

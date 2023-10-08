@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
@@ -34,27 +35,25 @@ class NewsTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Shimmer.fromColors(
-                      baseColor: Colors.grey.shade300,
-                      highlightColor: Colors.grey.shade100,
-                      child: Container(
-                        height: 80,
-                        width: 150,
-                        color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  child: CachedNetworkImage(
+                    imageUrl: imageUrl,
+                    width: 150,
+                    height: 80,
+                    filterQuality: FilterQuality.none,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => Center(
+                      child: Shimmer.fromColors(
+                        baseColor: Colors.grey.shade300,
+                        highlightColor: Colors.grey.shade100,
+                        child: Container(
+                          height: 80,
+                          width: 150,
+                          color: Colors.white,
+                        ),
                       ),
-                    );
-                  },
-                  imageUrl,
-                  width: 150,
-                  height: 80,
-                  filterQuality: FilterQuality.none,
-                  fit: BoxFit.cover,
-                ),
-              ),
+                    ),
+                  )),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10),

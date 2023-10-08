@@ -12,6 +12,12 @@ class NewsController extends GetxController {
     fetchNews();
   }
 
+  List<dynamic> get sortedByTimeNews {
+    return news.toList()
+      ..sort((a, b) => DateTime.parse(b['created_at'])
+          .compareTo(DateTime.parse(a['created_at'])));
+  }
+
   Future<dynamic> fetchNews() async {
     try {
       isLoading.value = true;

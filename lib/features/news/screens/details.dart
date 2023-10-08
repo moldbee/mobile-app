@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
@@ -82,23 +83,20 @@ class NewsDetailsScreen extends HookWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(
-                newData['image'],
+              CachedNetworkImage(
+                imageUrl: newData['image'],
                 height: 220,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.grey.shade100,
-                    child: Container(
-                      height: 220,
-                      width: double.infinity,
-                      color: Colors.white,
-                    ),
-                  );
-                },
                 fit: BoxFit.cover,
                 width: double.infinity,
+                placeholder: (context, url) => Shimmer.fromColors(
+                  baseColor: Colors.grey.shade300,
+                  highlightColor: Colors.grey.shade100,
+                  child: Container(
+                    height: 220,
+                    width: double.infinity,
+                    color: Colors.white,
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
@@ -181,6 +179,7 @@ class NewsDetailsScreen extends HookWidget {
                                     return StatefulBuilder(
                                         builder: (context, setState) {
                                       return CommentsBottomSheet(
+                                        setState: setState,
                                         setComments: (value) {
                                           setState(() {
                                             comments.value = value;

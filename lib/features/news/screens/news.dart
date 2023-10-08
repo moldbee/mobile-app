@@ -64,7 +64,7 @@ class NewsScreen extends HookWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                   itemBuilder: (context, index) {
-                    final news = newsController.news[index];
+                    final news = newsController.sortedByTimeNews[index];
 
                     return NewsTile(
                       id: news['id'],
@@ -73,7 +73,7 @@ class NewsScreen extends HookWidget {
                       imageUrl: news['image'],
                     );
                   },
-                  itemCount: newsController.news.length,
+                  itemCount: newsController.sortedByTimeNews.length,
                   separatorBuilder: (BuildContext context, int index) {
                     return const SizedBox(
                       height: 20,

@@ -38,6 +38,8 @@ class ServiceUpsert extends HookWidget {
     final hasSelectedImage = pickedImage.value is XFile;
     final formState =
         usePreservedState('new-form-state', context, <String, dynamic>{});
+    final typeOfService =
+        usePreservedState('type-of-service', context, {'service'});
     return Scaffold(
       appBar: AppBar(title: const Text('Добавление услуги'), actions: [
         IconButton(
@@ -66,6 +68,29 @@ class ServiceUpsert extends HookWidget {
                     child: Image.file(File(pickedImage.value!.path))),
                 const SizedBox(height: 30),
               ],
+              SegmentedButton(
+                emptySelectionAllowed: false,
+                selectedIcon: const Icon(
+                  Icons.check_rounded,
+                  color: Colors.white,
+                ),
+                style: ButtonStyle(
+                    textStyle: const MaterialStatePropertyAll(
+                        TextStyle(color: Colors.white)),
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.orange.shade400)),
+                segments: const [
+                  ButtonSegment(value: 'service', label: Text('Сервис')),
+                  ButtonSegment(value: 'section', label: Text('Секция')),
+                ],
+                selected: typeOfService.value,
+                onSelectionChanged: (value) {
+                  typeOfService.value = {value.first};
+                },
+              ),
+              SizedBox(
+                height: itemsSpacing,
+              ),
               const TextInput(name: 'title_ro', title: 'Название (RO)'),
               SizedBox(
                 height: itemsSpacing,

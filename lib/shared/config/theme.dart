@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 // Theme needs hot restart
 
 ThemeData themeData = ThemeData(
+  segmentedButtonTheme: SegmentedButtonThemeData(
+      style: ButtonStyle(
+    textStyle: MaterialStateProperty.all(const TextStyle(
+      color: Colors.white,
+    )),
+  )),
   platform: TargetPlatform.iOS,
   filledButtonTheme: const FilledButtonThemeData(
       style: ButtonStyle(
