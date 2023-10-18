@@ -59,13 +59,12 @@ class ProfileScreen extends StatelessWidget {
                                   .from('profiles')
                                   .update({'avatar': uploadedAvatarFileUrl}).eq(
                                       'uid', supabase.auth.currentUser!.id);
-                              print(currentAvatarUrl);
-                              print(currentAvatarUrl.split('/').last);
                               await supabase.storage
                                   .from('avatars')
                                   .remove([currentAvatarUrl.split('/').last]);
                             }
                           } catch (e) {
+                            // ignore: avoid_print
                             print(e);
                           }
                         },

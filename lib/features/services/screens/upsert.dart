@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:form_builder_extra_fields/form_builder_extra_fields.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smart_city/shared/hooks/use_preserved_state.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';
@@ -23,23 +22,33 @@ final iconColorByStatus = {
 };
 
 class ServiceUpsert extends HookWidget {
-  ServiceUpsert({Key? key}) : super(key: key);
+  ServiceUpsert({Key? key, this.categoryId}) : super(key: key);
   final String route = '/service/upsert';
   final ImagePicker _imagePicker = ImagePicker();
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   final double itemsSpacing = 30;
+  final String? categoryId;
 
   @override
   Widget build(BuildContext context) {
-    final pickedCategory = usePreservedState('picked-category', context);
     final pickedImage = usePreservedState('picked-service-image', context);
     final aditionalFields = usePreservedState('info-fields', context, []);
     final scrollController = useScrollController();
     final hasSelectedImage = pickedImage.value is XFile;
     final formState =
-        usePreservedState('new-form-state', context, <String, dynamic>{});
-    final typeOfService =
-        usePreservedState('type-of-service', context, {'service'});
+        usePreservedState('new-form-state', context, <String, dynamic>{
+      'title_ro': 'McDonalds',
+      'title_ru': 'Макдоналдс',
+      'phone': '+373 79 123 456',
+      'category': categoryId,
+      'messageLink': 'https://t.me/mcdonalds',
+      'website': 'https://mcdonalds.md',
+      'place': 'https://maps.app.goo.gl/Mgh9XZyGeHrQ7GBBA',
+      'description_ro':
+          'McDonald’s este cel mai mare lanț de restaurante cu servire rapidă din lume, cu peste 37.000 de restaurante în peste 100 de țări. În România, McDonald’s este prezent din anul 1995, iar în prezent are 85 de restaurante în 30 de orașe din țară.',
+      'description_ru':
+          'Макдоналдс — американская корпорация, крупнейшая в мире сеть ресторанов быстрого питания. Штаб-квартира — в городе Окленд, штат Калифорния. В настоящее время входит в число 100 крупнейших корпораций США по версии журнала Fortune.',
+    });
     return Scaffold(
       appBar: AppBar(title: const Text('Добавление услуги'), actions: [
         IconButton(
@@ -68,29 +77,6 @@ class ServiceUpsert extends HookWidget {
                     child: Image.file(File(pickedImage.value!.path))),
                 const SizedBox(height: 30),
               ],
-              SegmentedButton(
-                emptySelectionAllowed: false,
-                selectedIcon: const Icon(
-                  Icons.check_rounded,
-                  color: Colors.white,
-                ),
-                style: ButtonStyle(
-                    textStyle: const MaterialStatePropertyAll(
-                        TextStyle(color: Colors.white)),
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.orange.shade400)),
-                segments: const [
-                  ButtonSegment(value: 'service', label: Text('Сервис')),
-                  ButtonSegment(value: 'section', label: Text('Секция')),
-                ],
-                selected: typeOfService.value,
-                onSelectionChanged: (value) {
-                  typeOfService.value = {value.first};
-                },
-              ),
-              SizedBox(
-                height: itemsSpacing,
-              ),
               const TextInput(name: 'title_ro', title: 'Название (RO)'),
               SizedBox(
                 height: itemsSpacing,
@@ -112,39 +98,6 @@ class ServiceUpsert extends HookWidget {
                 height: itemsSpacing,
               ),
               const TextInput(name: 'place', title: 'Местоположение'),
-              SizedBox(
-                height: itemsSpacing,
-              ),
-              DropdownSearch(
-                compareFn: (item1, item2) => item1 == item2,
-                selectedItem: pickedCategory.value,
-                itemAsString: (item) => item.toString(),
-                dropdownDecoratorProps: const DropDownDecoratorProps(
-                    dropdownSearchDecoration:
-                        InputDecoration(label: Text('Категория'))),
-                dropdownBuilder: (context, selectedItem) => Text(
-                  selectedItem != null ? selectedItem.toString() : '',
-                ),
-                popupProps: PopupProps.menu(
-                    containerBuilder: (context, popupWidget) => Stack(
-                          children: [popupWidget],
-                        ),
-                    showSearchBox: true,
-                    menuProps: const MenuProps(),
-                    searchFieldProps: const TextFieldProps(
-                        decoration:
-                            InputDecoration(hintText: 'Поиск по категориям')),
-                    showSelectedItems: true,
-                    constraints:
-                        const BoxConstraints(minWidth: double.infinity)),
-                filterFn: (item, query) {
-                  return (item as String)
-                      .toLowerCase()
-                      .contains(query.toLowerCase());
-                },
-                onChanged: (value) => pickedCategory.value = value,
-                items: const ['Main', 'Second'],
-              ),
               SizedBox(
                 height: itemsSpacing,
               ),

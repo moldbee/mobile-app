@@ -9,14 +9,14 @@ import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/profile/screens/profile.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
 import 'package:smart_city/features/profile/screens/sign_up.dart';
-import 'package:smart_city/features/services/screens/other.dart';
+import 'package:smart_city/features/services/screens/category_upsert.dart';
+import 'package:smart_city/features/services/screens/details.dart';
 import 'package:smart_city/features/services/screens/services.dart';
 import 'package:smart_city/features/services/screens/upsert.dart';
-import 'package:smart_city/features/services/widgets/details.dart';
 import 'package:smart_city/features/settings/screens/about.dart';
 import 'package:smart_city/shared/screens/policy.dart';
 
-import 'features/services/screens/companies.dart';
+import 'features/services/screens/items.dart';
 import 'features/settings/screens/settings.dart';
 import 'shared/animations/slide_page_transition.dart';
 import 'shared/widgets/bottom_navigation_bar.dart';
@@ -92,17 +92,19 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               pageBuilder: (context, state) =>
                   const NoTransitionPage(child: ServicesScreen())),
           GoRoute(
+              path: const ServiceCategoryUpsert().route,
+              pageBuilder: (context, state) =>
+                  const MaterialPage(child: ServiceCategoryUpsert())),
+          GoRoute(
               path: ServiceUpsert().route,
               pageBuilder: (context, state) =>
                   MaterialPage(child: ServiceUpsert())),
           GoRoute(
               path: const ServicesCompaniesScreen().route,
-              pageBuilder: (context, state) =>
-                  const MaterialPage(child: ServicesCompaniesScreen())),
-          GoRoute(
-              path: const ServicesOtherScreen().route,
-              pageBuilder: (context, state) =>
-                  const MaterialPage(child: ServicesOtherScreen())),
+              name: const ServicesCompaniesScreen().route,
+              pageBuilder: (context, state) => MaterialPage(
+                  child: ServicesCompaniesScreen(
+                      id: state.uri.queryParameters['category_id']))),
           GoRoute(
               name: const ServiceDetailsScreen().route,
               path: const ServiceDetailsScreen().route,

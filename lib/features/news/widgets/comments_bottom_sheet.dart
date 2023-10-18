@@ -33,8 +33,20 @@ class CommentsBottomSheet extends HookWidget {
   Widget build(BuildContext context) {
     final selectedForReplyComment = useState<String?>(null);
     final ProfileController profileController = Get.find<ProfileController>();
+    final commentIdForEdit = usePreservedState('commentIdForEdit', context);
     final formState =
         usePreservedState('comment-form-state', context, {'comment': ''});
+    void onCommentEdit(String id) {
+      commentIdForEdit.value = id;
+      final selectedForEditComment =
+          comments.firstWhere((element) => element['id'].toString() == id);
+      _formKey.currentState
+          ?.patchValue({'comment': selectedForEditComment['message']});
+      selectedForReplyComment.value =
+          selectedForEditComment['reply_comment_id'] is int
+              ? selectedForEditComment['reply_comment_id'].toString()
+              : null;
+    }
 
     useEffect(() {
       Timer timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
@@ -76,6 +88,7 @@ class CommentsBottomSheet extends HookWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Comment(
+                      onEdit: onCommentEdit,
                       comments: comments,
                       setSelectedForReplyComment: (id) {
                         selectedForReplyComment.value = id;
@@ -189,52 +202,69 @@ class CommentsBottomSheet extends HookWidget {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 4),
-                        child: GestureDetector(
+                      if (commentIdForEdit.value != null) ...[
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4),
                           child: IconButton(
                               onPressed: () async {
-                                print(formState.value);
-                                if (_formKey.currentState!.value['comment']
-                                        ?.length <
-                                    2) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                    showCloseIcon: true,
-                                    content: Text(
-                                        'Комментарий должен быть не менее 5 символов'),
-                                    backgroundColor: Colors.red,
-                                  ));
-                                  return;
-                                }
-                                if (_formKey.currentState!.saveAndValidate()) {
-                                  dynamic comment = {
-                                    'new_id': newId,
-                                    'message': formState.value['comment'],
-                                    'created_by': int.parse(
-                                        profileController.id.value as String)
-                                  };
-
-                                  if (selectedForReplyComment.value != null) {
-                                    comment['reply_comment_id'] =
-                                        selectedForReplyComment.value;
-                                  }
-                                  await supabase
-                                      .from('news_comments')
-                                      .insert(comment);
-                                  setComments!(
-                                      await fetchCommentsForNew(newId));
-                                  _formKey.currentState!.reset();
-                                  selectedForReplyComment.value = null;
-                                  if (!context.mounted) return;
-                                  FocusScope.of(context).unfocus();
-                                }
+                                _formKey.currentState!.reset();
+                                selectedForReplyComment.value = null;
+                                commentIdForEdit.value = null;
+                                if (!context.mounted) return;
+                                FocusScope.of(context).unfocus();
                               },
                               icon: Icon(
-                                Icons.send,
+                                Icons.cancel_schedule_send_rounded,
                                 color: Colors.grey.shade400,
                               )),
                         ),
+                      ],
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 4),
+                        child: IconButton(
+                            onPressed: () async {
+                              if (_formKey
+                                      .currentState!.value['comment']?.length <
+                                  2) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  showCloseIcon: true,
+                                  content: Text(
+                                      'Комментарий должен быть не менее 5 символов'),
+                                  backgroundColor: Colors.red,
+                                ));
+                                return;
+                              }
+                              if (_formKey.currentState!.saveAndValidate()) {
+                                dynamic comment = {
+                                  'new_id': newId,
+                                  'message': formState.value['comment'],
+                                  'created_by': int.parse(
+                                      profileController.id.value as String)
+                                };
+                                if (commentIdForEdit.value != null) {
+                                  comment['id'] = commentIdForEdit.value;
+                                }
+
+                                comment['reply_comment_id'] =
+                                    selectedForReplyComment.value;
+                                await supabase
+                                    .from('news_comments')
+                                    .upsert(comment);
+                                setComments!(await fetchCommentsForNew(newId));
+                                _formKey.currentState!.reset();
+                                selectedForReplyComment.value = null;
+                                commentIdForEdit.value = null;
+                                if (!context.mounted) return;
+                                FocusScope.of(context).unfocus();
+                              }
+                            },
+                            icon: Icon(
+                              commentIdForEdit.value != null
+                                  ? Icons.done_rounded
+                                  : Icons.send_rounded,
+                              color: Colors.grey.shade400,
+                            )),
                       )
                     ],
                   )
@@ -275,6 +305,7 @@ class Comment extends HookWidget {
     required this.setComments,
     required this.comments,
     required this.avatar,
+    required this.onEdit,
     required this.createdAt,
     this.replyCommentId,
   });
@@ -290,6 +321,7 @@ class Comment extends HookWidget {
   final Function(String? id) setSelectedForReplyComment;
   final String avatar;
   final String createdAt;
+  final void Function(String id) onEdit;
   final int? replyCommentId;
 
   @override
@@ -357,7 +389,16 @@ class Comment extends HookWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  isLiked.value = !isLiked.value;
+                  if (profileController.id.value != null) {
+                    isLiked.value = !isLiked.value;
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Войдите в аккаунт'),
+                      backgroundColor: Colors.red,
+                      padding: EdgeInsets.all(20),
+                      duration: Duration(seconds: 2),
+                    ));
+                  }
                 },
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -453,6 +494,15 @@ class Comment extends HookWidget {
                   //   style: TextStyle(color: Colors.grey.shade600),
                   // ),
                   if (nick == profileController.nick.value) ...[
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          onEdit(id);
+                        },
+                        child: Text('Редактировать',
+                            style: TextStyle(color: Colors.grey.shade600))),
                     const SizedBox(
                       width: 20,
                     ),

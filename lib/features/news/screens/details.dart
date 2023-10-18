@@ -17,7 +17,7 @@ Future<dynamic> fetchCommentsForNew(String? newId) async {
           'id, created_at, created_by: created_by(nick, id, avatar), message, new_id, reply_comment_id, likes')
       .eq('new_id', newId)
       .order('created_at', ascending: true);
-  print(res);
+  (res);
   return res;
 }
 
@@ -181,9 +181,11 @@ class NewsDetailsScreen extends HookWidget {
                                       return CommentsBottomSheet(
                                         setState: setState,
                                         setComments: (value) {
-                                          setState(() {
-                                            comments.value = value;
-                                          });
+                                          if (context.mounted) {
+                                            setState(() {
+                                              comments.value = value;
+                                            });
+                                          }
                                         },
                                         newId: id,
                                         comments: comments.value,

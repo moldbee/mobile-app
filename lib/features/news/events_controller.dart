@@ -30,6 +30,4 @@ class EventsController extends GetxController {
     await supabase.from('events').delete().eq('id', id);
     await fetchEvents();
   }
-
-
 }

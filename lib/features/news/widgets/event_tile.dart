@@ -29,6 +29,7 @@ class EventTile extends StatelessWidget {
     final Uri urlToPlace = Uri.parse(placeUrl);
     final Uri urlToInfo = Uri.parse(infoUrl);
 
+    // ignore: no_leading_underscores_for_local_identifiers
     Future<void> _launchUrl(url) async {
       if (!await launchUrl(url)) {
         throw Exception('Could not launch $url');

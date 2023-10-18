@@ -45,11 +45,11 @@ class ProfileSignInScreen extends HookWidget {
           context.go(ProfileScreen().route);
         }
       } catch (e) {
+        // ignore: avoid_print
         print('Error: $e');
 
         if (e is AuthException) {
           // Check the type of exception and handle it.
-          print(e.statusCode == '400');
           if (e.statusCode == '400') {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:smart_city/features/news/events_controller.dart';
 import 'package:smart_city/features/news/news_controller.dart';
 import 'package:smart_city/features/profile/controller.dart';
+import 'package:smart_city/features/services/controller.dart';
 import 'package:smart_city/routes.dart';
 import 'package:smart_city/shared/config/pallete.dart';
 import 'package:smart_city/shared/config/theme.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -23,6 +26,7 @@ void main() async {
   Get.put(ProfileController());
   Get.put(NewsController());
   Get.put(EventsController());
+  Get.put(ServicesController());
   runApp(const MyApp());
 }
 
@@ -39,7 +43,7 @@ class MyApp extends StatelessWidget {
         systemNavigationBarDividerColor: blackColor,
         systemNavigationBarIconBrightness: Brightness.dark));
     return SafeArea(
-      child: MaterialApp.router(  
+      child: MaterialApp.router(
         scrollBehavior: const MaterialScrollBehavior(),
         routerConfig: router,
         theme: themeData,
@@ -49,10 +53,7 @@ class MyApp extends StatelessWidget {
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate
         ],
-        supportedLocales: const [
-          Locale('ru'), 
-          Locale('ro')
-          ],
+        supportedLocales: const [Locale('ru'), Locale('ro')],
       ),
     );
   }

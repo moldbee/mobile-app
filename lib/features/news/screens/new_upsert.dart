@@ -29,7 +29,8 @@ Future<String?> uploadImage(ValueNotifier pickedImage) async {
 class NewsUpsertScreen extends HookWidget {
   NewsUpsertScreen({Key? key, this.id}) : super(key: key);
   final String route = '/news/upsert';
-  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
+  static final GlobalKey<FormBuilderState> _formKey =
+      GlobalKey<FormBuilderState>();
   final double itemsSpacing = 30;
   final ImagePicker _imagePicker = ImagePicker();
   final String? id;
@@ -100,6 +101,7 @@ class NewsUpsertScreen extends HookWidget {
           context.go(const NewsScreen().route);
         }
       } catch (e) {
+        // ignore: avoid_print
         print(e);
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Ошибка при создании новости'),
