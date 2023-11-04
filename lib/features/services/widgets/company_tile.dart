@@ -4,7 +4,7 @@ class CompanyTile extends StatelessWidget {
   const CompanyTile({Key? key, required this.logoUrl, required this.title})
       : super(key: key);
 
-  final String logoUrl;
+  final dynamic logoUrl;
   final String title;
 
   @override
@@ -14,16 +14,23 @@ class CompanyTile extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Image.asset(
-          logoUrl,
-          width: 150,
-          height: 70,
-        ),
+        if (logoUrl is int) ...[
+          Icon(
+            IconData(logoUrl, fontFamily: 'MaterialIcons'),
+            size: 40,
+            color: Colors.grey.shade400,
+          ),
+        ] else ...[
+          Image.network(
+            logoUrl!,
+            height: 40,
+          ),
+        ],
         Padding(
           padding: const EdgeInsets.only(top: 10),
           child: Text(
             title,
-            style: TextStyle(fontSize: 18, color: Colors.grey.shade700),
+            style: TextStyle(color: Colors.grey.shade700),
           ),
         ),
       ],

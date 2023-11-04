@@ -41,12 +41,6 @@ class NewsDetailsScreen extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_rounded),
-          onPressed: () {
-            context.pop();
-          },
-        ),
         title: const Text('Статья'),
         actions: [
           IconButton(

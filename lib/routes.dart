@@ -96,23 +96,25 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               pageBuilder: (context, state) =>
                   const MaterialPage(child: ServiceCategoryUpsert())),
           GoRoute(
+              name: ServiceUpsert().route,
               path: ServiceUpsert().route,
-              pageBuilder: (context, state) =>
-                  MaterialPage(child: ServiceUpsert())),
+              pageBuilder: (context, state) => MaterialPage(
+                      child: ServiceUpsert(
+                    categoryId: state.uri.queryParameters['categoryId'],
+                  ))),
           GoRoute(
               path: const ServicesCompaniesScreen().route,
               name: const ServicesCompaniesScreen().route,
               pageBuilder: (context, state) => MaterialPage(
                   child: ServicesCompaniesScreen(
-                      id: state.uri.queryParameters['category_id']))),
+                      categoryId: state.uri.queryParameters['categoryId']))),
           GoRoute(
               name: const ServiceDetailsScreen().route,
               path: const ServiceDetailsScreen().route,
               pageBuilder: (context, state) {
                 return MaterialPage(
                     child: ServiceDetailsScreen(
-                  logoUrl: state.uri.queryParameters['logoUrl'],
-                  title: state.uri.queryParameters['title'] as String,
+                  serviceId: state.uri.queryParameters['serviceId'],
                 ));
               }),
         ],

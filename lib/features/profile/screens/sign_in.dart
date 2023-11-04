@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/profile/screens/profile.dart';
 import 'package:smart_city/features/profile/screens/sign_up.dart';
@@ -130,45 +131,82 @@ class ProfileSignInScreen extends HookWidget {
                     children: [
                       Expanded(
                         child: FilledButton.icon(
-                          onPressed: () {},
+                          onPressed: () async {
+                            /// TODO: update the Web client ID with your own.
+                            ///
+                            /// Web Client ID that you registered with Google Cloud.
+                            const webClientId =
+                                'my-web.apps.googleusercontent.com';
+
+                            /// TODO: update the iOS client ID with your own.
+                            ///
+                            /// iOS Client ID that you registered with Google Cloud.
+                            const iosClientId =
+                                'my-ios.apps.googleusercontent.com';
+
+                            // Google sign in on Android will work without providing the Android
+                            // Client ID registered on Google Cloud.
+
+                            final GoogleSignIn googleSignIn = GoogleSignIn(
+                              clientId: iosClientId,
+                              serverClientId: webClientId,
+                            );
+                            final googleUser = await googleSignIn.signIn();
+                            final googleAuth = await googleUser!.authentication;
+                            final accessToken = googleAuth.accessToken;
+                            final idToken = googleAuth.idToken;
+
+                            if (accessToken == null) {
+                              throw 'No Access Token found.';
+                            }
+                            if (idToken == null) {
+                              throw 'No ID Token found.';
+                            }
+
+                            await supabase.auth.signInWithIdToken(
+                              provider: Provider.google,
+                              idToken: idToken,
+                              accessToken: accessToken,
+                            );
+                          },
                           style: ButtonStyle(
                               backgroundColor: MaterialStatePropertyAll(
                                   Colors.grey.shade800)),
                           icon: const Icon(
-                            FontAwesomeIcons.facebook,
+                            FontAwesomeIcons.google,
                             color: Colors.white,
                           ),
                           label: const Text(
-                            'Войти через Facebook',
+                            'Войти через Google',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: FilledButton.icon(
-                            onPressed: () {},
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStatePropertyAll(
-                                    Colors.grey.shade800)),
-                            icon: const Icon(
-                              FontAwesomeIcons.instagram,
-                              color: Colors.white,
-                            ),
-                            label: const Text(
-                              'Войти через Facebook',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 8),
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //         child: FilledButton.icon(
+                  //           onPressed: () {},
+                  //           style: ButtonStyle(
+                  //               backgroundColor: MaterialStatePropertyAll(
+                  //                   Colors.grey.shade800)),
+                  //           icon: const Icon(
+                  //             FontAwesomeIcons.instagram,
+                  //             color: Colors.white,
+                  //           ),
+                  //           label: const Text(
+                  //             'Войти через Facebook',
+                  //             style: TextStyle(color: Colors.white),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // )
                 ],
               ),
             ),

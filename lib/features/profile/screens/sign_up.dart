@@ -205,29 +205,29 @@ class ProfileSignUpScreen extends HookWidget {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: FilledButton.icon(
-                            onPressed: () {},
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStatePropertyAll(
-                                    Colors.grey.shade800)),
-                            icon: const Icon(
-                              FontAwesomeIcons.instagram,
-                              color: Colors.white,
-                            ),
-                            label: const Text(
-                              'Войти через Facebook',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 8),
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //         child: FilledButton.icon(
+                  //           onPressed: () {},
+                  //           style: ButtonStyle(
+                  //               backgroundColor: MaterialStatePropertyAll(
+                  //                   Colors.grey.shade800)),
+                  //           icon: const Icon(
+                  //             FontAwesomeIcons.instagram,
+                  //             color: Colors.white,
+                  //           ),
+                  //           label: const Text(
+                  //             'Войти через Facebook',
+                  //             style: TextStyle(color: Colors.white),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // )
                 ],
               ),
             ),

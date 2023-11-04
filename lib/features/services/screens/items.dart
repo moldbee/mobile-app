@@ -8,16 +8,16 @@ import 'package:smart_city/features/services/widgets/company_tile.dart';
 import 'package:smart_city/shared/widgets/delete_confirm.dart';
 
 class ServicesCompaniesScreen extends StatelessWidget {
-  const ServicesCompaniesScreen({Key? key, this.id}) : super(key: key);
+  const ServicesCompaniesScreen({Key? key, this.categoryId}) : super(key: key);
   final String route = '/services/companies';
 
-  final String? id;
+  final String? categoryId;
 
   @override
   Widget build(BuildContext context) {
     final servicesController = Get.find<ServicesController>();
-    final category = servicesController.categories
-        .firstWhere((element) => element['id'].toString() == id.toString());
+    final category = servicesController.categories.firstWhere(
+        (element) => element['id'].toString() == categoryId.toString());
     return Scaffold(
       appBar: AppBar(
         title: Text(category['title_ru']),
@@ -28,16 +28,16 @@ class ServicesCompaniesScreen extends StatelessWidget {
                     context: context,
                     builder: (context) => DeleteConfirmAlert(
                           onDelete: () async {
-                            await servicesController.deleteCategory(id!);
+                            await servicesController
+                                .deleteCategory(categoryId!);
                           },
                         ));
               },
               icon: const Icon(Icons.delete_rounded)),
           IconButton(
             onPressed: () {
-              context.push(ServiceUpsert(
-                categoryId: id,
-              ).route);
+              context.pushNamed(ServiceUpsert().route,
+                  queryParameters: {'categoryId': categoryId});
             },
             icon: const Icon(
               Icons.add_rounded,
@@ -47,20 +47,20 @@ class ServicesCompaniesScreen extends StatelessWidget {
         ],
       ),
       body: GridView.count(
-          childAspectRatio: 4 / 3,
+          childAspectRatio: 5 / 3,
           crossAxisCount: 2,
-          children:
-              servicesController.getServicesByCategory(id!).map((company) {
+          children: servicesController
+              .getServicesByCategory(categoryId!)
+              .map((company) {
             return GestureDetector(
               onTap: () {
                 context.pushNamed(const ServiceDetailsScreen().route,
                     queryParameters: {
-                      'logoUrl': company['logo'],
-                      'title': company['title_ru']
+                      'serviceId': company['id'].toString(),
                     });
               },
               child: CompanyTile(
-                logoUrl: company['logo'],
+                logoUrl: company['logo'] ?? category['icon'],
                 title: company['title_ru'],
               ),
             );

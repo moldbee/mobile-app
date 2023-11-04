@@ -34,7 +34,7 @@ class ServicesScreen extends HookWidget {
                 onTap: () {
                   context.pushNamed(const ServicesCompaniesScreen().route,
                       queryParameters: {
-                        'category_id': element['id'].toString()
+                        'categoryId': element['id'].toString()
                       });
                 },
                 child: ServiceTile(

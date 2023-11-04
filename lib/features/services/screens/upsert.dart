@@ -1,11 +1,17 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:smart_city/features/services/controller.dart';
+import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/hooks/use_preserved_state.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';
+import 'package:uuid/uuid.dart';
 
 final iconsByStatus = {
   'info': Icons.info_rounded,
@@ -32,7 +38,10 @@ class ServiceUpsert extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final pickedImage = usePreservedState('picked-service-image', context);
-    final aditionalFields = usePreservedState('info-fields', context, []);
+    final serviceInfos = usePreservedState('info-fields', context, []);
+    final servicesController = Get.find<ServicesController>();
+    final serviceInfosLastLength = usePreservedState(
+        'info-fields-last-length', context, serviceInfos.value.length);
     final scrollController = useScrollController();
     final hasSelectedImage = pickedImage.value is XFile;
     final formState =
@@ -41,7 +50,7 @@ class ServiceUpsert extends HookWidget {
       'title_ru': 'Макдоналдс',
       'phone': '+373 79 123 456',
       'category': categoryId,
-      'messageLink': 'https://t.me/mcdonalds',
+      'message': 'https://t.me/mcdonalds',
       'website': 'https://mcdonalds.md',
       'place': 'https://maps.app.goo.gl/Mgh9XZyGeHrQ7GBBA',
       'description_ro':
@@ -49,6 +58,19 @@ class ServiceUpsert extends HookWidget {
       'description_ru':
           'Макдоналдс — американская корпорация, крупнейшая в мире сеть ресторанов быстрого питания. Штаб-квартира — в городе Окленд, штат Калифорния. В настоящее время входит в число 100 крупнейших корпораций США по версии журнала Fortune.',
     });
+
+    useEffect(() {
+      if (serviceInfos.value.length > serviceInfosLastLength.value) {
+        Timer(const Duration(milliseconds: 300), () {
+          scrollController.animateTo(scrollController.position.maxScrollExtent,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOut);
+        });
+      }
+
+      return null;
+    }, [serviceInfos.value]);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Добавление услуги'), actions: [
         IconButton(
@@ -58,7 +80,46 @@ class ServiceUpsert extends HookWidget {
               pickedImage.value = image;
             },
             icon: const Icon(Icons.attach_file_rounded)),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.done))
+        IconButton(
+            onPressed: () async {
+              try {
+                dynamic uploadedAvatarFileUrl;
+
+                if (hasSelectedImage) {
+                  try {
+                    final logoKeyInBucket = 'logo-${const Uuid().v4()}';
+                    await supabase.storage
+                        .from('services')
+                        .upload(logoKeyInBucket, File(pickedImage.value!.path));
+                    uploadedAvatarFileUrl = supabase.storage
+                        .from('services')
+                        .getPublicUrl(logoKeyInBucket);
+                  } catch (error) {
+                    printError(info: error.toString());
+                  }
+                }
+                final upsertedItem = await supabase.from('services').insert({
+                  ...formState.value,
+                  'logo': uploadedAvatarFileUrl,  
+                  'category': categoryId,
+                }).select();
+
+                await supabase.from('services_infos').insert(serviceInfos.value
+                    .map((item) => {
+                          'title_ru': item['title_ru'],
+                          'title_ro': item['title_ro'],
+                          'type': item['type'],
+                          'service': upsertedItem.first['id'],
+                        })
+                    .toList());
+                await servicesController.fetchServices();
+                if (!context.mounted) return;
+                context.pop();
+              } catch (e) {
+                printError(info: e.toString());
+              }
+            },
+            icon: const Icon(Icons.done))
       ]),
       body: FormBuilder(
           initialValue: formState.value,
@@ -89,7 +150,7 @@ class ServiceUpsert extends HookWidget {
               SizedBox(
                 height: itemsSpacing,
               ),
-              const TextInput(name: 'messageLink', title: 'Написать'),
+              const TextInput(name: 'message', title: 'Написать'),
               SizedBox(
                 height: itemsSpacing,
               ),
@@ -114,45 +175,79 @@ class ServiceUpsert extends HookWidget {
                 title: 'Описание (RU)',
                 minLines: 4,
               ),
-              if (!aditionalFields.value.isEmpty) ...[
+              if (!serviceInfos.value.isEmpty) ...[
                 SizedBox(
                   height: itemsSpacing,
                 ),
-                ...aditionalFields.value.asMap().entries.map((field) => Padding(
-                      padding: EdgeInsets.only(
-                          bottom: aditionalFields.value.length > 1 ? 20 : 0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              minLines: 1,
-                              maxLines: double.maxFinite.toInt(),
-                              decoration: InputDecoration(
-                                  labelText: field.value['title'],
-                                  prefixIcon: Icon(
-                                    iconsByStatus[field.value['status']],
-                                    color: iconColorByStatus[
-                                        field.value['status']],
-                                  )),
-                            ),
+                ...serviceInfos.value.asMap().entries.map((field) {
+                  final inputController = TextEditingController();
+                  inputController.value = const TextEditingValue(
+                      text: 'Deserunt minim id reprehenderit fugiat.');
+
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        bottom: serviceInfos.value.length > 1 ? 30 : 0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              TextField(
+                                controller: inputController,
+                                minLines: 1,
+                                onChanged: (value) {
+                                  serviceInfos.value[field.key]['title_ro'] =
+                                      value;
+                                },
+                                maxLines: double.maxFinite.toInt(),
+                                decoration: InputDecoration(
+                                    labelText: field.value['label'] + ' (RO)',
+                                    prefixIcon: Icon(
+                                      iconsByStatus[field.value['type']],
+                                      color: iconColorByStatus[
+                                          field.value['type']],
+                                    )),
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              TextField(
+                                controller: inputController,
+                                minLines: 1,
+                                onChanged: (value) {
+                                  serviceInfos.value[field.key]['title_ru'] =
+                                      value;
+                                },
+                                maxLines: double.maxFinite.toInt(),
+                                decoration: InputDecoration(
+                                    labelText: field.value['label'] + ' (RU)',
+                                    prefixIcon: Icon(
+                                      iconsByStatus[field.value['type']],
+                                      color: iconColorByStatus[
+                                          field.value['type']],
+                                    )),
+                              ),
+                            ],
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          GestureDetector(
-                            behavior: HitTestBehavior.translucent,
-                            onTap: () {
-                              aditionalFields.value = aditionalFields.value
-                                  .where((item) =>
-                                      item != aditionalFields.value[field.key])
-                                  .toList();
-                            },
-                            child: Icon(Icons.close_rounded,
-                                color: Colors.grey.shade400),
-                          ),
-                        ],
-                      ),
-                    )),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        GestureDetector(
+                          behavior: HitTestBehavior.translucent,
+                          onTap: () {
+                            serviceInfos.value = serviceInfos.value
+                                .where((item) =>
+                                    item != serviceInfos.value[field.key])
+                                .toList();
+                          },
+                          child: Icon(Icons.close_rounded,
+                              color: Colors.grey.shade400),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
               ],
               SizedBox(
                 height: itemsSpacing,
@@ -162,15 +257,14 @@ class ServiceUpsert extends HookWidget {
                 children: [
                   FilledButton(
                       onPressed: () {
-                        aditionalFields.value = [
-                          ...aditionalFields.value,
+                        serviceInfos.value = [
+                          ...serviceInfos.value,
                           {
-                            'status': 'info',
-                            'title': 'Информация',
+                            'id': const Uuid().v4(),
+                            'type': 'info',
+                            'label': 'Информация',
                           }
                         ];
-                        scrollController.jumpTo(
-                            scrollController.position.maxScrollExtent + 80);
                       },
                       style: ButtonStyle(
                           backgroundColor:
@@ -181,15 +275,13 @@ class ServiceUpsert extends HookWidget {
                       )),
                   FilledButton(
                       onPressed: () {
-                        aditionalFields.value = [
-                          ...aditionalFields.value,
+                        serviceInfos.value = [
+                          ...serviceInfos.value,
                           {
-                            'status': 'warning',
-                            'title': 'Предупреждение',
+                            'type': 'warning',
+                            'label': 'Предупреждение',
                           }
                         ];
-                        scrollController.jumpTo(
-                            scrollController.position.maxScrollExtent + 80);
                       },
                       style: ButtonStyle(
                           backgroundColor:
@@ -200,15 +292,13 @@ class ServiceUpsert extends HookWidget {
                       )),
                   FilledButton(
                       onPressed: () {
-                        aditionalFields.value = [
-                          ...aditionalFields.value,
+                        serviceInfos.value = [
+                          ...serviceInfos.value,
                           {
-                            'status': 'discount',
-                            'title': 'Скидка',
+                            'type': 'discount',
+                            'label': 'Скидка',
                           }
                         ];
-                        scrollController.jumpTo(
-                            scrollController.position.maxScrollExtent + 80);
                       },
                       style: ButtonStyle(
                           backgroundColor:
@@ -219,15 +309,13 @@ class ServiceUpsert extends HookWidget {
                       )),
                   FilledButton(
                       onPressed: () {
-                        aditionalFields.value = [
-                          ...aditionalFields.value,
+                        serviceInfos.value = [
+                          ...serviceInfos.value,
                           {
-                            'status': 'price',
-                            'title': 'Цены',
+                            'type': 'price',
+                            'label': 'Цены',
                           }
                         ];
-                        scrollController.jumpTo(
-                            scrollController.position.maxScrollExtent + 80);
                       },
                       style: ButtonStyle(
                           backgroundColor:
