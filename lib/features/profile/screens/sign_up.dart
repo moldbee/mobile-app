@@ -198,7 +198,7 @@ class ProfileSignUpScreen extends HookWidget {
                             color: Colors.white,
                           ),
                           label: const Text(
-                            'Войти через Facebook',
+                            'Войти через Google',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),

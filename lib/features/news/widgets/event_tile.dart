@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 class EventTile extends StatelessWidget {
   const EventTile({
     Key? key,
+    required this.paid,
     required this.date,
     required this.title,
     required this.place,
@@ -21,6 +22,7 @@ class EventTile extends StatelessWidget {
   final String title;
   final String place;
   final String placeUrl;
+  final bool? paid;
   final String emoji;
   final String infoUrl;
 
@@ -38,89 +40,101 @@ class EventTile extends StatelessWidget {
 
     final locale = Localizations.localeOf(context).languageCode;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text('$emoji  $title',
-                    style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500))
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 12),
-              child: Row(
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 6),
-                    child: Icon(
-                      Icons.calendar_month_rounded,
-                      color: Colors.grey.shade400,
-                    ),
-                  ),
-                  Text(
-                    DateFormat(fullDateFormat, locale)
-                        .format(DateTime.parse(date)),
-                    style: TextStyle(color: Colors.grey.shade600),
-                  )
+                  Text('$emoji  $title',
+                      style: TextStyle(
+                          color: Colors.grey.shade800,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500))
                 ],
               ),
-            ),
-            GestureDetector(
-              onTap: () {
-                _launchUrl(urlToPlace);
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10),
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
                 child: Row(
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 6),
                       child: Icon(
-                        Icons.place_rounded,
+                        Icons.calendar_month_rounded,
                         color: Colors.grey.shade400,
                       ),
                     ),
-                    Text(place, style: TextStyle(color: Colors.grey.shade600))
+                    Text(
+                      DateFormat(fullDateFormat, locale)
+                          .format(DateTime.parse(date)),
+                      style: TextStyle(color: Colors.grey.shade600),
+                    )
                   ],
                 ),
               ),
-            )
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-                onPressed: () {
+              GestureDetector(
+                onTap: () {
+                  _launchUrl(urlToPlace);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 6),
+                        child: Icon(
+                          Icons.place_rounded,
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
+                      Text(place, style: TextStyle(color: Colors.grey.shade600))
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+          Wrap(
+            direction: Axis.vertical,
+            spacing: 10,
+            children: [
+              GestureDetector(
+                child: Icon(
+                  Icons.edit,
+                  size: 23,
+                  color: Colors.grey.shade400.withOpacity(0.9),
+                ),
+                onTap: () {
                   context.pushNamed(EventsUpsertScreen().route,
                       queryParameters: {'id': id});
                 },
-                icon: Icon(
-                  Icons.edit,
-                  size: 25,
-                  color: Colors.grey.shade400.withOpacity(0.9),
-                )),
-            IconButton(
-                onPressed: () {
+              ),
+              GestureDetector(
+                onTap: () {
                   _launchUrl(urlToInfo);
                 },
-                icon: Icon(
+                child: Icon(
                   Icons.info,
-                  size: 25,
+                  size: 23,
                   color: Colors.grey.shade400.withOpacity(0.7),
-                ))
-          ],
-        )
-      ],
+                ),
+              ),
+              if (paid == true) ...[
+                const Icon(
+                  Icons.attach_money_rounded,
+                  size: 23,
+                )
+              ]
+            ],
+          )
+        ],
+      ),
     );
   }
 }

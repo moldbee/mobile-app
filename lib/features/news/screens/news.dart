@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:smart_city/features/news/events_controller.dart';
 import 'package:smart_city/features/news/news_controller.dart';
 import 'package:smart_city/features/news/screens/event_upsert.dart';
@@ -19,6 +20,7 @@ class NewsScreen extends HookWidget {
     final selectedTab = usePreservedState('news-tab', context, 0);
     final NewsController newsController = Get.find<NewsController>();
     final EventsController eventsController = Get.find<EventsController>();
+    ItemScrollController eventsScrollController = ItemScrollController();
 
     return DefaultTabController(
       length: 2,
@@ -87,13 +89,15 @@ class NewsScreen extends HookWidget {
 
                   return;
                 },
-                child: ListView.separated(
+                child: ScrollablePositionedList.builder(
+                    itemScrollController: eventsScrollController,
                     padding: const EdgeInsets.symmetric(
                         vertical: 16, horizontal: 10),
                     itemBuilder: (context, index) {
-                      final event = eventsController.events[index];
+                      final event = eventsController.sortedByTimeEvents[index];
 
                       return EventTile(
+                          paid: event['paid'],
                           id: event['id'].toString(),
                           date: event['date'],
                           emoji: event['emoji'],
@@ -102,10 +106,7 @@ class NewsScreen extends HookWidget {
                           infoUrl: event['info_url'],
                           placeUrl: event['place_url']);
                     },
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(height: 20);
-                    },
-                    itemCount: eventsController.events.length),
+                    itemCount: eventsController.sortedByTimeEvents.length),
               )
             ]);
           })),

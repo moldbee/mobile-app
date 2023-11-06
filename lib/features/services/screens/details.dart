@@ -139,47 +139,40 @@ class ServiceDetailsScreen extends StatelessWidget {
                     ),
                   ],
                 )),
-            // SingleChildScrollView(
-            //   child: SizedBox(
-            //     height: 40,
-            //     child: ListView(
-            //       scrollDirection: Axis.horizontal,
-            //       children: [
-            //         const SizedBox(
-            //           width: 15,
-            //         ),
-            //         OutlinedButton.icon(
-            //             icon: const Icon(Icons.percent_rounded),
-            //             onPressed: () {},
-            //             label: const Text('Добавить скидку')),
-            //         const SizedBox(
-            //           width: 10,
-            //         ),
-            //         OutlinedButton.icon(
-            //             icon: const Icon(Icons.attach_money_rounded),
-            //             onPressed: () {},
-            //             label: const Text('Добавить цену')),
-            //         const SizedBox(
-            //           width: 10,
-            //         ),
-            //         OutlinedButton.icon(
-            //             icon: const Icon(Icons.info_outline_rounded),
-            //             onPressed: () {},
-            //             label: const Text('Добавить информацию')),
-            //         const SizedBox(
-            //           width: 10,
-            //         ),
-            //         OutlinedButton.icon(
-            //             icon: const Icon(Icons.warning_amber_rounded),
-            //             onPressed: () {},
-            //             label: const Text('Добавить предупреждение')),
-            //         const SizedBox(
-            //           width: 10,
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // )
+            SingleChildScrollView(
+              child: SizedBox(
+                height: 40,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    OutlinedButton.icon(
+                        icon: const Icon(Icons.percent_rounded),
+                        onPressed: () {},
+                        label: const Text('Добавить скидку')),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    OutlinedButton.icon(
+                        icon: const Icon(Icons.info_outline_rounded),
+                        onPressed: () {},
+                        label: const Text('Добавить информацию')),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    OutlinedButton.icon(
+                        icon: const Icon(Icons.warning_amber_rounded),
+                        onPressed: () {},
+                        label: const Text('Добавить предупреждение')),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),

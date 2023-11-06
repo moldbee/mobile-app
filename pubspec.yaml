@@ -64,6 +64,7 @@ dependencies:
   flutter_iconpicker: ^3.2.4
   shimmer: ^3.0.0
   google_sign_in: ^6.1.5
+  scrollable_positioned_list: ^0.3.8
 
 dev_dependencies:
   flutter_test:
@@ -82,20 +83,9 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter_launcher_icons:
-  android: 'launcher_icon'
+  android: true
   ios: true
   image_path: 'assets/app_icon.png'
-  min_sdk_android: 21 # android min sdk min:16, default 21
-  web:
-    generate: true
-    image_path: 'assets/app_icon.png'
-  windows:
-    generate: true
-    image_path: 'assets/app_icon.png'
-    icon_size: 48 # min:48, max:256, default: 48
-  macos:
-    generate: true
-    image_path: 'assets/app_icon.png'
 flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

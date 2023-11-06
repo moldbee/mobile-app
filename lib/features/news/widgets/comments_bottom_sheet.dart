@@ -5,7 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smart_city/features/news/screens/details.dart';
+import 'package:smart_city/features/news/news_controller.dart';
 import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
 import 'package:smart_city/main.dart';
@@ -31,6 +31,7 @@ class CommentsBottomSheet extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final newsController = Get.find<NewsController>();
     final selectedForReplyComment = useState<String?>(null);
     final ProfileController profileController = Get.find<ProfileController>();
     final commentIdForEdit = usePreservedState('commentIdForEdit', context);
@@ -51,7 +52,7 @@ class CommentsBottomSheet extends HookWidget {
     useEffect(() {
       Timer timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
         if (newId != null) {
-          setComments!(await fetchCommentsForNew(newId));
+          setComments!(await newsController.fetchCommentsForNew(newId));
         }
       });
       return () {
@@ -99,7 +100,6 @@ class CommentsBottomSheet extends HookWidget {
                       nick: comment['created_by']['nick'],
                       avatar: comment['created_by']['avatar'],
                       createdAt: comment['created_at'],
-                      likes: comment['likes'].toString(),
                       replyCommentId: comment['reply_comment_id'],
                       message: comment['message'],
                       onReply: (id) {
@@ -251,7 +251,8 @@ class CommentsBottomSheet extends HookWidget {
                                 await supabase
                                     .from('news_comments')
                                     .upsert(comment);
-                                setComments!(await fetchCommentsForNew(newId));
+                                setComments!(await newsController
+                                    .fetchCommentsForNew(newId));
                                 _formKey.currentState!.reset();
                                 selectedForReplyComment.value = null;
                                 commentIdForEdit.value = null;
@@ -298,7 +299,6 @@ class Comment extends HookWidget {
     required this.onReply,
     required this.message,
     required this.setSelectedForReplyComment,
-    required this.likes,
     required this.id,
     required this.nick,
     required this.newId,
@@ -312,7 +312,6 @@ class Comment extends HookWidget {
 
   final Function(String id) onReply;
   final String message;
-  final String likes;
   final List<dynamic>? comments;
   final Function setComments;
   final String id;
@@ -327,7 +326,23 @@ class Comment extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final isLiked = useState(false);
+    final likes = useState('0');
     final profileController = Get.find<ProfileController>();
+    final newsController = Get.find<NewsController>();
+
+    Future<void> fetchLikesInfo() async {
+      newsController
+          .getLikesForComment(id)
+          .then((value) => likes.value = value.count.toString());
+      newsController
+          .getHasLiked(id, profileController.id.value)
+          .then((value) => isLiked.value = value);
+    }
+
+    useEffect(() {
+      fetchLikesInfo();
+      return null;
+    }, []);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
@@ -388,9 +403,11 @@ class Comment extends HookWidget {
                 ],
               ),
               GestureDetector(
-                onTap: () {
+                onTap: () async {
                   if (profileController.id.value != null) {
-                    isLiked.value = !isLiked.value;
+                    await newsController.toggleLike(
+                        id, profileController.id.value);
+                    await fetchLikesInfo();
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('Войдите в аккаунт'),
@@ -406,7 +423,7 @@ class Comment extends HookWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 3),
                       child: Text(
-                        likes,
+                        likes.value,
                         style: TextStyle(
                             fontSize: 16,
                             color: isLiked.value
@@ -514,11 +531,15 @@ class Comment extends HookWidget {
                                   disableDoublePop: true,
                                   onDelete: () async {
                                     await supabase
+                                        .from('news_comments_likes')
+                                        .delete()
+                                        .eq('comment', id);
+                                    await supabase
                                         .from('news_comments')
                                         .delete()
                                         .eq('id', id);
-                                    setComments(
-                                        await fetchCommentsForNew(newId));
+                                    setComments(await newsController
+                                        .fetchCommentsForNew(newId));
                                   }));
                         },
                         child: Text('Удалить',

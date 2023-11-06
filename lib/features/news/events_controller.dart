@@ -11,6 +11,14 @@ class EventsController extends GetxController {
     fetchEvents();
   }
 
+  List<dynamic> get sortedByTimeEvents {
+    final filteredEvents = events.toList().where(
+        (element) => DateTime.parse(element['date']).isAfter(DateTime.now()));
+    return filteredEvents.toList()
+      ..sort((a, b) =>
+          DateTime.parse(a['date']).compareTo(DateTime.parse(b['date'])));
+  }
+
   Future<dynamic> fetchEvents() async {
     final events = await supabase.from('events').select();
     this.events.value = events;

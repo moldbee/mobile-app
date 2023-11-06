@@ -7,19 +7,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:smart_city/features/news/news_controller.dart';
 import 'package:smart_city/features/news/screens/new_upsert.dart';
 import 'package:smart_city/features/news/widgets/comments_bottom_sheet.dart';
-import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/widgets/delete_confirm.dart';
-
-Future<dynamic> fetchCommentsForNew(String? newId) async {
-  final res = await supabase
-      .from('news_comments')
-      .select(
-          'id, created_at, created_by: created_by(nick, id, avatar), message, new_id, reply_comment_id, likes')
-      .eq('new_id', newId)
-      .order('created_at', ascending: true);
-  (res);
-  return res;
-}
 
 class NewsDetailsScreen extends HookWidget {
   const NewsDetailsScreen({Key? key, this.id}) : super(key: key);
@@ -34,7 +22,8 @@ class NewsDetailsScreen extends HookWidget {
     });
     final comments = useState([]);
     useEffect(() {
-      fetchCommentsForNew(newData['id'].toString())
+      newsController
+          .fetchCommentsForNew(newData['id'].toString())
           .then((value) => comments.value = value);
       return null;
     }, []);
