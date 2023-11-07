@@ -61,6 +61,7 @@ class NewsDetailsScreen extends HookWidget {
         ],
       ),
       body: SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
         child: SizedBox(
           width: double.maxFinite,
           child: Column(

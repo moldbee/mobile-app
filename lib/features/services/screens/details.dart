@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/services/controller.dart';
+import 'package:smart_city/features/services/screens/alert_upsert.dart';
+import 'package:smart_city/features/services/screens/discount_upsert.dart';
+import 'package:smart_city/features/services/screens/info_upsert.dart';
 import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/helpers/show_delete_confirm.dart';
+import 'package:smart_city/shared/utils/formatter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ServiceDetailsScreen extends StatelessWidget {
+class ServiceDetailsScreen extends HookWidget {
   const ServiceDetailsScreen({Key? key, this.serviceId}) : super(key: key);
   final String route = '/service/details';
 
@@ -15,23 +20,16 @@ class ServiceDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final servicesController = Get.find<ServicesController>();
-
+    final discounts =
+        servicesController.getDiscountsForService(serviceId as String);
+    final alerts = servicesController.getAlertsForService(serviceId as String);
+    final infos = servicesController.getInfosForService(serviceId as String);
     final selectedService = servicesController.services.firstWhere(
         (element) => element['id'].toString() == serviceId.toString());
-    // final serviceCategory = servicesController.categories.firstWhere(
-    //     (element) =>
-    //         element['id'].toString() == selectedService['category'].toString());
-
     return Scaffold(
       appBar: AppBar(
-        centerTitle: false,
-        elevation: 1,
-        iconTheme: IconThemeData(color: Colors.grey.shade800),
-        backgroundColor: Colors.grey.shade200,
         title: Text(
           selectedService['title_ru'] as String,
-          style: TextStyle(
-              color: Colors.grey.shade800, fontWeight: FontWeight.w600),
         ),
         actions: [
           IconButton(
@@ -54,10 +52,10 @@ class ServiceDetailsScreen extends StatelessWidget {
           children: [
             Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     if (selectedService['logo'] != null) ...[
                       const SizedBox(
@@ -72,7 +70,7 @@ class ServiceDetailsScreen extends StatelessWidget {
                       ),
                     ],
                     Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: Alignment.center,
                       child: Wrap(
                         direction: Axis.horizontal,
                         crossAxisAlignment: WrapCrossAlignment.center,
@@ -143,6 +141,8 @@ class ServiceDetailsScreen extends StatelessWidget {
               child: SizedBox(
                 height: 40,
                 child: ListView(
+                  physics: const ClampingScrollPhysics(),
+                  shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   children: [
                     const SizedBox(
@@ -150,21 +150,30 @@ class ServiceDetailsScreen extends StatelessWidget {
                     ),
                     OutlinedButton.icon(
                         icon: const Icon(Icons.percent_rounded),
-                        onPressed: () {},
+                        onPressed: () {
+                          context.pushNamed(const ServiceDiscountUpsert().route,
+                              queryParameters: {'serviceId': serviceId});
+                        },
                         label: const Text('Добавить скидку')),
                     const SizedBox(
                       width: 10,
                     ),
                     OutlinedButton.icon(
                         icon: const Icon(Icons.info_outline_rounded),
-                        onPressed: () {},
+                        onPressed: () {
+                          context.pushNamed(const ServiceInfoUpsert().route,
+                              queryParameters: {'serviceId': serviceId});
+                        },
                         label: const Text('Добавить информацию')),
                     const SizedBox(
                       width: 10,
                     ),
                     OutlinedButton.icon(
                         icon: const Icon(Icons.warning_amber_rounded),
-                        onPressed: () {},
+                        onPressed: () {
+                          context.pushNamed(const ServiceAlertUpsert().route,
+                              queryParameters: {'serviceId': serviceId});
+                        },
                         label: const Text('Добавить предупреждение')),
                     const SizedBox(
                       width: 10,
@@ -172,6 +181,177 @@ class ServiceDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            if (discounts.isNotEmpty)
+              ...discounts.map((item) => Padding(
+                    padding: const EdgeInsets.fromLTRB(14, 20, 14, 0),
+                    child: GestureDetector(
+                      onTap: () {
+                        context.pushNamed(const ServiceDiscountUpsert().route,
+                            queryParameters: {
+                              'serviceId': serviceId,
+                              'discountId': item['id'].toString()
+                            });
+                      },
+                      child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 14),
+                          decoration: BoxDecoration(
+                              color: Colors.red.shade400,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10))),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.percent_rounded,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    item['description_ru'] as String,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14),
+                                  ),
+                                  if (item['start_date'] != 'null' &&
+                                      item['end_date'] != 'null') ...[
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      '${formatter(context).format(DateTime.parse(item['start_date']))} - ${formatter(context).format(DateTime.parse(item['end_date']))}',
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    )
+                                  ]
+                                ],
+                              )),
+                            ],
+                          )),
+                    ),
+                  )),
+            if (alerts.isNotEmpty)
+              ...alerts.map((item) => Padding(
+                    padding: const EdgeInsets.fromLTRB(14, 20, 14, 0),
+                    child: GestureDetector(
+                      onTap: () {
+                        context.pushNamed(const ServiceAlertUpsert().route,
+                            queryParameters: {
+                              'serviceId': serviceId,
+                              'alertId': item['id'].toString()
+                            });
+                      },
+                      child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 14),
+                          decoration: BoxDecoration(
+                              color: Colors.red.shade400,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10))),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.warning_rounded,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    item['description_ru'] as String,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14),
+                                  ),
+                                  if (item['start_date'] != 'null' &&
+                                      item['end_date'] != 'null') ...[
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      '${formatter(context).format(DateTime.parse(item['start_date']))} - ${formatter(context).format(DateTime.parse(item['end_date']))}',
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    )
+                                  ]
+                                ],
+                              )),
+                            ],
+                          )),
+                    ),
+                  )),
+            if (infos.isNotEmpty)
+              ...infos.map((item) => Padding(
+                    padding: const EdgeInsets.fromLTRB(14, 20, 14, 0),
+                    child: GestureDetector(
+                      onTap: () {
+                        context.pushNamed(const ServiceInfoUpsert().route,
+                            queryParameters: {
+                              'serviceId': serviceId,
+                              'infoId': item['id'].toString()
+                            });
+                      },
+                      child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 14),
+                          decoration: BoxDecoration(
+                              color: Colors.blue.shade400,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10))),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.info,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    item['description_ru'] as String,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14),
+                                  ),
+                                  if (item['start_date'] != 'null' &&
+                                      item['end_date'] != 'null') ...[
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      '${formatter(context).format(DateTime.parse(item['start_date']))} - ${formatter(context).format(DateTime.parse(item['end_date']))}',
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    )
+                                  ]
+                                ],
+                              )),
+                            ],
+                          )),
+                    ),
+                  )),
+            const SizedBox(
+              height: 30,
             )
           ],
         ),

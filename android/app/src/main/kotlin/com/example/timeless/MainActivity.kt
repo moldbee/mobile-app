@@ -1,4 +1,4 @@
-package com.example.timeless
+package com.moldova.smartcity
 
 import io.flutter.embedding.android.FlutterActivity
 

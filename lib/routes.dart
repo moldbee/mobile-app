@@ -9,8 +9,11 @@ import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/profile/screens/profile.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
 import 'package:smart_city/features/profile/screens/sign_up.dart';
+import 'package:smart_city/features/services/screens/alert_upsert.dart';
 import 'package:smart_city/features/services/screens/category_upsert.dart';
 import 'package:smart_city/features/services/screens/details.dart';
+import 'package:smart_city/features/services/screens/discount_upsert.dart';
+import 'package:smart_city/features/services/screens/info_upsert.dart';
 import 'package:smart_city/features/services/screens/services.dart';
 import 'package:smart_city/features/services/screens/upsert.dart';
 import 'package:smart_city/features/settings/screens/about.dart';
@@ -95,6 +98,27 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               path: const ServiceCategoryUpsert().route,
               pageBuilder: (context, state) =>
                   const MaterialPage(child: ServiceCategoryUpsert())),
+          GoRoute(
+              name: const ServiceInfoUpsert().route,
+              path: const ServiceInfoUpsert().route,
+              pageBuilder: (context, state) => MaterialPage(
+                  child: ServiceInfoUpsert(
+                      serviceId: state.uri.queryParameters['serviceId'],
+                      infoId: state.uri.queryParameters['infoId']))),
+          GoRoute(
+              name: const ServiceDiscountUpsert().route,
+              path: const ServiceDiscountUpsert().route,
+              pageBuilder: (context, state) => MaterialPage(
+                  child: ServiceDiscountUpsert(
+                      serviceId: state.uri.queryParameters['serviceId'],
+                      discountId: state.uri.queryParameters['discountId']))),
+          GoRoute(
+              name: const ServiceAlertUpsert().route,
+              path: const ServiceAlertUpsert().route,
+              pageBuilder: (context, state) => MaterialPage(
+                  child: ServiceAlertUpsert(
+                      serviceId: state.uri.queryParameters['serviceId'],
+                      alertId: state.uri.queryParameters['alertId']))),
           GoRoute(
               name: ServiceUpsert().route,
               path: ServiceUpsert().route,

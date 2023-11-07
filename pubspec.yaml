@@ -85,7 +85,10 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: 'assets/app_icon.png'
+  image_path: 'assets/launch_foreground.png'
+  adaptive_icon_background: 'assets/launch_background.png'
+  adaptive_icon_foreground: 'assets/launch_foreground.png'
+
 flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

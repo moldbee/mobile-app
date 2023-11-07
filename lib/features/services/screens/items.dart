@@ -20,6 +20,7 @@ class ServicesCompaniesScreen extends StatelessWidget {
         (element) => element['id'].toString() == categoryId.toString());
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(category['title_ru']),
         actions: [
           IconButton(
@@ -53,6 +54,7 @@ class ServicesCompaniesScreen extends StatelessWidget {
               .getServicesByCategory(categoryId!)
               .map((company) {
             return GestureDetector(
+              behavior: HitTestBehavior.translucent,
               onTap: () {
                 context.pushNamed(const ServiceDetailsScreen().route,
                     queryParameters: {

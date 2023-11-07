@@ -31,6 +31,7 @@ class ServicesScreen extends HookWidget {
             crossAxisCount: 3,
             children: servicesController.categories.map((element) {
               return GestureDetector(
+                behavior: HitTestBehavior.translucent,
                 onTap: () {
                   context.pushNamed(const ServicesCompaniesScreen().route,
                       queryParameters: {

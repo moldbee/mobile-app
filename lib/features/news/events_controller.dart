@@ -12,8 +12,9 @@ class EventsController extends GetxController {
   }
 
   List<dynamic> get sortedByTimeEvents {
-    final filteredEvents = events.toList().where(
-        (element) => DateTime.parse(element['date']).isAfter(DateTime.now()));
+    final filteredEvents = events.toList().where((element) =>
+        DateTime.parse(element['date'])
+            .isAfter(DateTime.now().subtract(const Duration(days: 2))));
     return filteredEvents.toList()
       ..sort((a, b) =>
           DateTime.parse(a['date']).compareTo(DateTime.parse(b['date'])));

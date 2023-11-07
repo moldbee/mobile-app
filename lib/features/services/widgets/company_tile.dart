@@ -23,14 +23,14 @@ class CompanyTile extends StatelessWidget {
         ] else ...[
           Image.network(
             logoUrl!,
-            height: 40,
+            height: 50,
           ),
         ],
         Padding(
           padding: const EdgeInsets.only(top: 10),
           child: Text(
             title,
-            style: TextStyle(color: Colors.grey.shade700),
+            style: TextStyle(color: Colors.grey.shade900),
           ),
         ),
       ],
