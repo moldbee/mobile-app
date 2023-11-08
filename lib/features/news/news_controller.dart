@@ -5,11 +5,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class NewsController extends GetxController {
   RxList<dynamic> news = <dynamic>[].obs;
   RxBool isLoading = false.obs;
+  final viewedNews = <RxString>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-
     fetchNews();
   }
 

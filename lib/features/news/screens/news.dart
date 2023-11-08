@@ -8,6 +8,7 @@ import 'package:smart_city/features/news/screens/event_upsert.dart';
 import 'package:smart_city/features/news/screens/new_upsert.dart';
 import 'package:smart_city/features/news/widgets/event_tile.dart';
 import 'package:smart_city/features/news/widgets/tile.dart';
+import 'package:smart_city/shared/config/permissions.dart';
 import 'package:smart_city/shared/hooks/use_preserved_state.dart';
 
 class NewsScreen extends HookWidget {
@@ -42,16 +43,18 @@ class NewsScreen extends HookWidget {
               ],
             ),
             actions: [
-              IconButton(
-                  onPressed: () {
-                    context.push(selectedTab.value == 0
-                        ? NewsUpsertScreen().route
-                        : EventsUpsertScreen().route);
-                  },
-                  icon: const Icon(
-                    Icons.add_rounded,
-                    size: 30,
-                  ))
+              if (Permissions().getForNewsAndEvents()) ...[
+                IconButton(
+                    onPressed: () {
+                      context.push(selectedTab.value == 0
+                          ? NewsUpsertScreen().route
+                          : EventsUpsertScreen().route);
+                    },
+                    icon: const Icon(
+                      Icons.add_rounded,
+                      size: 30,
+                    ))
+              ]
             ],
           ),
           body: Obx(() {

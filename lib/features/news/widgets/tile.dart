@@ -21,12 +21,10 @@ class NewsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String heroKey = 'new_image$title';
-
     return GestureDetector(
       onTap: () {
         context.pushNamed(const NewsDetailsScreen().route,
-            queryParameters: {'heroKey': heroKey, 'id': id.toString()});
+            queryParameters: {'id': id.toString()});
       },
       child: Container(
         height: 90,
@@ -36,7 +34,7 @@ class NewsTile extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               child: CachedNetworkImage(
                 imageUrl: imageUrl,
-                width: 180,
+                width: 170,
                 height: 90,
                 filterQuality: FilterQuality.none,
                 fit: BoxFit.cover,
@@ -46,7 +44,7 @@ class NewsTile extends StatelessWidget {
                     highlightColor: Colors.grey.shade100,
                     child: Container(
                       height: 90,
-                      width: 180,
+                      width: 170,
                       color: Colors.white,
                     ),
                   ),

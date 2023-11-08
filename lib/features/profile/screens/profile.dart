@@ -127,13 +127,13 @@ class ProfileScreen extends HookWidget {
                           style: TextStyle(color: Colors.orange.shade400),
                         )),
                     const SizedBox(height: 10),
-                    OutlinedButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Удалить аккаунт',
-                          style: TextStyle(color: Colors.orange.shade400),
-                        )),
-                    const SizedBox(height: 10),
+                    // OutlinedButton(
+                    //     onPressed: () {},
+                    //     child: Text(
+                    //       'Удалить аккаунт',
+                    //       style: TextStyle(color: Colors.orange.shade400),
+                    //     )),
+                    // const SizedBox(height: 10),
                     OutlinedButton(
                         onPressed: () async {
                           await supabase

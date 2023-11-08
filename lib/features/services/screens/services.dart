@@ -6,6 +6,7 @@ import 'package:smart_city/features/services/controller.dart';
 import 'package:smart_city/features/services/screens/category_upsert.dart';
 import 'package:smart_city/features/services/screens/items.dart';
 import 'package:smart_city/features/services/widgets/tile.dart';
+import 'package:smart_city/shared/config/permissions.dart';
 
 class ServicesScreen extends HookWidget {
   final String route = '/services';
@@ -20,11 +21,13 @@ class ServicesScreen extends HookWidget {
         centerTitle: true,
         title: const Text("Услуги"),
         actions: [
-          IconButton(
+          if (Permissions().getForServiceCategories()) ...[
+            IconButton(
               onPressed: () async {
                 context.push(const ServiceCategoryUpsert().route);
               },
               icon: const Icon(Icons.add_home_work_rounded)),
+          ]
         ],
       ),
       body: Obx(() => GridView.count(

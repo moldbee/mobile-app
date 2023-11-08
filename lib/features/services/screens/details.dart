@@ -7,6 +7,7 @@ import 'package:smart_city/features/services/screens/alert_upsert.dart';
 import 'package:smart_city/features/services/screens/discount_upsert.dart';
 import 'package:smart_city/features/services/screens/info_upsert.dart';
 import 'package:smart_city/main.dart';
+import 'package:smart_city/shared/config/permissions.dart';
 import 'package:smart_city/shared/helpers/show_delete_confirm.dart';
 import 'package:smart_city/shared/utils/formatter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -32,19 +33,21 @@ class ServiceDetailsScreen extends HookWidget {
           selectedService['title_ru'] as String,
         ),
         actions: [
-          IconButton(
-              onPressed: () async {
-                await showDeleteConfirm(() async {
-                  await supabase
-                      .from('services')
-                      .delete()
-                      .eq('id', selectedService['id']);
-                  await servicesController.fetchServices();
-                  if (!context.mounted) return;
-                  context.pop();
-                }, context, disableDoublePop: true);
-              },
-              icon: const Icon(Icons.delete_rounded))
+          if (Permissions().getForCompany(serviceId)) ...[
+            IconButton(
+                onPressed: () async {
+                  await showDeleteConfirm(() async {
+                    await supabase
+                        .from('services')
+                        .delete()
+                        .eq('id', selectedService['id']);
+                    await servicesController.fetchServices();
+                    if (!context.mounted) return;
+                    context.pop();
+                  }, context, disableDoublePop: true);
+                },
+                icon: const Icon(Icons.delete_rounded))
+          ]
         ],
       ),
       body: SingleChildScrollView(
@@ -137,7 +140,8 @@ class ServiceDetailsScreen extends HookWidget {
                     ),
                   ],
                 )),
-            SingleChildScrollView(
+            if (Permissions().getForCompany(serviceId)) ...[
+              SingleChildScrollView(
               child: SizedBox(
                 height: 40,
                 child: ListView(
@@ -181,6 +185,7 @@ class ServiceDetailsScreen extends HookWidget {
                 ),
               ),
             ),
+            ],
             if (discounts.isNotEmpty)
               ...discounts.map((item) => Padding(
                     padding: const EdgeInsets.fromLTRB(14, 20, 14, 0),

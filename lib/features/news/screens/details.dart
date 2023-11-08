@@ -8,6 +8,7 @@ import 'package:smart_city/features/news/news_controller.dart';
 import 'package:smart_city/features/news/screens/new_upsert.dart';
 import 'package:smart_city/features/news/widgets/comments_bottom_sheet.dart';
 import 'package:smart_city/shared/widgets/delete_confirm.dart';
+import 'package:timeago_flutter/timeago_flutter.dart' as timeago;
 
 class NewsDetailsScreen extends HookWidget {
   const NewsDetailsScreen({Key? key, this.id, this.commentId})
@@ -140,14 +141,16 @@ class NewsDetailsScreen extends HookWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Icon(
-                          Icons.remove_red_eye,
+                          Icons.timelapse_rounded,
                           size: 22,
                           color: Colors.grey.shade400,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 8),
                           child: Text(
-                            '2503',
+                            timeago.format(
+                                DateTime.parse(newData['created_at']),
+                                locale: 'ru'),
                             style: TextStyle(color: Colors.grey.shade500),
                           ),
                         )

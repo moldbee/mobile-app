@@ -13,6 +13,7 @@ class ProfileController extends GetxController {
   final RxnString uid = RxnString();
   final RxnString id = RxnString();
   final comments = <dynamic>[].obs;
+  final RxString companyId = RxString('');
 
   @override
   void onInit() async {

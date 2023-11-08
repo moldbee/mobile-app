@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_city/features/news/screens/event_upsert.dart';
-import 'package:smart_city/shared/config/date_format.dart';
+import 'package:smart_city/shared/config/permissions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class EventTile extends StatelessWidget {
@@ -67,7 +67,7 @@ class EventTile extends StatelessWidget {
         ),
         elevation: 1,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 18),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -76,14 +76,13 @@ class EventTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Text('$emoji  $title',
-                          style: TextStyle(
-                              color: Colors.grey.shade800,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500))
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 3),
+                    child: Text('$emoji  $title',
+                        style: TextStyle(
+                            color: Colors.grey.shade800,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500)),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
@@ -130,17 +129,19 @@ class EventTile extends StatelessWidget {
                 direction: Axis.vertical,
                 spacing: 10,
                 children: [
-                  GestureDetector(
-                    child: Icon(
-                      Icons.edit,
-                      size: 23,
-                      color: Colors.grey.shade400.withOpacity(0.9),
+                  if (Permissions().getForNewsAndEvents()) ...[
+                    GestureDetector(
+                      child: Icon(
+                        Icons.edit,
+                        size: 23,
+                        color: Colors.grey.shade400.withOpacity(0.9),
+                      ),
+                      onTap: () {
+                        context.pushNamed(EventsUpsertScreen().route,
+                            queryParameters: {'id': id});
+                      },
                     ),
-                    onTap: () {
-                      context.pushNamed(EventsUpsertScreen().route,
-                          queryParameters: {'id': id});
-                    },
-                  ),
+                  ],
                   GestureDetector(
                     onTap: () {
                       _launchUrl(urlToInfo);
