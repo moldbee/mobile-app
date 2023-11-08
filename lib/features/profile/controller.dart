@@ -12,6 +12,7 @@ class ProfileController extends GetxController {
   final RxnString role = RxnString();
   final RxnString uid = RxnString();
   final RxnString id = RxnString();
+  final comments = <dynamic>[].obs;
 
   @override
   void onInit() async {
@@ -47,6 +48,36 @@ class ProfileController extends GetxController {
     ever(uid, (String? value) {
       box.write('uid', value);
     });
+  }
+
+  Future<void> fetchComments() async {
+    List res = await supabase
+        .from('news_comments')
+        .select()
+        .eq('created_by', id)
+        .order('id', ascending: false);
+
+    List likes = await supabase
+        .from('news_comments_likes')
+        .select()
+        .in_('comment', res.map((e) => e['id']).toList());
+    comments.value = res.map((e) {
+      final like = likes.where((element) => element['comment'] == e['id']);
+      return {
+        ...e,
+        'likes': like.length,
+      };
+    }).toList();
+  }
+
+  Future<void> getUpdatedNick() async {
+    final response = await supabase
+        .from('profiles')
+        .select()
+        .eq('uid', supabase.auth.currentUser!.id);
+    final data = response[0];
+
+    nick.value = data['nick'];
   }
 
   void setProfileData(

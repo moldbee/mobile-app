@@ -6,6 +6,9 @@ import 'package:smart_city/features/news/screens/event_upsert.dart';
 import 'package:smart_city/features/news/screens/new_upsert.dart';
 import 'package:smart_city/features/news/screens/news.dart';
 import 'package:smart_city/features/profile/controller.dart';
+import 'package:smart_city/features/profile/screens/comments.dart';
+import 'package:smart_city/features/profile/screens/edit.dart';
+import 'package:smart_city/features/profile/screens/notifications.dart';
 import 'package:smart_city/features/profile/screens/profile.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
 import 'package:smart_city/features/profile/screens/sign_up.dart';
@@ -83,6 +86,7 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
                 return MaterialPage(
                     child: NewsDetailsScreen(
                   id: state.uri.queryParameters['id'],
+                  commentId: state.uri.queryParameters['commentId'],
                 ));
               }),
         ],
@@ -160,11 +164,23 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               path: ProfileSignInScreen().route,
               name: ProfileSignInScreen().route,
               pageBuilder: (context, state) =>
-                  NoTransitionPage(child: ProfileSignInScreen())),
+                  MaterialPage(child: ProfileSignInScreen())),
           GoRoute(
               path: ProfileSignUpScreen().route,
               pageBuilder: (context, state) =>
                   MaterialPage(child: ProfileSignUpScreen())),
+          GoRoute(
+              path: const ProfileComments().route,
+              pageBuilder: (context, state) =>
+                  const MaterialPage(child: ProfileComments())),
+          GoRoute(
+              path: const ProfileNotifications().route,
+              pageBuilder: (context, state) =>
+                  const MaterialPage(child: ProfileNotifications())),
+          GoRoute(
+              path: const ProfileEdit().route,
+              pageBuilder: (context, state) =>
+                  const MaterialPage(child: ProfileEdit())),
           GoRoute(
               path: ProfileScreen().route,
               pageBuilder: (context, state) =>

@@ -29,59 +29,57 @@ class NewsTile extends StatelessWidget {
             queryParameters: {'heroKey': heroKey, 'id': id.toString()});
       },
       child: Container(
+        height: 90,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: CachedNetworkImage(
-                    imageUrl: imageUrl,
-                    width: 150,
-                    height: 80,
-                    filterQuality: FilterQuality.none,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Center(
-                      child: Shimmer.fromColors(
-                        baseColor: Colors.grey.shade300,
-                        highlightColor: Colors.grey.shade100,
-                        child: Container(
-                          height: 80,
-                          width: 150,
-                          color: Colors.white,
-                        ),
-                      ),
+        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
+                width: 180,
+                height: 90,
+                filterQuality: FilterQuality.none,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Center(
+                  child: Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade100,
+                    child: Container(
+                      height: 90,
+                      width: 180,
+                      color: Colors.white,
                     ),
-                  )),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey.shade800),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 12),
-                        child: NewTime(
-                          time: createdAt,
-                        ),
-                      )
-                    ],
                   ),
                 ),
-              )
-            ]),
+              )),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      title,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey.shade800),
+                    ),
+                  ),
+                  NewTime(
+                    time: createdAt,
+                  )
+                ],
+              ),
+            ),
+          )
+        ]),
       ),
     );
   }

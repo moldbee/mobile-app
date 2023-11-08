@@ -10,9 +10,11 @@ import 'package:smart_city/features/news/widgets/comments_bottom_sheet.dart';
 import 'package:smart_city/shared/widgets/delete_confirm.dart';
 
 class NewsDetailsScreen extends HookWidget {
-  const NewsDetailsScreen({Key? key, this.id}) : super(key: key);
+  const NewsDetailsScreen({Key? key, this.id, this.commentId})
+      : super(key: key);
   final String route = '/news/details';
   final String? id;
+  final String? commentId;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +23,48 @@ class NewsDetailsScreen extends HookWidget {
       return element['id'].toString() == id;
     });
     final comments = useState([]);
+
+    showCommentsBottomSheet() {
+      showModalBottomSheet(
+          isScrollControlled: true,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(18), topRight: Radius.circular(18))),
+          context: context,
+          builder: (context) {
+            return StatefulBuilder(builder: (context, setState) {
+              return CommentsBottomSheet(
+                highlightId: commentId,
+                setState: setState,
+                setComments: (value) {
+                  if (context.mounted) {
+                    setState(() {
+                      comments.value = value;
+                    });
+                  }
+                },
+                newId: id,
+                comments: comments.value,
+              );
+            });
+          });
+    }
+
     useEffect(() {
-      newsController
-          .fetchCommentsForNew(newData['id'].toString())
-          .then((value) => comments.value = value);
+      if (commentId == null) {
+        newsController
+            .fetchCommentsForNew(newData['id'].toString())
+            .then((value) => comments.value = value);
+      }
+
+      if (commentId != null) {
+        Future.delayed(const Duration(milliseconds: 0), () async {
+          final res = await newsController
+              .fetchCommentsForNew(newData['id'].toString());
+          comments.value = res;
+          showCommentsBottomSheet();
+        });
+      }
       return null;
     }, []);
 
@@ -52,21 +92,30 @@ class NewsDetailsScreen extends HookWidget {
                 Icons.edit_rounded,
                 size: 26,
               )),
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.share_rounded,
-                size: 26,
-              ))
+          // IconButton(
+          //     onPressed: () {},
+          //     icon: const Icon(
+          //       Icons.share_rounded,
+          //       size: 26,
+          //     ))
         ],
       ),
       body: SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
         child: SizedBox(
           width: double.maxFinite,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 14, 10, 20),
+                child: Text(
+                  newData['title_ru'],
+                  style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey.shade800),
+                ),
+              ),
               CachedNetworkImage(
                 imageUrl: newData['image'],
                 height: 220,
@@ -83,7 +132,7 @@ class NewsDetailsScreen extends HookWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -129,16 +178,6 @@ class NewsDetailsScreen extends HookWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 14, 10, 10),
-                child: Text(
-                  newData['title_ru'],
-                  style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey.shade800),
-                ),
-              ),
-              Padding(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                 child: Text(
                   newData['description_ru'],
@@ -152,30 +191,7 @@ class NewsDetailsScreen extends HookWidget {
                     Expanded(
                         child: OutlinedButton(
                             onPressed: () {
-                              showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(18),
-                                          topRight: Radius.circular(18))),
-                                  context: context,
-                                  builder: (context) {
-                                    return StatefulBuilder(
-                                        builder: (context, setState) {
-                                      return CommentsBottomSheet(
-                                        setState: setState,
-                                        setComments: (value) {
-                                          if (context.mounted) {
-                                            setState(() {
-                                              comments.value = value;
-                                            });
-                                          }
-                                        },
-                                        newId: id,
-                                        comments: comments.value,
-                                      );
-                                    });
-                                  });
+                              showCommentsBottomSheet();
                             },
                             child: const Text(
                               'Комментарии',

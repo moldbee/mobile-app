@@ -141,7 +141,6 @@ class ServiceDetailsScreen extends HookWidget {
               child: SizedBox(
                 height: 40,
                 child: ListView(
-                  physics: const ClampingScrollPhysics(),
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   children: [

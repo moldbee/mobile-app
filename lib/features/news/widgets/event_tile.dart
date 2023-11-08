@@ -28,8 +28,28 @@ class EventTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).languageCode;
     final Uri urlToPlace = Uri.parse(placeUrl);
     final Uri urlToInfo = Uri.parse(infoUrl);
+    getDate() {
+      final now = DateTime.now();
+      final today = DateTime(now.year, now.month, now.day);
+      final yesterday = DateTime(now.year, now.month, now.day - 1);
+      final tomorrow = DateTime(now.year, now.month, now.day + 1);
+
+      final dateToCheck = DateTime.parse(date);
+      final aDate =
+          DateTime(dateToCheck.year, dateToCheck.month, dateToCheck.day);
+      if (aDate == today) {
+        return 'cегодня, ${DateFormat('d MMMM, HH:mm', locale).format(aDate)}';
+      } else if (aDate == yesterday) {
+        return 'вчера, ${DateFormat('d MMMM, HH:mm', locale).format(aDate)}';
+      } else if (aDate == tomorrow) {
+        return 'завтра, ${DateFormat('d MMMM, HH:mm', locale).format(aDate)}';
+      }
+      return DateFormat('${DateFormat.WEEKDAY} d MMMM, HH:mm', locale)
+          .format(DateTime.parse(date));
+    }
 
     // ignore: no_leading_underscores_for_local_identifiers
     Future<void> _launchUrl(url) async {
@@ -38,102 +58,110 @@ class EventTile extends StatelessWidget {
       }
     }
 
-    final locale = Localizations.localeOf(context).languageCode;
-
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Card(
+        semanticContainer: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 1,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 18),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('$emoji  $title',
-                      style: TextStyle(
-                          color: Colors.grey.shade800,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500))
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 12),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 6),
-                      child: Icon(
-                        Icons.calendar_month_rounded,
-                        color: Colors.grey.shade400,
-                      ),
-                    ),
-                    Text(
-                      DateFormat(fullDateFormat, locale)
-                          .format(DateTime.parse(date)),
-                      style: TextStyle(color: Colors.grey.shade600),
-                    )
-                  ],
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  _launchUrl(urlToPlace);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Row(
+                  Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 6),
-                        child: Icon(
-                          Icons.place_rounded,
-                          color: Colors.grey.shade400,
-                        ),
-                      ),
-                      Text(place, style: TextStyle(color: Colors.grey.shade600))
+                      Text('$emoji  $title',
+                          style: TextStyle(
+                              color: Colors.grey.shade800,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500))
                     ],
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 6),
+                          child: Icon(
+                            Icons.calendar_month_rounded,
+                            color: Colors.grey.shade400,
+                          ),
+                        ),
+                        Text(
+                          getDate(),
+                          style: TextStyle(color: Colors.grey.shade600),
+                        )
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _launchUrl(urlToPlace);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 6),
+                            child: Icon(
+                              Icons.place_rounded,
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                          Text(place,
+                              style: TextStyle(color: Colors.grey.shade600))
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              Wrap(
+                direction: Axis.vertical,
+                spacing: 10,
+                children: [
+                  GestureDetector(
+                    child: Icon(
+                      Icons.edit,
+                      size: 23,
+                      color: Colors.grey.shade400.withOpacity(0.9),
+                    ),
+                    onTap: () {
+                      context.pushNamed(EventsUpsertScreen().route,
+                          queryParameters: {'id': id});
+                    },
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _launchUrl(urlToInfo);
+                    },
+                    child: Icon(
+                      Icons.info,
+                      size: 23,
+                      color: Colors.grey.shade400.withOpacity(0.7),
+                    ),
+                  ),
+                  if (paid == true) ...[
+                    const Icon(
+                      Icons.attach_money_rounded,
+                      size: 23,
+                    )
+                  ]
+                ],
               )
             ],
           ),
-          Wrap(
-            direction: Axis.vertical,
-            spacing: 10,
-            children: [
-              GestureDetector(
-                child: Icon(
-                  Icons.edit,
-                  size: 23,
-                  color: Colors.grey.shade400.withOpacity(0.9),
-                ),
-                onTap: () {
-                  context.pushNamed(EventsUpsertScreen().route,
-                      queryParameters: {'id': id});
-                },
-              ),
-              GestureDetector(
-                onTap: () {
-                  _launchUrl(urlToInfo);
-                },
-                child: Icon(
-                  Icons.info,
-                  size: 23,
-                  color: Colors.grey.shade400.withOpacity(0.7),
-                ),
-              ),
-              if (paid == true) ...[
-                const Icon(
-                  Icons.attach_money_rounded,
-                  size: 23,
-                )
-              ]
-            ],
-          )
-        ],
+        ),
       ),
     );
   }

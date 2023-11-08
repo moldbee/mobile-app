@@ -1,16 +1,19 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smart_city/features/profile/controller.dart';
+import 'package:smart_city/features/profile/screens/comments.dart';
+import 'package:smart_city/features/profile/screens/edit.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
 import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/screens/policy.dart';
 import 'package:uuid/uuid.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends HookWidget {
   ProfileScreen({Key? key}) : super(key: key);
   final String route = '/profile';
   final ImagePicker _imagePicker = ImagePicker();
@@ -18,17 +21,25 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profileController = Get.find<ProfileController>();
+
+    profileController.fetchComments();
+
     return Scaffold(
         appBar: AppBar(
           title: const Text("Профиль"),
           actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.push(const ProfileEdit().route);
+                },
                 icon: const Icon(
                   Icons.edit_rounded,
                 )),
-            IconButton(
-                onPressed: () {}, icon: const Icon(Icons.notifications_rounded))
+            // IconButton(
+            //     onPressed: () async {
+            //       await context.push(const ProfileNotifications().route);
+            //     },
+            //     icon: const Icon(Icons.notifications_rounded))
           ],
         ),
         body: Padding(
@@ -99,7 +110,9 @@ class ProfileScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
                     OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.push(const ProfileComments().route);
+                        },
                         child: Text(
                           'Мои комментарии',
                           style: TextStyle(color: Colors.orange.shade400),

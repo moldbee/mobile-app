@@ -52,8 +52,7 @@ class NewsUpsertScreen extends HookWidget {
       }
     }
 
-    final formState =
-        usePreservedState('new-form-state', context, <String, dynamic>{
+    dynamic payload = {
       'title_ro':
           'Salutare, lume! Eu sunt o știre scrisa in limba română și nu in limba rusă',
       'title_ru':
@@ -62,7 +61,19 @@ class NewsUpsertScreen extends HookWidget {
           'Salutare, lume! Eu sunt o știre scrisa in limba română și nu in limba rusă. Apropo am acest text este scris de Github Copilot. Nu știu ce altceva sa scriu, asa ca scriu ce scrie Github Copilot. Id aliquip nulla amet tempor minim Lorem veniam anim quis in cillum anim. Consequat et irure nisi fugiat ullamco laboris esse pariatur proident fugiat. Occaecat ea tempor eiusmod culpa aliqua exercitation aliqua nulla consequat officia dolor minim cupidatat. Irure fugiat sint nisi adipisicing non ut pariatur adipisicing irure sunt id eiusmod nulla.',
       'description_ru':
           'Привет, мир! Я новость написанная на русском языке, а не на румынском. Кстати этот текст написан Github Copilot. Я не знаю что еще написать, поэтому пишу что пишет Github Copilot. Id aliquip nulla amet tempor minim Lorem veniam anim quis in cillum anim. Consequat et irure nisi fugiat ullamco laboris esse pariatur proident fugiat. Occaecat ea tempor eiusmod culpa aliqua exercitation aliqua nulla consequat officia dolor minim cupidatat. Irure fugiat sint nisi adipisicing non ut pariatur adipisicing irure sunt id eiusmod nulla.',
-    });
+    };
+
+    if (id != null) {
+      payload = {
+        'title_ro': editingNew['title_ro'],
+        'title_ru': editingNew['title_ru'],
+        'subtitle_ro': editingNew['subtitle_ro'],
+        'subtitle_ru': editingNew['subtitle_ru'],
+        'description_ro': editingNew['description_ro'],
+        'description_ru': editingNew['description_ru'],
+      };
+    }
+    final formState = usePreservedState('new-form-state', context, payload);
     final isLoading = useState(false);
 
     void uploadNew() async {

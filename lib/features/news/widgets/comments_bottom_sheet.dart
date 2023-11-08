@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:smart_city/features/news/news_controller.dart';
 import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
@@ -12,6 +13,7 @@ import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/hooks/use_preserved_state.dart';
 import 'package:smart_city/shared/widgets/delete_confirm.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';
+import 'package:smooth_highlight/smooth_highlight.dart';
 import 'package:timeago_flutter/timeago_flutter.dart' as timeago;
 
 class CommentsBottomSheet extends HookWidget {
@@ -20,17 +22,20 @@ class CommentsBottomSheet extends HookWidget {
       this.newId,
       this.comments,
       this.setComments,
+      this.highlightId,
       required this.setState})
       : super(key: key);
   static final _formKey = GlobalKey<FormBuilderState>();
 
   final String? newId;
+  final String? highlightId;
   final void Function(void Function()) setState;
   final dynamic comments;
   final Function(dynamic value)? setComments;
 
   @override
   Widget build(BuildContext context) {
+    final highlightCount = useState(0);
     final newsController = Get.find<NewsController>();
     final selectedForReplyComment = useState<String?>(null);
     final ProfileController profileController = Get.find<ProfileController>();
@@ -49,14 +54,28 @@ class CommentsBottomSheet extends HookWidget {
               : null;
     }
 
+    final highlightIndex = comments
+        ?.indexWhere((element) => element['id'].toString() == highlightId);
+
     useEffect(() {
-      Timer timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
-        if (newId != null) {
-          setComments!(await newsController.fetchCommentsForNew(newId));
+      final highlightTimer =
+          Timer.periodic(const Duration(milliseconds: 300), (timer) async {
+        if (highlightId != null) {
+          highlightCount.value = highlightCount.value + 1;
         }
       });
+      // Timer timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
+      //   if (newId != null) {
+      //     setComments!(await newsController.fetchCommentsForNew(newId));
+      //   }
+      // });
+
+      Future.delayed(const Duration(seconds: 2), () {
+        highlightTimer.cancel();
+      });
       return () {
-        timer.cancel();
+        // timer.cancel();
+        highlightTimer.cancel();
       };
     }, []);
 
@@ -84,30 +103,42 @@ class CommentsBottomSheet extends HookWidget {
         Expanded(
           child: SingleChildScrollView(
             child: Column(mainAxisSize: MainAxisSize.max, children: [
-              if (comments!.isNotEmpty)
-                for (var comment in comments)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Comment(
-                      onEdit: onCommentEdit,
-                      comments: comments,
-                      setSelectedForReplyComment: (id) {
-                        selectedForReplyComment.value = id;
-                      },
-                      setComments: setComments!,
-                      newId: newId!,
-                      id: comment['id'].toString(),
-                      nick: comment['created_by']['nick'],
-                      avatar: comment['created_by']['avatar'],
-                      createdAt: comment['created_at'],
-                      replyCommentId: comment['reply_comment_id'],
-                      message: comment['message'],
-                      onReply: (id) {
-                        selectedForReplyComment.value = id;
-                      },
-                    ),
-                  )
-              else
+              if (comments!.isNotEmpty) ...[
+                ScrollablePositionedList.builder(
+                    shrinkWrap: true,
+                    itemCount: comments.length,
+                    itemBuilder: (context, index) {
+                      final comment = comments[index];
+
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: ValueChangeHighlight(
+                          enabled:
+                              highlightIndex == index && highlightId != null,
+                          value: highlightCount.value,
+                          color: Colors.orange.shade100.withOpacity(0.5),
+                          child: Comment(
+                            onEdit: onCommentEdit,
+                            comments: comments,
+                            setSelectedForReplyComment: (id) {
+                              selectedForReplyComment.value = id;
+                            },
+                            setComments: setComments!,
+                            newId: newId!,
+                            id: comment['id'].toString(),
+                            nick: comment['created_by']['nick'],
+                            avatar: comment['created_by']['avatar'],
+                            createdAt: comment['created_at'],
+                            replyCommentId: comment['reply_comment_id'],
+                            message: comment['message'],
+                            onReply: (id) {
+                              selectedForReplyComment.value = id;
+                            },
+                          ),
+                        ),
+                      );
+                    })
+              ] else
                 const NoCommentsMessage()
             ]),
           ),
@@ -331,12 +362,14 @@ class Comment extends HookWidget {
     final newsController = Get.find<NewsController>();
 
     Future<void> fetchLikesInfo() async {
-      newsController
-          .getLikesForComment(id)
-          .then((value) => likes.value = value.count.toString());
-      newsController
-          .getHasLiked(id, profileController.id.value)
-          .then((value) => isLiked.value = value);
+      newsController.getLikesForComment(id).then((value) {
+        if (!context.mounted) return null;
+        return likes.value = value.count.toString();
+      });
+      newsController.getHasLiked(id, profileController.id.value).then((value) {
+        if (!context.mounted) return null;
+        return isLiked.value = value;
+      });
     }
 
     useEffect(() {

@@ -1,3 +1,3 @@
 import 'package:intl/intl.dart';
 
-const fullDateFormat = '${DateFormat.WEEKDAY} dd MMMM, yyyy HH:mm';
+const fullDateFormat = '${DateFormat.WEEKDAY} d MMMM, yyyy HH:mm';
