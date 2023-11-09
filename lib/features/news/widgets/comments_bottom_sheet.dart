@@ -10,6 +10,7 @@ import 'package:smart_city/features/news/news_controller.dart';
 import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
 import 'package:smart_city/main.dart';
+import 'package:smart_city/shared/config/permissions.dart';
 import 'package:smart_city/shared/hooks/use_preserved_state.dart';
 import 'package:smart_city/shared/widgets/delete_confirm.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';
@@ -543,7 +544,8 @@ class Comment extends HookWidget {
                   //   'Пожаловаться',
                   //   style: TextStyle(color: Colors.grey.shade600),
                   // ),
-                  if (nick == profileController.nick.value) ...[
+                  if (nick == profileController.nick.value ||
+                      Permissions().getForComments()) ...[
                     const SizedBox(
                       width: 20,
                     ),

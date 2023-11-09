@@ -21,12 +21,9 @@ class Permissions {
     return role == 'admin';
   }
 
-  getForService() {
-    return role == 'admin' || role == 'editor' || role == 'moderator';
-  }
-
   getForCompany(String? companyId) {
     return role == 'admin' ||
         role == 'user' && profileController.companyId.value == companyId;
   }
+
 }

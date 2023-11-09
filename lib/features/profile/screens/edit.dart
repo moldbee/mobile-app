@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/profile/controller.dart';
@@ -36,14 +37,16 @@ class ProfileEdit extends HookWidget {
                 size: 30,
               ),
               onPressed: () async {
-                final formVal = persistedFormState.value;
-                await supabase
-                    .from('profiles')
-                    .update({'nick': formVal['nick']}).eq(
-                        'uid', supabase.auth.currentUser!.id);
-                await rofileController.getUpdatedNick();
-                if (!context.mounted) return;
-                context.pop();
+                if (_formKey.currentState!.saveAndValidate()) {
+                  final formVal = persistedFormState.value;
+                  await supabase
+                      .from('profiles')
+                      .update({'nick': formVal['nick']}).eq(
+                          'uid', supabase.auth.currentUser!.id);
+                  await rofileController.getUpdatedNick();
+                  if (!context.mounted) return;
+                  context.pop();
+                }
               },
             )
           ],
@@ -55,11 +58,18 @@ class ProfileEdit extends HookWidget {
             _formKey.currentState?.save();
             persistedFormState.value = _formKey.currentState?.value;
           },
-          child: const Padding(
-            padding: EdgeInsets.symmetric(vertical: 30, horizontal: 12),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 12),
             child: Column(
               children: [
-                TextInput(name: 'nick', title: 'Никнейм'),
+                TextInput(name: 'nick', title: 'Никнейм', validators: [
+                  FormBuilderValidators.required(
+                      errorText: 'Поле не может быть пустым'),
+                  FormBuilderValidators.minLength(3,
+                      errorText: 'Минимум 3 символа'),
+                  FormBuilderValidators.maxLength(20,
+                      errorText: 'Максимум 20 символов'),
+                ]),
               ],
             ),
           ),

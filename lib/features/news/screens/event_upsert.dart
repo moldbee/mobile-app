@@ -70,14 +70,13 @@ class EventsUpsertScreen extends HookWidget {
                 }
               : {
                   'date': DateTime.now(),
-                  'emoji': '🇲🇩',
-                  'title_ro': 'Ziua Independenței',
-                  'title_ru': 'День Независимости',
-                  'place_ro': 'Centru',
-                  'info_url':
-                      'https://balti.md/planul-activitatilor-culturale-dedicate-sarbatorii-nationale-ziua-independentei-republicii-moldova/',
-                  'place_ru': 'Центральная площадь',
-                  'place_url': 'https://maps.app.goo.gl/hDfRQjoWrbetTsTj6',
+                  'emoji': '',
+                  'title_ro': '',
+                  'title_ru': '',
+                  'place_ro': '',
+                  'info_url': '',
+                  'place_ru': '',
+                  'place_url': '',
                 },
           child: ListView(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),

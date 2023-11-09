@@ -38,8 +38,8 @@ class EventTile extends StatelessWidget {
       final tomorrow = DateTime(now.year, now.month, now.day + 1);
 
       final dateToCheck = DateTime.parse(date);
-      final aDate =
-          DateTime(dateToCheck.year, dateToCheck.month, dateToCheck.day);
+      final aDate = DateTime(dateToCheck.year, dateToCheck.month,
+          dateToCheck.day, dateToCheck.hour, dateToCheck.minute);
       if (aDate == today) {
         return 'cегодня, ${DateFormat('d MMMM, HH:mm', locale).format(aDate)}';
       } else if (aDate == yesterday) {
