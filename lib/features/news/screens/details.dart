@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
@@ -9,6 +10,7 @@ import 'package:smart_city/features/news/screens/new_upsert.dart';
 import 'package:smart_city/features/news/widgets/comments_bottom_sheet.dart';
 import 'package:smart_city/shared/widgets/delete_confirm.dart';
 import 'package:timeago_flutter/timeago_flutter.dart' as timeago;
+import 'package:url_launcher/url_launcher.dart';
 
 class NewsDetailsScreen extends HookWidget {
   const NewsDetailsScreen({Key? key, this.id, this.commentId})
@@ -182,8 +184,13 @@ class NewsDetailsScreen extends HookWidget {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                child: Text(
-                  newData['description_ru'],
+                child: Linkify(
+                  text: newData['description_ru'],
+                  onOpen: (link) async {
+                    final url = Uri.parse(link.url);
+
+                    launchUrl(url);
+                  },
                   style: TextStyle(fontSize: 18, color: Colors.grey.shade800),
                 ),
               ),

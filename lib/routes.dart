@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:smart_city/features/home/home.dart';
 import 'package:smart_city/features/news/screens/details.dart';
 import 'package:smart_city/features/news/screens/event_upsert.dart';
 import 'package:smart_city/features/news/screens/new_upsert.dart';
@@ -59,6 +60,15 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
       );
     },
     branches: [
+      StatefulShellBranch(
+        initialLocation: const HomeScreen().route,
+        routes: [
+          GoRoute(
+              path: const HomeScreen().route,
+              pageBuilder: (context, state) =>
+                  const NoTransitionPage(child: HomeScreen())),
+        ],
+      ),
       StatefulShellBranch(
         routes: [
           GoRoute(
@@ -188,16 +198,11 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
           GoRoute(
               path: const PolicyScreen().route,
               pageBuilder: (context, state) =>
-                  wrapPageSlideTransition(const PolicyScreen()))
-        ],
-      ),
-      StatefulShellBranch(
-        initialLocation: const SettingsScreen().route,
-        routes: [
+                  wrapPageSlideTransition(const PolicyScreen())),
           GoRoute(
               path: const SettingsScreen().route,
               pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: SettingsScreen())),
+                  const MaterialPage(child: SettingsScreen())),
           GoRoute(
               path: const AboutScreen().route,
               pageBuilder: (context, state) =>

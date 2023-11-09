@@ -9,6 +9,7 @@ import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/profile/screens/comments.dart';
 import 'package:smart_city/features/profile/screens/edit.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
+import 'package:smart_city/features/settings/screens/settings.dart';
 import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/screens/policy.dart';
 import 'package:uuid/uuid.dart';
@@ -34,6 +35,13 @@ class ProfileScreen extends HookWidget {
                 },
                 icon: const Icon(
                   Icons.edit_rounded,
+                )),
+            IconButton(
+                onPressed: () {
+                  context.push(const SettingsScreen().route);
+                },
+                icon: const Icon(
+                  Icons.settings,
                 )),
             // IconButton(
             //     onPressed: () async {

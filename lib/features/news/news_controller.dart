@@ -5,7 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class NewsController extends GetxController {
   RxList<dynamic> news = <dynamic>[].obs;
   RxBool isLoading = false.obs;
-  final viewedNews = <RxString>[].obs;
+  RxBool hasReachedMax = false.obs;
 
   @override
   void onInit() {
@@ -19,10 +19,26 @@ class NewsController extends GetxController {
           .compareTo(DateTime.parse(a['created_at'])));
   }
 
-  Future<dynamic> fetchNews() async {
+  Future<dynamic> fetchNews({int start = 0, int end = 10}) async {
+    print('fetching news');
     try {
       isLoading.value = true;
-      news.value = await supabase.from('news').select();
+      final newNews = await supabase.from('news').select().range(start, end);
+      if (newNews.length == 0) {
+        return hasReachedMax.value = true;
+      }
+      news.addAll(newNews);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<dynamic> refetchNews() async {
+    try {
+      hasReachedMax.value = false;
+      isLoading.value = true;
+      final newNews = await supabase.from('news').select().range(0, 10);
+      news.value = newNews;
     } finally {
       isLoading.value = false;
     }

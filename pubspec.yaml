@@ -66,6 +66,7 @@ dependencies:
   google_sign_in: ^6.1.5
   scrollable_positioned_list: ^0.3.8
   smooth_highlight: ^0.1.1
+  very_good_infinite_list: ^0.7.1
 
 dev_dependencies:
   flutter_test:

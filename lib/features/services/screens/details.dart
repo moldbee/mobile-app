@@ -33,7 +33,7 @@ class ServiceDetailsScreen extends HookWidget {
           selectedService['title_ru'] as String,
         ),
         actions: [
-          if (Permissions().getForCompany(serviceId)) ...[
+          if (Permissions().getForCompany(selectedService['owner'])) ...[
             IconButton(
                 onPressed: () async {
                   await showDeleteConfirm(() async {
@@ -140,51 +140,52 @@ class ServiceDetailsScreen extends HookWidget {
                     ),
                   ],
                 )),
-            if (Permissions().getForCompany(serviceId)) ...[
+            if (Permissions().getForCompany(selectedService['owner'])) ...[
               SingleChildScrollView(
-              child: SizedBox(
-                height: 40,
-                child: ListView(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    OutlinedButton.icon(
-                        icon: const Icon(Icons.percent_rounded),
-                        onPressed: () {
-                          context.pushNamed(const ServiceDiscountUpsert().route,
-                              queryParameters: {'serviceId': serviceId});
-                        },
-                        label: const Text('Добавить скидку')),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    OutlinedButton.icon(
-                        icon: const Icon(Icons.info_outline_rounded),
-                        onPressed: () {
-                          context.pushNamed(const ServiceInfoUpsert().route,
-                              queryParameters: {'serviceId': serviceId});
-                        },
-                        label: const Text('Добавить информацию')),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    OutlinedButton.icon(
-                        icon: const Icon(Icons.warning_amber_rounded),
-                        onPressed: () {
-                          context.pushNamed(const ServiceAlertUpsert().route,
-                              queryParameters: {'serviceId': serviceId});
-                        },
-                        label: const Text('Добавить предупреждение')),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                  ],
+                child: SizedBox(
+                  height: 40,
+                  child: ListView(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      OutlinedButton.icon(
+                          icon: const Icon(Icons.percent_rounded),
+                          onPressed: () {
+                            context.pushNamed(
+                                const ServiceDiscountUpsert().route,
+                                queryParameters: {'serviceId': serviceId});
+                          },
+                          label: const Text('Добавить скидку')),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      OutlinedButton.icon(
+                          icon: const Icon(Icons.info_outline_rounded),
+                          onPressed: () {
+                            context.pushNamed(const ServiceInfoUpsert().route,
+                                queryParameters: {'serviceId': serviceId});
+                          },
+                          label: const Text('Добавить информацию')),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      OutlinedButton.icon(
+                          icon: const Icon(Icons.warning_amber_rounded),
+                          onPressed: () {
+                            context.pushNamed(const ServiceAlertUpsert().route,
+                                queryParameters: {'serviceId': serviceId});
+                          },
+                          label: const Text('Добавить предупреждение')),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
             ],
             if (discounts.isNotEmpty)
               ...discounts.map((item) => Padding(

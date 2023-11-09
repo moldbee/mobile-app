@@ -46,7 +46,7 @@ class ServiceInfoUpsert extends HookWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Добавление скидки'),
+          title: const Text('Добавление информацию'),
           actions: [
             if (infoId != null) ...[
               IconButton(

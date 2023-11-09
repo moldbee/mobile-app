@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -46,30 +45,16 @@ class ServiceUpsert extends HookWidget {
     final hasSelectedImage = pickedImage.value is XFile;
     final formState =
         usePreservedState('new-form-state', context, <String, dynamic>{
-      'title_ro': 'McDonalds',
-      'title_ru': 'Макдоналдс',
-      'phone': '+373 79 123 456',
+      'title_ro': '',
+      'title_ru': '',
+      'phone': '',
       'category': categoryId,
-      'message': 'https://t.me/mcdonalds',
-      'website': 'https://mcdonalds.md',
-      'place': 'https://maps.app.goo.gl/Mgh9XZyGeHrQ7GBBA',
-      'description_ro':
-          'McDonald’s este cel mai mare lanț de restaurante cu servire rapidă din lume, cu peste 37.000 de restaurante în peste 100 de țări. În România, McDonald’s este prezent din anul 1995, iar în prezent are 85 de restaurante în 30 de orașe din țară.',
-      'description_ru':
-          'Макдоналдс — американская корпорация, крупнейшая в мире сеть ресторанов быстрого питания. Штаб-квартира — в городе Окленд, штат Калифорния. В настоящее время входит в число 100 крупнейших корпораций США по версии журнала Fortune.',
+      'message': '',
+      'website': '',
+      'place': '',
+      'description_ro': '',
+      'description_ru': '',
     });
-
-    useEffect(() {
-      if (serviceInfos.value.length > serviceInfosLastLength.value) {
-        Timer(const Duration(milliseconds: 300), () {
-          scrollController.animateTo(scrollController.position.maxScrollExtent,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeOut);
-        });
-      }
-
-      return null;
-    }, [serviceInfos.value]);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Добавление услуги'), actions: [
@@ -100,7 +85,7 @@ class ServiceUpsert extends HookWidget {
                 }
                 final upsertedItem = await supabase.from('services').insert({
                   ...formState.value,
-                  'logo': uploadedAvatarFileUrl,  
+                  'logo': uploadedAvatarFileUrl,
                   'category': categoryId,
                 }).select();
 
@@ -165,7 +150,6 @@ class ServiceUpsert extends HookWidget {
               const TextInput(
                 name: 'description_ro',
                 title: 'Описание (RO)',
-                minLines: 4,
               ),
               SizedBox(
                 height: itemsSpacing,
@@ -173,158 +157,6 @@ class ServiceUpsert extends HookWidget {
               const TextInput(
                 name: 'description_ru',
                 title: 'Описание (RU)',
-                minLines: 4,
-              ),
-              if (!serviceInfos.value.isEmpty) ...[
-                SizedBox(
-                  height: itemsSpacing,
-                ),
-                ...serviceInfos.value.asMap().entries.map((field) {
-                  final inputController = TextEditingController();
-                  inputController.value = const TextEditingValue(
-                      text: 'Deserunt minim id reprehenderit fugiat.');
-
-                  return Padding(
-                    padding: EdgeInsets.only(
-                        bottom: serviceInfos.value.length > 1 ? 30 : 0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            children: [
-                              TextField(
-                                controller: inputController,
-                                minLines: 1,
-                                onChanged: (value) {
-                                  serviceInfos.value[field.key]['title_ro'] =
-                                      value;
-                                },
-                                maxLines: double.maxFinite.toInt(),
-                                decoration: InputDecoration(
-                                    labelText: field.value['label'] + ' (RO)',
-                                    prefixIcon: Icon(
-                                      iconsByStatus[field.value['type']],
-                                      color: iconColorByStatus[
-                                          field.value['type']],
-                                    )),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              TextField(
-                                controller: inputController,
-                                minLines: 1,
-                                onChanged: (value) {
-                                  serviceInfos.value[field.key]['title_ru'] =
-                                      value;
-                                },
-                                maxLines: double.maxFinite.toInt(),
-                                decoration: InputDecoration(
-                                    labelText: field.value['label'] + ' (RU)',
-                                    prefixIcon: Icon(
-                                      iconsByStatus[field.value['type']],
-                                      color: iconColorByStatus[
-                                          field.value['type']],
-                                    )),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          onTap: () {
-                            serviceInfos.value = serviceInfos.value
-                                .where((item) =>
-                                    item != serviceInfos.value[field.key])
-                                .toList();
-                          },
-                          child: Icon(Icons.close_rounded,
-                              color: Colors.grey.shade400),
-                        ),
-                      ],
-                    ),
-                  );
-                }),
-              ],
-              SizedBox(
-                height: itemsSpacing,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FilledButton(
-                      onPressed: () {
-                        serviceInfos.value = [
-                          ...serviceInfos.value,
-                          {
-                            'id': const Uuid().v4(),
-                            'type': 'info',
-                            'label': 'Информация',
-                          }
-                        ];
-                      },
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.blue.shade400)),
-                      child: const Icon(
-                        Icons.info_rounded,
-                        color: Colors.white,
-                      )),
-                  FilledButton(
-                      onPressed: () {
-                        serviceInfos.value = [
-                          ...serviceInfos.value,
-                          {
-                            'type': 'warning',
-                            'label': 'Предупреждение',
-                          }
-                        ];
-                      },
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.red.shade400)),
-                      child: const Icon(
-                        Icons.warning_rounded,
-                        color: Colors.white,
-                      )),
-                  FilledButton(
-                      onPressed: () {
-                        serviceInfos.value = [
-                          ...serviceInfos.value,
-                          {
-                            'type': 'discount',
-                            'label': 'Скидка',
-                          }
-                        ];
-                      },
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.red.shade400)),
-                      child: const Icon(
-                        Icons.percent_rounded,
-                        color: Colors.white,
-                      )),
-                  FilledButton(
-                      onPressed: () {
-                        serviceInfos.value = [
-                          ...serviceInfos.value,
-                          {
-                            'type': 'price',
-                            'label': 'Цены',
-                          }
-                        ];
-                      },
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.cyan)),
-                      child: const Icon(
-                        Icons.attach_money_rounded,
-                        color: Colors.white,
-                      )),
-                ],
               ),
             ],
           )),

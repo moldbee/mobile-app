@@ -5,12 +5,12 @@ import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/services/controller.dart';
 import 'package:smart_city/features/services/screens/category_upsert.dart';
 import 'package:smart_city/features/services/screens/items.dart';
-import 'package:smart_city/features/services/widgets/tile.dart';
 import 'package:smart_city/shared/config/permissions.dart';
+import 'package:smart_city/shared/widgets/tile.dart';
 
 class ServicesScreen extends HookWidget {
-  final String route = '/services';
   const ServicesScreen({Key? key}) : super(key: key);
+  final String route = '/services';
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +23,10 @@ class ServicesScreen extends HookWidget {
         actions: [
           if (Permissions().getForServiceCategories()) ...[
             IconButton(
-              onPressed: () async {
-                context.push(const ServiceCategoryUpsert().route);
-              },
-              icon: const Icon(Icons.add_home_work_rounded)),
+                onPressed: () async {
+                  context.push(const ServiceCategoryUpsert().route);
+                },
+                icon: const Icon(Icons.add_home_work_rounded)),
           ]
         ],
       ),
@@ -41,9 +41,10 @@ class ServicesScreen extends HookWidget {
                         'categoryId': element['id'].toString()
                       });
                 },
-                child: ServiceTile(
+                child: Tile(
                   title: element['title_ru'],
                   icon: IconData(element['icon'], fontFamily: 'MaterialIcons'),
+                  iconColor: Colors.orange.shade300,
                 ),
               );
             }).toList(),

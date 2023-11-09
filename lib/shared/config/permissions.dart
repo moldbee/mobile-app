@@ -21,9 +21,8 @@ class Permissions {
     return role == 'admin';
   }
 
-  getForCompany(String? companyId) {
+  getForCompany(int? profileId) {
     return role == 'admin' ||
-        role == 'user' && profileController.companyId.value == companyId;
+        (role == 'user' && profileController.id.value == profileId.toString());
   }
-
 }

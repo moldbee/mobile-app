@@ -10,10 +10,11 @@ import 'package:smart_city/features/news/widgets/event_tile.dart';
 import 'package:smart_city/features/news/widgets/tile.dart';
 import 'package:smart_city/shared/config/permissions.dart';
 import 'package:smart_city/shared/hooks/use_preserved_state.dart';
+import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
 class NewsScreen extends HookWidget {
   const NewsScreen({Key? key}) : super(key: key);
-  final String route = '/';
+  final String route = '/info';
 
   @override
   Widget build(BuildContext context) {
@@ -61,14 +62,11 @@ class NewsScreen extends HookWidget {
             return TabBarView(children: [
               RefreshIndicator(
                 onRefresh: () async {
-                  await newsController.fetchNews();
+                  newsController.refetchNews();
                 },
-                child: ListView.separated(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                child: InfiniteList(
                   itemBuilder: (context, index) {
-                    final news = newsController.sortedByTimeNews[index];
-
+                    final news = newsController.news[index];
                     return NewsTile(
                       id: news['id'],
                       createdAt: DateTime.parse(news['created_at']),
@@ -76,19 +74,34 @@ class NewsScreen extends HookWidget {
                       imageUrl: news['image'],
                     );
                   },
-                  itemCount: newsController.sortedByTimeNews.length,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                   separatorBuilder: (BuildContext context, int index) {
                     return const SizedBox(
                       height: 20,
                     );
+                  },
+                  loadingBuilder: (context) {
+                    return const Padding(
+                      padding: EdgeInsets.only(top: 50),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  },
+                  isLoading: newsController.isLoading.value,
+                  itemCount: newsController.news.length,
+                  hasReachedMax: newsController.hasReachedMax.value,
+                  onFetchData: () {
+                    newsController.fetchNews(
+                        start: newsController.news.length,
+                        end: newsController.news.length + 10);
                   },
                 ),
               ),
               RefreshIndicator(
                 onRefresh: () async {
                   await eventsController.fetchEvents();
-
-                  return;
                 },
                 child: ListView.builder(
                     padding: const EdgeInsets.symmetric(
