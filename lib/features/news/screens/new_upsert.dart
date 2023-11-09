@@ -52,7 +52,7 @@ class NewsUpsertScreen extends HookWidget {
       }
     }
 
-    dynamic payload = {
+    dynamic defaultValue = {
       'title_ro':
           'Salutare, lume! Eu sunt o știre scrisa in limba română și nu in limba rusă',
       'title_ru':
@@ -64,7 +64,7 @@ class NewsUpsertScreen extends HookWidget {
     };
 
     if (id != null) {
-      payload = {
+      defaultValue = {
         'title_ro': editingNew['title_ro'],
         'title_ru': editingNew['title_ru'],
         'subtitle_ro': editingNew['subtitle_ro'],
@@ -73,7 +73,7 @@ class NewsUpsertScreen extends HookWidget {
         'description_ru': editingNew['description_ru'],
       };
     }
-    final formState = usePreservedState('new-form-state', context, payload);
+    final formState = usePreservedState('new-form-state', context, defaultValue);
     final isLoading = useState(false);
 
     void uploadNew() async {

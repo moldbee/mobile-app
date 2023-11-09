@@ -20,7 +20,6 @@ class NewsController extends GetxController {
   }
 
   Future<dynamic> fetchNews({int start = 0, int end = 10}) async {
-    print('fetching news');
     try {
       isLoading.value = true;
       final newNews = await supabase.from('news').select().range(start, end);

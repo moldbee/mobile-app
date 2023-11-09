@@ -139,6 +139,7 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               pageBuilder: (context, state) => MaterialPage(
                       child: ServiceUpsert(
                     categoryId: state.uri.queryParameters['categoryId'],
+                    serviceId: state.uri.queryParameters['serviceId'],
                   ))),
           GoRoute(
               path: const ServicesCompaniesScreen().route,

@@ -6,6 +6,7 @@ import 'package:smart_city/features/services/controller.dart';
 import 'package:smart_city/features/services/screens/alert_upsert.dart';
 import 'package:smart_city/features/services/screens/discount_upsert.dart';
 import 'package:smart_city/features/services/screens/info_upsert.dart';
+import 'package:smart_city/features/services/screens/upsert.dart';
 import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/config/permissions.dart';
 import 'package:smart_city/shared/helpers/show_delete_confirm.dart';
@@ -32,8 +33,15 @@ class ServiceDetailsScreen extends HookWidget {
         title: Text(
           selectedService['title_ru'] as String,
         ),
+        centerTitle: true,
         actions: [
           if (Permissions().getForCompany(selectedService['owner'])) ...[
+            IconButton(
+                onPressed: () {
+                  context.pushNamed(ServiceUpsert().route,
+                      queryParameters: {'serviceId': serviceId, 'categoryId': selectedService['category'].toString()});
+                },
+                icon: const Icon(Icons.edit_rounded)),
             IconButton(
                 onPressed: () async {
                   await showDeleteConfirm(() async {
@@ -46,7 +54,7 @@ class ServiceDetailsScreen extends HookWidget {
                     context.pop();
                   }, context, disableDoublePop: true);
                 },
-                icon: const Icon(Icons.delete_rounded))
+                icon: const Icon(Icons.delete_rounded)),
           ]
         ],
       ),

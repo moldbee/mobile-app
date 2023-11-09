@@ -27,24 +27,17 @@ final iconColorByStatus = {
 };
 
 class ServiceUpsert extends HookWidget {
-  ServiceUpsert({Key? key, this.categoryId}) : super(key: key);
+  ServiceUpsert({Key? key, this.categoryId, this.serviceId}) : super(key: key);
   final String route = '/service/upsert';
   final ImagePicker _imagePicker = ImagePicker();
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   final double itemsSpacing = 30;
   final String? categoryId;
+  final String? serviceId;
 
   @override
   Widget build(BuildContext context) {
-    final pickedImage = usePreservedState('picked-service-image', context);
-    final serviceInfos = usePreservedState('info-fields', context, []);
-    final servicesController = Get.find<ServicesController>();
-    final serviceInfosLastLength = usePreservedState(
-        'info-fields-last-length', context, serviceInfos.value.length);
-    final scrollController = useScrollController();
-    final hasSelectedImage = pickedImage.value is XFile;
-    final formState =
-        usePreservedState('new-form-state', context, <String, dynamic>{
+    dynamic defaultValue = {
       'title_ro': '',
       'title_ru': '',
       'phone': '',
@@ -54,7 +47,29 @@ class ServiceUpsert extends HookWidget {
       'place': '',
       'description_ro': '',
       'description_ru': '',
-    });
+    };
+    final servicesController = Get.find<ServicesController>();
+    final existingService = servicesController.services
+        .firstWhere((element) => element['id'].toString() == serviceId);
+    final pickedImage = usePreservedState('picked-service-image', context);
+    final hasSelectedImage = pickedImage.value != null;
+    if (serviceId != null) {
+      pickedImage.value = existingService['logo'];
+      defaultValue = {
+        'id': existingService['id'],
+        'title_ro': existingService['title_ro'],
+        'title_ru': existingService['title_ru'],
+        'phone': existingService['phone'],
+        'category': categoryId,
+        'message': existingService['message'],
+        'website': existingService['website'],
+        'place': existingService['place'],
+        'description_ro': existingService['description_ro'],
+        'description_ru': existingService['description_ru'],
+      };
+    }
+    final formState =
+        usePreservedState('new-form-state', context, defaultValue);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Добавление услуги'), actions: [
@@ -83,20 +98,12 @@ class ServiceUpsert extends HookWidget {
                     printError(info: error.toString());
                   }
                 }
-                final upsertedItem = await supabase.from('services').insert({
+                await supabase.from('services').upsert({
                   ...formState.value,
                   'logo': uploadedAvatarFileUrl,
                   'category': categoryId,
                 }).select();
 
-                await supabase.from('services_infos').insert(serviceInfos.value
-                    .map((item) => {
-                          'title_ru': item['title_ru'],
-                          'title_ro': item['title_ro'],
-                          'type': item['type'],
-                          'service': upsertedItem.first['id'],
-                        })
-                    .toList());
                 await servicesController.fetchServices();
                 if (!context.mounted) return;
                 context.pop();
@@ -114,13 +121,14 @@ class ServiceUpsert extends HookWidget {
           },
           key: _formKey,
           child: ListView(
-            controller: scrollController,
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
             children: [
               if (hasSelectedImage) ...[
                 ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.file(File(pickedImage.value!.path))),
+                    child: serviceId != null && pickedImage.value is String
+                        ? Image.network(pickedImage.value)
+                        : Image.file(File(pickedImage.value?.path))),
                 const SizedBox(height: 30),
               ],
               const TextInput(name: 'title_ro', title: 'Название (RO)'),
