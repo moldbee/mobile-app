@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
         'iconColor': Colors.red.shade500,
       },
       {
-        'title': 'Компании',
+        'title': 'Услуги',
         'icon': Icons.apartment_rounded,
         'iconColor': Colors.orange.shade300,
         'route': const ServicesScreen().route

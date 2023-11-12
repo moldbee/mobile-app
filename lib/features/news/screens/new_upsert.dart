@@ -67,13 +67,12 @@ class NewsUpsertScreen extends HookWidget {
       defaultValue = {
         'title_ro': editingNew['title_ro'],
         'title_ru': editingNew['title_ru'],
-        'subtitle_ro': editingNew['subtitle_ro'],
-        'subtitle_ru': editingNew['subtitle_ru'],
         'description_ro': editingNew['description_ro'],
         'description_ru': editingNew['description_ru'],
       };
     }
-    final formState = usePreservedState('new-form-state', context, defaultValue);
+    final formState =
+        usePreservedState('new-form-state', context, defaultValue);
     final isLoading = useState(false);
 
     void uploadNew() async {
@@ -192,20 +191,6 @@ class NewsUpsertScreen extends HookWidget {
                     validators: [
                       FormBuilderValidators.required(),
                     ]),
-                SizedBox(
-                  height: itemsSpacing,
-                ),
-                const TextInput(
-                  name: 'subtitle_ro',
-                  title: 'Подзаголовок (RO)',
-                ),
-                SizedBox(
-                  height: itemsSpacing,
-                ),
-                const TextInput(
-                  name: 'subtitle_ru',
-                  title: 'Подзаголовок (RU)',
-                ),
                 SizedBox(
                   height: itemsSpacing,
                 ),
