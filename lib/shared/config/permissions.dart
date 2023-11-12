@@ -18,7 +18,7 @@ class Permissions {
   }
 
   getForServices() {
-    return role == 'admin';
+    return role == 'dadawdawdawawdaw';
   }
 
   getForCompany(int? profileId) {
