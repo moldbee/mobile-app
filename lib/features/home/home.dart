@@ -40,6 +40,26 @@ class HomeScreen extends StatelessWidget {
         'icon': Icons.event_rounded,
         'iconColor': Colors.orange.shade300,
       },
+      {
+        'title': 'Экстренные службы',
+        'icon': Icons.emergency_rounded,
+        'iconColor': Colors.red.shade500,
+      },
+      {
+        'title': 'Настройки',
+        'icon': Icons.settings_rounded,
+        'iconColor': Colors.orange.shade300,
+      },
+      {
+        'title': 'О приложении',
+        'icon': Icons.info_rounded,
+        'iconColor': Colors.orange.shade300,
+      },
+      {
+        'title': 'Поддержка',
+        'icon': Icons.support_rounded,
+        'iconColor': Colors.orange.shade300,
+      },
     ];
     return Scaffold(
       appBar: AppBar(

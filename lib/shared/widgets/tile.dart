@@ -38,7 +38,7 @@ class Tile extends StatelessWidget {
               style: TextStyle(
                   fontSize: 14,
                   overflow: TextOverflow.ellipsis,
-                  color: Colors.grey.shade800,
+                  color: Colors.grey.shade700,
                   fontWeight: FontWeight.w500),
             ),
           ),
