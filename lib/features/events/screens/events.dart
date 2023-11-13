@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smart_city/features/events/controller.dart';
-import 'package:smart_city/features/news/widgets/event_tile.dart';
+import 'package:smart_city/features/events/widgets/tile.dart';
 
 class EventsTab extends StatelessWidget {
   const EventsTab({Key? key}) : super(key: key);
