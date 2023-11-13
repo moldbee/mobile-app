@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:smart_city/shared/widgets/call_button.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class EmergenciesScreen extends StatelessWidget {
   const EmergenciesScreen({Key? key}) : super(key: key);
@@ -36,7 +35,7 @@ class EmergenciesScreen extends StatelessWidget {
       {
         'title': 'Газовая служба',
         'icon': Icons.propane_tank_rounded,
-        'number': '102',
+        'number': '904',
         'iconColor': Colors.orange.shade500,
       },
       {
@@ -48,9 +47,10 @@ class EmergenciesScreen extends StatelessWidget {
       {
         'title': 'Аварийная служба лифтов МП ЖКХ',
         'icon': Icons.elevator_rounded,
-        'number': '904',
+        'number': '0231 8-00-49',
         'iconColor': Colors.orange.shade500,
       },
+      
     ];
 
     return Scaffold(
