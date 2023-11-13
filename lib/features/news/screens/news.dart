@@ -14,7 +14,7 @@ import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
 class NewsScreen extends HookWidget {
   const NewsScreen({Key? key}) : super(key: key);
-  final String route = '/info';
+  final String route = '/';
 
   @override
   Widget build(BuildContext context) {

@@ -164,8 +164,8 @@ class CommentsBottomSheet extends HookWidget {
                       children: [
                         CircleAvatar(
                           radius: 18,
-                          backgroundImage:
-                              NetworkImage(comment['created_by']['avatar']),
+                          backgroundImage: NetworkImage(
+                              comment['created_by']['avatar'] ?? defaultAvatar),
                         ),
                         const SizedBox(
                           width: 10,
@@ -350,7 +350,7 @@ class Comment extends HookWidget {
   final String nick;
   final String newId;
   final Function(String? id) setSelectedForReplyComment;
-  final String avatar;
+  final String? avatar;
   final String createdAt;
   final void Function(String id) onEdit;
   final int? replyCommentId;
@@ -392,7 +392,7 @@ class Comment extends HookWidget {
                 children: [
                   CircleAvatar(
                     radius: 26,
-                    backgroundImage: NetworkImage(avatar),
+                    backgroundImage: NetworkImage(avatar ?? defaultAvatar),
                   ),
                   Wrap(
                     direction: Axis.vertical,

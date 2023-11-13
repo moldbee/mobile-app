@@ -36,7 +36,7 @@ class Tile extends StatelessWidget {
               title.toString(),
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 13,
                   overflow: TextOverflow.ellipsis,
                   color: Colors.grey.shade700,
                   fontWeight: FontWeight.w500),

@@ -37,13 +37,15 @@ class ProfileSignUpScreen extends HookWidget {
           }).eq('uid', supabase.auth.currentUser!.id);
           final profile = await supabase
               .from('profiles')
-              .select()
+              .select('*, role(name)')
               .eq('uid', supabase.auth.currentUser!.id)
               .single();
           profileController.setProfileData(
-              avatar: profile['avatar'],
+              role: profile['role']['name'],
               nick: profile['nick'],
-              email: profile['email']);
+              email: profile['email'],
+              uid: profile['uid'],
+              id: profile['id'].toString());
           if (!context.mounted) return;
           context.go(ProfileScreen().route);
         }
@@ -117,20 +119,6 @@ class ProfileSignUpScreen extends HookWidget {
                     title: 'Пароль',
                     isPassword: true,
                   ),
-                  spacing,
-                  TextInput(
-                    validators: [
-                      FormBuilderValidators.required(
-                        errorText: 'Это поле обязательно для заполнения',
-                      ),
-                      FormBuilderValidators.equal(
-                          _formKey.currentState?.instantValue['password'] ?? '',
-                          errorText: 'Пароли не совпадают')
-                    ],
-                    name: 'password2',
-                    title: 'Введите пароль еще раз',
-                    isPassword: true,
-                  ),
                   const SizedBox(
                     height: 10,
                   ),
@@ -166,7 +154,7 @@ class ProfileSignUpScreen extends HookWidget {
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 10),
+                          padding: const EdgeInsets.only(top: 20),
                           child: FilledButton(
                               onPressed: isAgree.value ? signUp : null,
                               child: const Text(

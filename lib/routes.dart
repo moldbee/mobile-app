@@ -62,24 +62,11 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
     },
     branches: [
       StatefulShellBranch(
-        initialLocation: const HomeScreen().route,
-        routes: [
-          GoRoute(
-              path: const HomeScreen().route,
-              pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: HomeScreen())),
-          GoRoute(
-              path: const EmergenciesScreen().route,
-              pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: EmergenciesScreen())),
-        ],
-      ),
-      StatefulShellBranch(
         routes: [
           GoRoute(
               path: const NewsScreen().route,
               pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: NewsScreen())),
+                  const MaterialPage(child: NewsScreen())),
           GoRoute(
               name: NewsUpsertScreen().route,
               path: NewsUpsertScreen().route,
@@ -112,7 +99,7 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
           GoRoute(
               path: const ServicesScreen().route,
               pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: ServicesScreen())),
+                  const MaterialPage(child: ServicesScreen())),
           GoRoute(
               path: const ServiceCategoryUpsert().route,
               pageBuilder: (context, state) =>
@@ -164,6 +151,19 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
         ],
       ),
       StatefulShellBranch(
+        initialLocation: const EmergenciesScreen().route,
+        routes: [
+          GoRoute(
+              path: const HomeScreen().route,
+              pageBuilder: (context, state) =>
+                  const MaterialPage(child: HomeScreen())),
+          GoRoute(
+              path: const EmergenciesScreen().route,
+              pageBuilder: (context, state) =>
+                  const MaterialPage(child: EmergenciesScreen())),
+        ],
+      ),
+      StatefulShellBranch(
         initialLocation: ProfileSignInScreen().route,
         routes: [
           GoRoute(
@@ -200,7 +200,7 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
           GoRoute(
               path: ProfileScreen().route,
               pageBuilder: (context, state) =>
-                  NoTransitionPage(child: ProfileScreen())),
+                  MaterialPage(child: ProfileScreen())),
           GoRoute(
               path: const PolicyScreen().route,
               pageBuilder: (context, state) =>

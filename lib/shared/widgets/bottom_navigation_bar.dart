@@ -61,23 +61,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
       destinations: <Widget>[
         NavigationDestination(
           selectedIcon: Icon(
-            Icons.home_rounded,
-            size: 28,
-            weight: 900,
-            opticalSize: 25,
-            color: bottomNavbarSelectedIconColor,
-          ),
-          icon: Icon(
-            Icons.home_rounded,
-            weight: 900,
-            opticalSize: 25,
-            size: 28,
-            color: bottomNavbarIconColor,
-          ),
-          label: '',
-        ),
-        NavigationDestination(
-          selectedIcon: Icon(
             Icons.newspaper_rounded,
             color: bottomNavbarSelectedIconColor,
           ),
@@ -94,6 +77,23 @@ class CustomBottomNavigationBar extends StatelessWidget {
           ),
           icon: Icon(
             Icons.widgets_rounded,
+            color: bottomNavbarIconColor,
+          ),
+          label: '',
+        ),
+        NavigationDestination(
+          selectedIcon: Icon(
+            Icons.emergency_rounded,
+            size: 28,
+            weight: 900,
+            opticalSize: 25,
+            color: bottomNavbarSelectedIconColor,
+          ),
+          icon: Icon(
+            Icons.emergency_rounded,
+            weight: 900,
+            opticalSize: 25,
+            size: 28,
             color: bottomNavbarIconColor,
           ),
           label: '',

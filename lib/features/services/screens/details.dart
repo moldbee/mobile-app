@@ -8,6 +8,7 @@ import 'package:smart_city/features/services/screens/discount_upsert.dart';
 import 'package:smart_city/features/services/screens/info_upsert.dart';
 import 'package:smart_city/shared/config/permissions.dart';
 import 'package:smart_city/shared/utils/formatter.dart';
+import 'package:smart_city/shared/widgets/call_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ServiceDetailsScreen extends HookWidget {
@@ -85,19 +86,10 @@ class ServiceDetailsScreen extends HookWidget {
                         spacing: 10,
                         runAlignment: WrapAlignment.center,
                         children: [
-                          IconButton(
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStatePropertyAll(
-                                      Colors.green.shade600)),
-                              onPressed: () {
-                                launchUrl(Uri(
-                                    scheme: 'tel',
-                                    path: selectedService['phone']));
-                              },
-                              icon: const Icon(
-                                Icons.phone_rounded,
-                                color: Colors.white,
-                              )),
+                          CallButton(
+                              uri: Uri(
+                                  scheme: 'tel',
+                                  path: selectedService['phone'])),
                           IconButton(
                               style: ButtonStyle(
                                   backgroundColor: MaterialStatePropertyAll(
