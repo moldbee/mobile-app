@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smart_city/features/home/home.dart';
+import 'package:smart_city/features/home/screens/emergencies.dart';
+import 'package:smart_city/features/home/screens/home.dart';
 import 'package:smart_city/features/news/screens/details.dart';
 import 'package:smart_city/features/news/screens/event_upsert.dart';
 import 'package:smart_city/features/news/screens/new_upsert.dart';
@@ -67,6 +68,10 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               path: const HomeScreen().route,
               pageBuilder: (context, state) =>
                   const NoTransitionPage(child: HomeScreen())),
+          GoRoute(
+              path: const EmergenciesScreen().route,
+              pageBuilder: (context, state) =>
+                  const NoTransitionPage(child: EmergenciesScreen())),
         ],
       ),
       StatefulShellBranch(

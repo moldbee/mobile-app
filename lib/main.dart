@@ -21,8 +21,8 @@ void main() async {
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNheGhrZWtvZWxveXVqY3NvdmJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTQyMDM3MjUsImV4cCI6MjAwOTc3OTcyNX0.FwEigv5tFxLaKEfGZvvyg_JSSxYUkN3JFqKqNfTsavI',
   );
-  // await GetStorage().erase();
   await GetStorage.init();
+  await GetStorage().erase();
   Get.put(ProfileController());
   Get.put(NewsController());
   Get.put(EventsController());

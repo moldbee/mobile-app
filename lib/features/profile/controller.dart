@@ -3,7 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:smart_city/main.dart';
 
 const defaultAvatar =
-    'https://caxhkekoeloyujcsovba.supabase.co/storage/v1/object/public/avatars/avatar.jpg';
+    'https://caxhkekoeloyujcsovba.supabase.co/storage/v1/object/public/avatars/avatar.png';
 
 class ProfileController extends GetxController {
   final RxnString nick = RxnString();
@@ -19,13 +19,17 @@ class ProfileController extends GetxController {
     super.onInit();
     final box = GetStorage();
     if (supabase.auth.currentUser != null) {
-      setProfileData(
-          nick: box.read('nick'),
-          email: box.read('email'),
-          avatar: box.read('avatar'),
-          role: box.read('role'),
-          uid: box.read('uid'),
-          id: box.read('id'));
+      try {
+        setProfileData(
+            nick: box.read('nick'),
+            email: box.read('email'),
+            avatar: box.read('avatar'),
+            role: box.read('role'),
+            uid: box.read('uid'),
+            id: box.read('id'));
+      } catch (e) {
+        printError(info: 'Failed to retrieve profile data');
+      }
     } else {
       clearProfileData();
     }
@@ -84,12 +88,12 @@ class ProfileController extends GetxController {
       {String? nick,
       String? email,
       String? id,
-      String avatar = defaultAvatar,
+      String? avatar,
       String? role,
       String? uid}) async {
     this.nick.value = nick;
     this.email.value = email;
-    this.avatar.value = avatar;
+    this.avatar.value = avatar ?? defaultAvatar;
     this.role.value = role;
     this.uid.value = uid;
     this.id.value = id;

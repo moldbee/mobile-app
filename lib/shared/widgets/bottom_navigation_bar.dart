@@ -33,6 +33,22 @@ class CustomBottomNavigationBar extends StatelessWidget {
             profileController.avatar.value,
           ),
         ));
+
+    final selectedAvatarIcon = Container(
+        decoration: const BoxDecoration(
+            border: Border.fromBorderSide(BorderSide(
+              color: Colors.orange,
+              width: 2,
+            )),
+            color: Colors.transparent,
+            shape: BoxShape.circle),
+        child: CircleAvatar(
+          backgroundColor: Colors.transparent,
+          radius: 12,
+          backgroundImage: NetworkImage(
+            profileController.avatar.value,
+          ),
+        ));
     return NavigationBar(
       selectedIndex: index as int,
       surfaceTintColor: Colors.transparent,
@@ -85,7 +101,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
         Obx(() {
           return NavigationDestination(
             selectedIcon: profileController.uid.value != null
-                ? avatarIcon
+                ? selectedAvatarIcon
                 : selectedAccountIcon,
             icon:
                 profileController.uid.value != null ? avatarIcon : accountIcon,
