@@ -7,10 +7,10 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:smart_city/features/news/news_controller.dart';
-import 'package:smart_city/features/news/screens/news.dart';
+import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/hooks/use_preserved_state.dart';
+import 'package:smart_city/shared/screens/info.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';
 import 'package:uuid/uuid.dart';
 
@@ -53,14 +53,10 @@ class NewsUpsertScreen extends HookWidget {
     }
 
     dynamic defaultValue = {
-      'title_ro':
-          'Salutare, lume! Eu sunt o știre scrisa in limba română și nu in limba rusă',
-      'title_ru':
-          'Привет, мир! Я новость написанная на русском языке, а не на румынском',
-      'description_ro':
-          'Salutare, lume! Eu sunt o știre scrisa in limba română și nu in limba rusă. Apropo am acest text este scris de Github Copilot. Nu știu ce altceva sa scriu, asa ca scriu ce scrie Github Copilot. Id aliquip nulla amet tempor minim Lorem veniam anim quis in cillum anim. Consequat et irure nisi fugiat ullamco laboris esse pariatur proident fugiat. Occaecat ea tempor eiusmod culpa aliqua exercitation aliqua nulla consequat officia dolor minim cupidatat. Irure fugiat sint nisi adipisicing non ut pariatur adipisicing irure sunt id eiusmod nulla.',
-      'description_ru':
-          'Привет, мир! Я новость написанная на русском языке, а не на румынском. Кстати этот текст написан Github Copilot. Я не знаю что еще написать, поэтому пишу что пишет Github Copilot. Id aliquip nulla amet tempor minim Lorem veniam anim quis in cillum anim. Consequat et irure nisi fugiat ullamco laboris esse pariatur proident fugiat. Occaecat ea tempor eiusmod culpa aliqua exercitation aliqua nulla consequat officia dolor minim cupidatat. Irure fugiat sint nisi adipisicing non ut pariatur adipisicing irure sunt id eiusmod nulla.',
+      'title_ro': '',
+      'title_ru': '',
+      'description_ro': '',
+      'description_ru': '',
     };
 
     if (id != null) {
@@ -108,7 +104,7 @@ class NewsUpsertScreen extends HookWidget {
           await newsController
               .createNew({...formValue, 'image': uploadedImageFileUrl});
           if (!context.mounted) return;
-          context.go(const NewsScreen().route);
+          context.go(const InfoScreen().route);
         }
       } catch (e) {
         // ignore: avoid_print

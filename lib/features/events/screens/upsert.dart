@@ -3,7 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smart_city/features/news/events_controller.dart';
+import 'package:smart_city/features/events/controller.dart';
 import 'package:smart_city/shared/widgets/delete_confirm.dart';
 import 'package:smart_city/shared/widgets/form/date_time_picker_input.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';

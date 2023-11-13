@@ -6,7 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:smart_city/features/news/news_controller.dart';
+import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
 import 'package:smart_city/main.dart';

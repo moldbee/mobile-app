@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:smart_city/features/news/screens/event_upsert.dart';
+import 'package:smart_city/features/events/screens/upsert.dart';
 import 'package:smart_city/shared/config/permissions.dart';
 import 'package:url_launcher/url_launcher.dart';
 

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smart_city/features/home/screens/emergencies.dart';
-import 'package:smart_city/features/home/screens/home.dart';
+import 'package:smart_city/controller.dart';
+import 'package:smart_city/features/emergencies/screens/emergencies.dart';
+import 'package:smart_city/features/events/screens/upsert.dart';
 import 'package:smart_city/features/news/screens/details.dart';
-import 'package:smart_city/features/news/screens/event_upsert.dart';
-import 'package:smart_city/features/news/screens/new_upsert.dart';
-import 'package:smart_city/features/news/screens/news.dart';
+import 'package:smart_city/features/news/screens/upsert.dart';
 import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/profile/screens/comments.dart';
 import 'package:smart_city/features/profile/screens/edit.dart';
@@ -22,18 +21,18 @@ import 'package:smart_city/features/services/screens/info_upsert.dart';
 import 'package:smart_city/features/services/screens/services.dart';
 import 'package:smart_city/features/services/screens/upsert.dart';
 import 'package:smart_city/features/settings/screens/about.dart';
+import 'package:smart_city/shared/screens/info.dart';
 import 'package:smart_city/shared/screens/policy.dart';
 
 import 'features/services/screens/items.dart';
 import 'features/settings/screens/settings.dart';
-import 'shared/animations/slide_page_transition.dart';
 import 'shared/widgets/bottom_navigation_bar.dart';
 
 final GoRouter router = GoRouter(routes: <RouteBase>[
   StatefulShellRoute.indexedStack(
     builder: (context, state, navigationShell) {
       DateTime? currentBackPressTime = DateTime.now();
-
+      final globalState = Get.find<GlobalController>();
       Future<bool> onWillPop() {
         DateTime now = DateTime.now();
         if (now.difference(currentBackPressTime as DateTime) >
@@ -52,21 +51,27 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
         return Future.value(true);
       }
 
-      return Scaffold(
-        bottomNavigationBar: CustomBottomNavigationBar(
-          goBranch: navigationShell.goBranch,
-          index: navigationShell.currentIndex,
-        ),
-        body: WillPopScope(onWillPop: onWillPop, child: navigationShell),
-      );
+      return Obx(() => Scaffold(
+            floatingActionButton: globalState.isLoading.value
+                ? Container(
+                    padding: const EdgeInsets.all(10),
+                    child: const CircularProgressIndicator(),
+                  )
+                : null,
+            bottomNavigationBar: CustomBottomNavigationBar(
+              goBranch: navigationShell.goBranch,
+              index: navigationShell.currentIndex,
+            ),
+            body: WillPopScope(onWillPop: onWillPop, child: navigationShell),
+          ));
     },
     branches: [
       StatefulShellBranch(
         routes: [
           GoRoute(
-              path: const NewsScreen().route,
+              path: const InfoScreen().route,
               pageBuilder: (context, state) =>
-                  const MaterialPage(child: NewsScreen())),
+                  const MaterialPage(child: InfoScreen())),
           GoRoute(
               name: NewsUpsertScreen().route,
               path: NewsUpsertScreen().route,
@@ -154,10 +159,6 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
         initialLocation: const EmergenciesScreen().route,
         routes: [
           GoRoute(
-              path: const HomeScreen().route,
-              pageBuilder: (context, state) =>
-                  const MaterialPage(child: HomeScreen())),
-          GoRoute(
               path: const EmergenciesScreen().route,
               pageBuilder: (context, state) =>
                   const MaterialPage(child: EmergenciesScreen())),
@@ -204,7 +205,7 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
           GoRoute(
               path: const PolicyScreen().route,
               pageBuilder: (context, state) =>
-                  wrapPageSlideTransition(const PolicyScreen())),
+                  const MaterialPage(child: PolicyScreen())),
           GoRoute(
               path: const SettingsScreen().route,
               pageBuilder: (context, state) =>
@@ -212,7 +213,7 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
           GoRoute(
               path: const AboutScreen().route,
               pageBuilder: (context, state) =>
-                  wrapPageSlideTransition(const AboutScreen()))
+                  const MaterialPage(child: AboutScreen()))
         ],
       ),
     ],
