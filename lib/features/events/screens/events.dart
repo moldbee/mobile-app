@@ -10,7 +10,7 @@ class EventsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final EventsController eventsController = Get.find<EventsController>();
 
-    return RefreshIndicator(
+    return Obx(() => RefreshIndicator(
         onRefresh: () async {
           await eventsController.fetchEvents();
         },
@@ -29,6 +29,6 @@ class EventsTab extends StatelessWidget {
                   infoUrl: event['info_url'],
                   placeUrl: event['place_url']);
             },
-            itemCount: eventsController.sortedByTimeEvents.length));
+            itemCount: eventsController.sortedByTimeEvents.length)));
   }
 }

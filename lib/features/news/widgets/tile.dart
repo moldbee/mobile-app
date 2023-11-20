@@ -17,7 +17,7 @@ class NewsTile extends StatelessWidget {
   final String title;
   final String imageUrl;
   final int id;
-  final DateTime createdAt;
+  final String createdAt;
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +86,10 @@ class NewsTile extends StatelessWidget {
 class NewTime extends StatelessWidget {
   const NewTime({
     super.key,
-    this.time,
+    required this.time,
   });
 
-  final DateTime? time;
+  final String time;
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +97,7 @@ class NewTime extends StatelessWidget {
     timeago.setLocaleMessages('ru', timeago.RuMessages());
 
     return Text(
-      timeago.format(time!, locale: 'ru'),
+      timeago.format(DateTime.parse(time), locale: 'ru'),
       style: TextStyle(color: Colors.grey.shade500),
     );
   }

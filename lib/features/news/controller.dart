@@ -3,17 +3,18 @@ import 'package:smart_city/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class NewsController extends GetxController {
-  RxList<dynamic> news = <dynamic>[].obs;
-  RxBool isLoading = false.obs;
-  RxBool hasReachedMax = false.obs;
+  final news = [].obs;
+  final isLoading = false.obs;
+  final loadedAllNews = false.obs;
 
   @override
   void onInit() {
     super.onInit();
+
     fetchNews();
   }
 
-  List<dynamic> get sortedByTimeNews {
+  get newsSortedByTime {
     return news.toList()
       ..sort((a, b) => DateTime.parse(b['created_at'])
           .compareTo(DateTime.parse(a['created_at'])));
@@ -21,23 +22,17 @@ class NewsController extends GetxController {
 
   Future<dynamic> fetchNews({int start = 0, int end = 10}) async {
     try {
-      isLoading.value = true;
-      final newNews = await supabase.from('news').select().range(start, end);
-      if (newNews.length == 0) {
-        return hasReachedMax.value = true;
+      if (loadedAllNews.value) {
+        return;
       }
-      news.addAll(newNews);
-    } finally {
-      isLoading.value = false;
-    }
-  }
 
-  Future<dynamic> refetchNews() async {
-    try {
-      hasReachedMax.value = false;
       isLoading.value = true;
-      final newNews = await supabase.from('news').select().range(0, 10);
-      news.value = newNews;
+      final fetchedNews =
+          await supabase.from('news').select().range(start, end);
+      if (fetchedNews.length == 0) {
+        loadedAllNews.value = true;
+      }
+      news.addAll(fetchedNews);
     } finally {
       isLoading.value = false;
     }

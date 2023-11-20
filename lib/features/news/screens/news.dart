@@ -13,43 +13,39 @@ class NewsTab extends HookWidget {
   Widget build(BuildContext context) {
     final NewsController newsController = Get.find<NewsController>();
 
-    return RefreshIndicator(
-      onRefresh: () async {
-        newsController.refetchNews();
-      },
-      child: InfiniteList(
-        itemBuilder: (context, index) {
-          final news = newsController.news[index];
-          return NewsTile(
-            id: news['id'],
-            createdAt: DateTime.parse(news['created_at']),
-            title: news['title_ru'],
-            imageUrl: news['image'],
-          );
-        },
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-        separatorBuilder: (BuildContext context, int index) {
-          return const SizedBox(
+    return Obx(() => RefreshIndicator(
+        child: InfiniteList(
+          separatorBuilder: (context, index) => Divider(
+            color: Colors.grey.shade200,
             height: 20,
-          );
-        },
-        loadingBuilder: (context) {
-          return const Padding(
-            padding: EdgeInsets.only(top: 50),
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        },
-        isLoading: newsController.isLoading.value,
-        itemCount: newsController.news.length,
-        hasReachedMax: newsController.hasReachedMax.value,
-        onFetchData: () {
-          newsController.fetchNews(
-              start: newsController.news.length,
-              end: newsController.news.length + 10);
-        },
-      ),
-    );
+          ),
+          loadingBuilder: (context) => const Center(
+            child: Padding(
+                padding: EdgeInsets.only(top: 30),
+                child: CircularProgressIndicator()),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+          itemCount: newsController.newsSortedByTime.length,
+          isLoading: newsController.isLoading.value,
+          itemBuilder: (context, index) {
+            final newsItem = newsController.newsSortedByTime[index];
+            return NewsTile(
+              title: newsItem['title_ru'],
+              imageUrl: newsItem['image'],
+              id: newsItem['id'],
+              createdAt: newsItem['created_at'],
+            );
+          },
+          onFetchData: () async {
+            await newsController.fetchNews(
+                start: newsController.news.length,
+                end: newsController.news.length + 10);
+          },
+        ),
+        onRefresh: () async {
+          newsController.loadedAllNews.value = false;
+          newsController.news.value = [];
+          await newsController.fetchNews();
+        }));
   }
 }
