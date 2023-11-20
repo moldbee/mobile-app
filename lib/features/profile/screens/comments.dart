@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/features/news/screens/details.dart';
 import 'package:smart_city/features/profile/controller.dart';
 import 'package:timeago_flutter/timeago_flutter.dart' as timeago;
@@ -12,6 +13,7 @@ class ProfileComments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profileController = Get.find<ProfileController>();
+    final newsController = Get.find<NewsController>();
 
     return Scaffold(
         appBar: AppBar(
@@ -26,7 +28,11 @@ class ProfileComments extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        await newsController
+                            .fetchNewById(comment['new_id'].toString());
+                            
+                        if (!context.mounted) return;
                         context.pushNamed(
                           const NewsDetailsScreen().route,
                           queryParameters: {

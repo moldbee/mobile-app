@@ -55,22 +55,24 @@ class CommentsBottomSheet extends HookWidget {
               : null;
     }
 
+    final commentScrollController = ItemScrollController();
+
     final highlightIndex = comments
         ?.indexWhere((element) => element['id'].toString() == highlightId);
 
     useEffect(() {
+      print(commentScrollController.isAttached);
+      if (commentScrollController.isAttached) {
+        commentScrollController.jumpTo(
+          index: highlightIndex!,
+        );
+      }
       final highlightTimer =
           Timer.periodic(const Duration(milliseconds: 300), (timer) async {
         if (highlightId != null) {
           highlightCount.value = highlightCount.value + 1;
         }
       });
-      // Timer timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
-      //   if (newId != null) {
-      //     setComments!(await newsController.fetchCommentsForNew(newId));
-      //   }
-      // });
-
       Future.delayed(const Duration(seconds: 2), () {
         highlightTimer.cancel();
       });

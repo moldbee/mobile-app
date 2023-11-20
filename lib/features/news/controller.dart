@@ -6,6 +6,7 @@ class NewsController extends GetxController {
   final news = [].obs;
   final isLoading = false.obs;
   final loadedAllNews = false.obs;
+  final allNews = [].obs;
 
   @override
   void onInit() {
@@ -28,7 +29,7 @@ class NewsController extends GetxController {
 
       isLoading.value = true;
       final fetchedNews =
-          await supabase.from('news').select().range(start, end);
+          await supabase.from('news').select().order('id').range(start, end);
       if (fetchedNews.length == 0) {
         loadedAllNews.value = true;
       }
@@ -36,6 +37,11 @@ class NewsController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  Future<dynamic> fetchNewById(String id) async {
+    final item = await supabase.from('news').select().eq('id', id).single();
+    allNews.add(item);
   }
 
   Future<bool> getHasLiked(String commentId, String? userId) async {

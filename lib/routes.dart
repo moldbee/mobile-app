@@ -92,9 +92,8 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               pageBuilder: (context, state) {
                 return MaterialPage(
                     child: NewsDetailsScreen(
-                  id: state.uri.queryParameters['id'],
-                  commentId: state.uri.queryParameters['commentId'],
-                ));
+                        id: state.uri.queryParameters['id'],
+                        commentId: state.uri.queryParameters['commentId']));
               }),
         ],
       ),

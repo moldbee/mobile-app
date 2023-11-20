@@ -22,9 +22,13 @@ class NewsDetailsScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final newsController = Get.find<NewsController>();
-    final newData = newsController.news.firstWhere((element) {
-      return element['id'].toString() == id;
-    });
+    final newFromList = newsController.news.firstWhereOrNull(
+        (element) => element['id'].toString() == id.toString());
+
+    final newFromAll = newsController.allNews.firstWhereOrNull(
+        (element) => element['id'].toString() == id.toString());
+
+    final newData = newFromList ?? newFromAll;
     final comments = useState([]);
 
     showCommentsBottomSheet() {
