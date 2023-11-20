@@ -17,7 +17,7 @@ class NewsTab extends HookWidget {
         child: InfiniteList(
           separatorBuilder: (context, index) => Divider(
             color: Colors.grey.shade200,
-            height: 20,
+            height: 30,
           ),
           loadingBuilder: (context) => const Center(
             child: Padding(
