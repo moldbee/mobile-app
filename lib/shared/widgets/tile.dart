@@ -15,8 +15,8 @@ class Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12),
-      margin: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+      margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade300, width: 1),
         borderRadius: BorderRadius.circular(30),
@@ -36,7 +36,7 @@ class Tile extends StatelessWidget {
               title.toString(),
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 12,
                   overflow: TextOverflow.ellipsis,
                   color: Colors.grey.shade700,
                   fontWeight: FontWeight.w500),

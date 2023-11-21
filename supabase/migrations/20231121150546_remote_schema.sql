@@ -41,7 +41,7 @@ SET default_table_access_method = "heap";
 CREATE TABLE IF NOT EXISTS "public"."services_categories" (
     "id" bigint NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
-    "icon" bigint,
+    "icon" "text",
     "title_ro" "text",
     "title_ru" "text"
 );

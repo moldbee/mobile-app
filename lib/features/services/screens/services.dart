@@ -31,6 +31,7 @@ class ServicesScreen extends HookWidget {
         ],
       ),
       body: Obx(() => GridView.count(
+        padding: const EdgeInsets.only(top: 10),
             crossAxisCount: 3,
             children: servicesController.categories.map((element) {
               return GestureDetector(
