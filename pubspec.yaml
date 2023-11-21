@@ -67,6 +67,7 @@ dependencies:
   scrollable_positioned_list: ^0.3.8
   smooth_highlight: ^0.1.1
   very_good_infinite_list: ^0.7.1
+  flutter_dotenv: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -102,6 +103,7 @@ flutter:
     - assets/new_image.jpg
     - assets/avatar.jpg
     - assets/okinawa.png
+    - .env
     - assets/linella.png
     - assets/metro.png
 

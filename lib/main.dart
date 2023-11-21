@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
@@ -15,12 +16,13 @@ import 'package:smart_city/shared/config/theme.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
+  // await dotenv.load(fileName: ".env.prod");
+  await dotenv.load(fileName: ".env.dev");
   WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(
-    url: 'https://caxhkekoeloyujcsovba.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNheGhrZWtvZWxveXVqY3NvdmJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTQyMDM3MjUsImV4cCI6MjAwOTc3OTcyNX0.FwEigv5tFxLaKEfGZvvyg_JSSxYUkN3JFqKqNfTsavI',
+    url: dotenv.env['SUPABASE_URL']!,
+    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
   );
   await GetStorage.init();
   // await GetStorage().erase();
