@@ -76,7 +76,7 @@ class EmergenciesScreen extends StatelessWidget {
             );
           },
           separatorBuilder: (context, index) => Divider(
-                color: Colors.grey.shade400,
+                color: Colors.grey.shade200,
               ),
           itemCount: items.length),
     );

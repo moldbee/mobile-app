@@ -8,7 +8,6 @@ import 'package:smart_city/features/services/screens/discount_upsert.dart';
 import 'package:smart_city/features/services/screens/info_upsert.dart';
 import 'package:smart_city/shared/config/permissions.dart';
 import 'package:smart_city/shared/utils/formatter.dart';
-import 'package:smart_city/shared/widgets/call_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ServiceDetailsScreen extends HookWidget {
@@ -32,7 +31,17 @@ class ServiceDetailsScreen extends HookWidget {
           selectedService['title_ru'] as String,
         ),
         centerTitle: true,
-        actions: const [
+        actions: [
+          IconButton(
+              onPressed: () {
+                launchUrl(Uri.parse(selectedService['message']));
+              },
+              icon: const Icon(Icons.send_rounded)),
+          IconButton(
+              onPressed: () {
+                launchUrl(Uri(scheme: 'tel', path: selectedService['phone']));
+              },
+              icon: const Icon(Icons.phone_rounded))
           // if (Permissions().getForCompany(selectedService['owner'])) ...[
           //   IconButton(
           //       onPressed: () {
@@ -64,7 +73,7 @@ class ServiceDetailsScreen extends HookWidget {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (selectedService['logo'] != null) ...[
                       const SizedBox(
@@ -75,58 +84,25 @@ class ServiceDetailsScreen extends HookWidget {
                         height: 100,
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                     ],
-                    Align(
-                      alignment: Alignment.center,
-                      child: Wrap(
-                        direction: Axis.horizontal,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        spacing: 10,
-                        runAlignment: WrapAlignment.center,
-                        children: [
-                          CallButton(
-                              uri: Uri(
-                                  scheme: 'tel',
-                                  path: selectedService['phone'])),
-                          IconButton(
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStatePropertyAll(
-                                      Colors.orange.shade400)),
-                              onPressed: () {
-                                launchUrl(
-                                    Uri.parse(selectedService['website']));
-                              },
-                              icon: const Icon(
-                                Icons.public,
-                                color: Colors.white,
-                              )),
-                          IconButton(
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStatePropertyAll(
-                                      Colors.orange.shade400)),
-                              onPressed: () {
-                                launchUrl(
-                                    Uri.parse(selectedService['message']));
-                              },
-                              icon: const Icon(
-                                Icons.send_rounded,
-                                color: Colors.white,
-                              )),
-                          IconButton(
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStatePropertyAll(
-                                      Colors.orange.shade400)),
-                              onPressed: () {
-                                launchUrl(Uri.parse(selectedService['place']));
-                              },
-                              icon: const Icon(
-                                Icons.place_rounded,
-                                color: Colors.white,
-                              )),
-                        ],
-                      ),
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      alignment: WrapAlignment.center,
+                      spacing: 6,
+                      children: [
+                        Icon(
+                          Icons.public_rounded,
+                          color: Colors.grey.shade400,
+                          size: 20,
+                        ),
+                        Text(
+                          selectedService['website'],
+                          style:
+                              const TextStyle(color: Colors.blue, fontSize: 14),
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
