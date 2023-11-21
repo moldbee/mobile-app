@@ -63,9 +63,10 @@ class EventTile extends StatelessWidget {
       child: Card(
         semanticContainer: true,
         shape: RoundedRectangleBorder(
+          side: BorderSide(color: Colors.grey.shade300, width: 1),
           borderRadius: BorderRadius.circular(10),
         ),
-        elevation: 1,
+        elevation: 0,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
           child: Row(

@@ -72,7 +72,7 @@ class ServiceDetailsScreen extends HookWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (selectedService['logo'] != null) ...[
@@ -81,7 +81,7 @@ class ServiceDetailsScreen extends HookWidget {
                       ),
                       Image.network(
                         selectedService['logo'],
-                        height: 100,
+                        width: double.infinity,
                       ),
                       const SizedBox(
                         height: 20,

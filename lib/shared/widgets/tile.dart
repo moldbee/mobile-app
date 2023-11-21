@@ -15,7 +15,7 @@ class Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade300, width: 1),
@@ -39,7 +39,8 @@ class Tile extends StatelessWidget {
                   fontSize: 14,
                   overflow: TextOverflow.ellipsis,
                   color: Colors.grey.shade800,
-                  fontWeight: FontWeight.w500),
+                  fontWeight: FontWeight.w500
+                  ),
             ),
           ),
         ],

@@ -30,7 +30,7 @@ class CompanyTile extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           child: Text(
             title,
-            style: TextStyle(color: Colors.grey.shade800),
+            style: TextStyle(color: Colors.grey.shade800, fontWeight: FontWeight.w500),
           ),
         ),
       ],

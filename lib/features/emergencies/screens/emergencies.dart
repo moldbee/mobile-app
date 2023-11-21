@@ -50,7 +50,6 @@ class EmergenciesScreen extends StatelessWidget {
         'number': '0231 8-00-49',
         'iconColor': Colors.orange.shade500,
       },
-      
     ];
 
     return Scaffold(
@@ -64,7 +63,10 @@ class EmergenciesScreen extends StatelessWidget {
                   const EdgeInsets.symmetric(vertical: 20, horizontal: 14),
               title: Text(
                 items[index]['title'],
-                style: TextStyle(color: Colors.grey.shade800, fontSize: 16),
+                style: TextStyle(
+                    color: Colors.grey.shade800,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500),
               ),
               leading: Icon(
                 items[index]['icon'],
