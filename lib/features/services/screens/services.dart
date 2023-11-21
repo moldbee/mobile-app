@@ -43,7 +43,7 @@ class ServicesScreen extends HookWidget {
                 },
                 child: Tile(
                   title: element['title_ru'],
-                  icon: IconData(element['icon'], fontFamily: 'MaterialIcons'),
+                  icon: element['icon'],
                   iconColor: Colors.orange.shade300,
                 ),
               );

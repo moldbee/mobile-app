@@ -9,7 +9,7 @@ class Tile extends StatelessWidget {
   }) : super(key: key);
 
   final String? title;
-  final IconData? icon;
+  final String? icon;
   final Color? iconColor;
 
   @override
@@ -26,7 +26,7 @@ class Tile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(
-            icon,
+            IconData(int.parse(icon!), fontFamily: 'MaterialIcons'),
             color: iconColor as Color,
             size: 40,
           ),
