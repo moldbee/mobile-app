@@ -174,11 +174,11 @@ class EventTile extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 6),
                           child: Icon(
-                            Icons.attach_money_rounded,
+                            Icons.payments_rounded,
                             color: Colors.orange.shade400,
                           ),
                         ),
-                        Text(price ?? 'Бесплатно',
+                        Text(price is String ? '$price MDL' : 'Бесплатно',
                             style: TextStyle(color: Colors.grey.shade600))
                       ],
                     ),

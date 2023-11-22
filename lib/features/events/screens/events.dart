@@ -18,7 +18,7 @@ class EventsTab extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
             itemBuilder: (context, index) {
               final event = eventsController.sortedByTimeEvents[index];
-
+            
               return EventTile(
                   price: event['price'],
                   id: event['id'].toString(),
