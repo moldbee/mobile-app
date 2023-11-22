@@ -69,30 +69,48 @@ class EventTile extends StatelessWidget {
         elevation: 0,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-          child: Row(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 3),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(3, 0, 5, 0),
+                      child: Expanded(
                         child: Text('$emoji  $title',
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: Colors.grey.shade800,
                                 fontSize: 15,
                                 overflow: TextOverflow.ellipsis,
                                 fontWeight: FontWeight.w500)),
-                      )
-                    ],
+                      ),
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12),
-                    child: Row(
+                  if (Permissions().getForNewsAndEvents()) ...[
+                    GestureDetector(
+                      child: Icon(
+                        Icons.edit,
+                        size: 23,
+                        color: Colors.grey.shade400.withOpacity(0.9),
+                      ),
+                      onTap: () {
+                        context.pushNamed(EventsUpsertScreen().route,
+                            queryParameters: {'id': id});
+                      },
+                    ),
+                  ],
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 6),
@@ -107,13 +125,29 @@ class EventTile extends StatelessWidget {
                         )
                       ],
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      _launchUrl(urlToPlace);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                    GestureDetector(
+                      onTap: () {
+                        _launchUrl(urlToInfo);
+                      },
+                      child: Icon(
+                        Icons.info,
+                        size: 23,
+                        color: Colors.grey.shade400.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        _launchUrl(urlToPlace);
+                      },
                       child: Row(
                         children: [
                           Padding(
@@ -128,43 +162,14 @@ class EventTile extends StatelessWidget {
                         ],
                       ),
                     ),
-                  )
-                ],
-              ),
-              Wrap(
-                direction: Axis.vertical,
-                spacing: 10,
-                children: [
-                  if (Permissions().getForNewsAndEvents()) ...[
-                    GestureDetector(
-                      child: Icon(
-                        Icons.edit,
+                    if (paid == true) ...[
+                      const Icon(
+                        Icons.attach_money_rounded,
                         size: 23,
-                        color: Colors.grey.shade400.withOpacity(0.9),
-                      ),
-                      onTap: () {
-                        context.pushNamed(EventsUpsertScreen().route,
-                            queryParameters: {'id': id});
-                      },
-                    ),
+                      )
+                    ]
                   ],
-                  GestureDetector(
-                    onTap: () {
-                      _launchUrl(urlToInfo);
-                    },
-                    child: Icon(
-                      Icons.info,
-                      size: 23,
-                      color: Colors.grey.shade400.withOpacity(0.7),
-                    ),
-                  ),
-                  if (paid == true) ...[
-                    const Icon(
-                      Icons.attach_money_rounded,
-                      size: 23,
-                    )
-                  ]
-                ],
+                ),
               )
             ],
           ),
