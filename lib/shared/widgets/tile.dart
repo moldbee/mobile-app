@@ -16,10 +16,10 @@ class Tile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-      margin: const EdgeInsets.all(8),
+      margin: const EdgeInsets.all(6),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade300, width: 1),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
