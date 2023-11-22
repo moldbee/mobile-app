@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_city/features/events/screens/upsert.dart';
@@ -31,7 +32,7 @@ class EventTile extends StatelessWidget {
     final locale = Localizations.localeOf(context).languageCode;
     final Uri urlToPlace = Uri.parse(placeUrl);
     final Uri urlToInfo = Uri.parse(infoUrl);
-    getDate() {
+    String getDate() {
       final now = DateTime.now();
       final today = DateTime(now.year, now.month, now.day);
       final yesterday = DateTime(now.year, now.month, now.day - 1);
@@ -108,14 +109,14 @@ class EventTile extends StatelessWidget {
                     Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(right: 6),
+                          padding: const EdgeInsets.only(right: 8),
                           child: Icon(
                             Icons.calendar_month_rounded,
                             color: Colors.grey.shade400,
                           ),
                         ),
                         Text(
-                          getDate(),
+                          getDate().capitalizeFirst!,
                           style: TextStyle(color: Colors.grey.shade600),
                         )
                       ],
@@ -149,7 +150,7 @@ class EventTile extends StatelessWidget {
                       child: Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(right: 6),
+                            padding: const EdgeInsets.only(right: 8),
                             child: Icon(
                               Icons.place_rounded,
                               color: Colors.grey.shade400,
@@ -172,7 +173,7 @@ class EventTile extends StatelessWidget {
                     Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(right: 6),
+                          padding: const EdgeInsets.only(right: 8),
                           child: Icon(
                             Icons.payments_rounded,
                             color: Colors.orange.shade400,
