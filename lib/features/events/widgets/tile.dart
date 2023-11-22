@@ -77,13 +77,18 @@ class EventTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 3),
-                    child: Text('$emoji  $title',
-                        style: TextStyle(
-                            color: Colors.grey.shade800,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500)),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 3),
+                        child: Text('$emoji  $title',
+                            style: TextStyle(
+                                color: Colors.grey.shade800,
+                                fontSize: 15,
+                                overflow: TextOverflow.ellipsis,
+                                fontWeight: FontWeight.w500)),
+                      )
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
