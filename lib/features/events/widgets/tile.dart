@@ -77,16 +77,15 @@ class EventTile extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(3, 0, 5, 0),
-                      child: Expanded(
-                        child: Text('$emoji  $title',
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: Colors.grey.shade800,
-                                fontSize: 15,
-                                overflow: TextOverflow.ellipsis,
-                                fontWeight: FontWeight.w500)),
-                      ),
+                      padding: const EdgeInsets.fromLTRB(3, 0, 30, 0),
+
+                      child: Text('$emoji   $title',
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Colors.grey.shade800,
+                              fontSize: 14,
+                              overflow: TextOverflow.ellipsis,
+                              fontWeight: FontWeight.w500)),
                     ),
                   ),
                   if (Permissions().getForNewsAndEvents()) ...[
