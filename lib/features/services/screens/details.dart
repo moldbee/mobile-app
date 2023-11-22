@@ -37,11 +37,6 @@ class ServiceDetailsScreen extends HookWidget {
                 launchUrl(Uri.parse(selectedService['message']));
               },
               icon: const Icon(Icons.send_rounded)),
-          IconButton(
-              onPressed: () {
-                launchUrl(Uri(scheme: 'tel', path: selectedService['phone']));
-              },
-              icon: const Icon(Icons.phone_rounded))
           // if (Permissions().getForCompany(selectedService['owner'])) ...[
           //   IconButton(
           //       onPressed: () {
@@ -81,28 +76,59 @@ class ServiceDetailsScreen extends HookWidget {
                       ),
                       Image.network(
                         selectedService['logo'],
-                        width: double.infinity,
+                        fit: BoxFit.scaleDown,
+                        height: 100,
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                     ],
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      alignment: WrapAlignment.center,
-                      spacing: 6,
-                      children: [
-                        Icon(
-                          Icons.public_rounded,
-                          color: Colors.grey.shade400,
-                          size: 20,
+                    GestureDetector(
+                      onTap: () {
+                        launchUrl(Uri.parse(selectedService['website']));
+                      },
+                      child: Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        alignment: WrapAlignment.center,
+                        spacing: 6,
+                        children: [
+                          Icon(
+                            Icons.public_rounded,
+                            color: Colors.grey.shade400,
+                            size: 20,
+                          ),
+                          Text(
+                            selectedService['website'],
+                            style:
+                                const TextStyle(color: Colors.blue, fontSize: 14),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: GestureDetector(
+                        onTap: () {
+                          launchUrl(Uri(scheme: 'tel', path: selectedService['phone']));
+                        },
+                        child: Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          alignment: WrapAlignment.center,
+                          spacing: 6,
+                          children: [
+                            Icon(
+                              Icons.phone_rounded,
+                              color: Colors.grey.shade400,
+                              size: 20,
+                            ),
+                            Text(
+                              selectedService['phone'],
+                              style:
+                                  const TextStyle(color: Colors.blue, fontSize: 14),
+                            ),
+                          ],
                         ),
-                        Text(
-                          selectedService['website'],
-                          style:
-                              const TextStyle(color: Colors.blue, fontSize: 14),
-                        ),
-                      ],
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20),

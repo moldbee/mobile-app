@@ -61,7 +61,6 @@ class CommentsBottomSheet extends HookWidget {
         ?.indexWhere((element) => element['id'].toString() == highlightId);
 
     useEffect(() {
-      print(commentScrollController.isAttached);
       if (commentScrollController.isAttached) {
         commentScrollController.jumpTo(
           index: highlightIndex!,

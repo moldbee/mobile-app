@@ -38,14 +38,14 @@ class EventTile extends StatelessWidget {
       final tomorrow = DateTime(now.year, now.month, now.day + 1);
 
       final dateToCheck = DateTime.parse(date);
-      final aDate = DateTime(dateToCheck.year, dateToCheck.month,
-          dateToCheck.day, dateToCheck.hour, dateToCheck.minute);
-      if (aDate == today) {
-        return 'cегодня, ${DateFormat('d MMMM, HH:mm', locale).format(aDate)}';
-      } else if (aDate == yesterday) {
-        return 'вчера, ${DateFormat('d MMMM, HH:mm', locale).format(aDate)}';
-      } else if (aDate == tomorrow) {
-        return 'завтра, ${DateFormat('d MMMM, HH:mm', locale).format(aDate)}';
+      final eventDate =
+          DateTime(dateToCheck.year, dateToCheck.month, dateToCheck.day);
+      if (eventDate == today) {
+        return 'cегодня, ${DateFormat('d MMMM, HH:mm', locale).format(dateToCheck)}';
+      } else if (eventDate == yesterday) {
+        return 'вчера, ${DateFormat('d MMMM, HH:mm', locale).format(dateToCheck)}';
+      } else if (eventDate == tomorrow) {
+        return 'завтра, ${DateFormat('d MMMM, HH:mm', locale).format(dateToCheck)}';
       }
       return DateFormat('${DateFormat.WEEKDAY} d MMMM, HH:mm', locale)
           .format(DateTime.parse(date));
