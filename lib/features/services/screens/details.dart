@@ -36,7 +36,7 @@ class ServiceDetailsScreen extends HookWidget {
               onPressed: () {
                 launchUrl(Uri.parse(selectedService['place']));
               },
-              icon: const Icon(Icons.public_rounded)),
+              icon: const Icon(Icons.place_rounded)),
           IconButton(
               onPressed: () {
                 launchUrl(Uri.parse(selectedService['message']));
