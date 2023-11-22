@@ -34,6 +34,11 @@ class ServiceDetailsScreen extends HookWidget {
         actions: [
           IconButton(
               onPressed: () {
+                launchUrl(Uri.parse(selectedService['place']));
+              },
+              icon: const Icon(Icons.public_rounded)),
+          IconButton(
+              onPressed: () {
                 launchUrl(Uri.parse(selectedService['message']));
               },
               icon: const Icon(Icons.send_rounded)),
@@ -99,8 +104,8 @@ class ServiceDetailsScreen extends HookWidget {
                           ),
                           Text(
                             selectedService['website'],
-                            style:
-                                const TextStyle(color: Colors.blue, fontSize: 14),
+                            style: const TextStyle(
+                                color: Colors.blue, fontSize: 14),
                           ),
                         ],
                       ),
@@ -109,7 +114,8 @@ class ServiceDetailsScreen extends HookWidget {
                       padding: const EdgeInsets.only(top: 10),
                       child: GestureDetector(
                         onTap: () {
-                          launchUrl(Uri(scheme: 'tel', path: selectedService['phone']));
+                          launchUrl(Uri(
+                              scheme: 'tel', path: selectedService['phone']));
                         },
                         child: Wrap(
                           crossAxisAlignment: WrapCrossAlignment.center,
@@ -123,8 +129,8 @@ class ServiceDetailsScreen extends HookWidget {
                             ),
                             Text(
                               selectedService['phone'],
-                              style:
-                                  const TextStyle(color: Colors.blue, fontSize: 14),
+                              style: const TextStyle(
+                                  color: Colors.blue, fontSize: 14),
                             ),
                           ],
                         ),
