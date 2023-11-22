@@ -77,6 +77,7 @@ class EventsUpsertScreen extends HookWidget {
                   'info_url': '',
                   'place_ru': '',
                   'place_url': '',
+                  'price': '',
                 },
           child: ListView(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
@@ -114,6 +115,13 @@ class EventsUpsertScreen extends HookWidget {
               const TextInput(
                 name: 'place_url',
                 title: 'Ссылка гугл карт на место',
+              ),
+              SizedBox(
+                height: itemsSpacing,
+              ),
+              const TextInput(
+                name: 'price',
+                title: 'Цена',
               ),
               SizedBox(
                 height: itemsSpacing,

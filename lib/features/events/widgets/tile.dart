@@ -8,8 +8,8 @@ import 'package:url_launcher/url_launcher.dart';
 class EventTile extends StatelessWidget {
   const EventTile({
     Key? key,
-    required this.paid,
     required this.date,
+    required this.price,
     required this.title,
     required this.place,
     required this.placeUrl,
@@ -22,7 +22,7 @@ class EventTile extends StatelessWidget {
   final String title;
   final String place;
   final String placeUrl;
-  final bool? paid;
+  final String? price;
   final String emoji;
   final String infoUrl;
 
@@ -78,7 +78,6 @@ class EventTile extends StatelessWidget {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(3, 0, 30, 0),
-
                       child: Text('$emoji   $title',
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -88,19 +87,16 @@ class EventTile extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                     ),
                   ),
-                  if (Permissions().getForNewsAndEvents()) ...[
-                    GestureDetector(
-                      child: Icon(
-                        Icons.edit,
-                        size: 23,
-                        color: Colors.grey.shade400.withOpacity(0.9),
-                      ),
-                      onTap: () {
-                        context.pushNamed(EventsUpsertScreen().route,
-                            queryParameters: {'id': id});
-                      },
+                  GestureDetector(
+                    onTap: () {
+                      _launchUrl(urlToInfo);
+                    },
+                    child: Icon(
+                      Icons.info,
+                      size: 23,
+                      color: Colors.grey.shade400.withOpacity(0.7),
                     ),
-                  ],
+                  ),
                 ],
               ),
               Padding(
@@ -124,16 +120,19 @@ class EventTile extends StatelessWidget {
                         )
                       ],
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        _launchUrl(urlToInfo);
-                      },
-                      child: Icon(
-                        Icons.info,
-                        size: 23,
-                        color: Colors.grey.shade400.withOpacity(0.7),
+                    if (Permissions().getForNewsAndEvents()) ...[
+                      GestureDetector(
+                        child: Icon(
+                          Icons.edit,
+                          size: 23,
+                          color: Colors.grey.shade400.withOpacity(0.9),
+                        ),
+                        onTap: () {
+                          context.pushNamed(EventsUpsertScreen().route,
+                              queryParameters: {'id': id});
+                        },
                       ),
-                    ),
+                    ],
                   ],
                 ),
               ),
@@ -161,12 +160,28 @@ class EventTile extends StatelessWidget {
                         ],
                       ),
                     ),
-                    if (paid == true) ...[
-                      const Icon(
-                        Icons.attach_money_rounded,
-                        size: 23,
-                      )
-                    ]
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 6),
+                          child: Icon(
+                            Icons.attach_money_rounded,
+                            color: Colors.orange.shade400,
+                          ),
+                        ),
+                        Text(price ?? 'Бесплатно',
+                            style: TextStyle(color: Colors.grey.shade600))
+                      ],
+                    ),
                   ],
                 ),
               )

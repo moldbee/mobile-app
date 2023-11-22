@@ -20,7 +20,7 @@ class EventsTab extends StatelessWidget {
               final event = eventsController.sortedByTimeEvents[index];
 
               return EventTile(
-                  paid: event['paid'],
+                  price: event['price'],
                   id: event['id'].toString(),
                   date: event['date'],
                   emoji: event['emoji'],
