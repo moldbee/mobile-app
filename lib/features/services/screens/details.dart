@@ -6,6 +6,7 @@ import 'package:smart_city/features/services/controller.dart';
 import 'package:smart_city/features/services/screens/alert_upsert.dart';
 import 'package:smart_city/features/services/screens/discount_upsert.dart';
 import 'package:smart_city/features/services/screens/info_upsert.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/shared/config/permissions.dart';
 import 'package:smart_city/shared/utils/formatter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -15,9 +16,9 @@ class ServiceDetailsScreen extends HookWidget {
   final String route = '/service/details';
 
   final String? serviceId;
-
   @override
   Widget build(BuildContext context) {
+    final locale = getAppLoc(context)!.localeName;
     final servicesController = Get.find<ServicesController>();
     final discounts =
         servicesController.getDiscountsForService(serviceId as String);
@@ -28,7 +29,7 @@ class ServiceDetailsScreen extends HookWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          selectedService['title_ru'] as String,
+          selectedService['title_$locale'] as String,
         ),
         centerTitle: true,
         actions: [
@@ -139,55 +140,59 @@ class ServiceDetailsScreen extends HookWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Text(
-                        selectedService['description_ru'],
+                        selectedService['description_$locale'],
                         style: const TextStyle(fontSize: 16),
                       ),
                     ),
                   ],
                 )),
             if (Permissions().getForCompany(selectedService['owner'])) ...[
-              SingleChildScrollView(
-                child: SizedBox(
-                  height: 40,
-                  child: ListView(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      OutlinedButton.icon(
-                          icon: const Icon(Icons.percent_rounded),
-                          onPressed: () {
-                            context.pushNamed(
-                                const ServiceDiscountUpsert().route,
-                                queryParameters: {'serviceId': serviceId});
-                          },
-                          label: const Text('Добавить скидку')),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      OutlinedButton.icon(
-                          icon: const Icon(Icons.info_outline_rounded),
-                          onPressed: () {
-                            context.pushNamed(const ServiceInfoUpsert().route,
-                                queryParameters: {'serviceId': serviceId});
-                          },
-                          label: const Text('Добавить информацию')),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      OutlinedButton.icon(
-                          icon: const Icon(Icons.warning_amber_rounded),
-                          onPressed: () {
-                            context.pushNamed(const ServiceAlertUpsert().route,
-                                queryParameters: {'serviceId': serviceId});
-                          },
-                          label: const Text('Добавить предупреждение')),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                    ],
+              Padding(
+                padding: const EdgeInsets.only(top: 14),
+                child: SingleChildScrollView(
+                  child: SizedBox(
+                    height: 40,
+                    child: ListView(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        OutlinedButton.icon(
+                            icon: const Icon(Icons.percent_rounded),
+                            onPressed: () {
+                              context.pushNamed(
+                                  const ServiceDiscountUpsert().route,
+                                  queryParameters: {'serviceId': serviceId});
+                            },
+                            label: Text(getAppLoc(context)!.addDiscount)),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        OutlinedButton.icon(
+                            icon: const Icon(Icons.info_outline_rounded),
+                            onPressed: () {
+                              context.pushNamed(const ServiceInfoUpsert().route,
+                                  queryParameters: {'serviceId': serviceId});
+                            },
+                            label: Text(getAppLoc(context)!.addInfo)),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        OutlinedButton.icon(
+                            icon: const Icon(Icons.warning_amber_rounded),
+                            onPressed: () {
+                              context.pushNamed(
+                                  const ServiceAlertUpsert().route,
+                                  queryParameters: {'serviceId': serviceId});
+                            },
+                            label: Text(getAppLoc(context)!.addAlert)),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -225,7 +230,7 @@ class ServiceDetailsScreen extends HookWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    item['description_ru'] as String,
+                                    item['description_$locale'] as String,
                                     style: const TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w500,
@@ -281,7 +286,7 @@ class ServiceDetailsScreen extends HookWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    item['description_ru'] as String,
+                                    item['description_$locale'] as String,
                                     style: const TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w500,
@@ -337,7 +342,7 @@ class ServiceDetailsScreen extends HookWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    item['description_ru'] as String,
+                                    item['description_$locale'] as String,
                                     style: const TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w500,

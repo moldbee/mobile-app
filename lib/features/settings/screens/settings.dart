@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:smart_city/controller.dart';
 import 'package:smart_city/features/settings/screens/about.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -10,9 +13,11 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double blockHeight = 40;
+    final globalController = Get.find<GlobalController>();
+
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Настройки"),
+          title: Text(AppLocalizations.of(context)!.info),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -30,11 +35,15 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        globalController.locale.value = const Locale('ru');
+                      },
                       child: const Text("Русский"),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        globalController.locale.value = const Locale('ro');
+                      },
                       child: const Text("Румынский"),
                     )
                   ],

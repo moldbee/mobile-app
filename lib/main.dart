@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-// ignore: depend_on_referenced_packages
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:smart_city/controller.dart';
@@ -45,19 +44,21 @@ class MyApp extends StatelessWidget {
         systemNavigationBarColor: blackColor,
         systemNavigationBarDividerColor: blackColor,
         systemNavigationBarIconBrightness: Brightness.dark));
+    final locale = Get.find<GlobalController>().locale;
+
     return SafeArea(
-      child: MaterialApp.router(
-        scrollBehavior: const MaterialScrollBehavior(),
-        routerConfig: router,
-        theme: themeData,
-        debugShowCheckedModeBanner: false,
-        title: 'SmartCity',
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate
-        ],
-        supportedLocales: const [Locale('ru'), Locale('ro')],
-      ),
+      child: Obx(() {
+        return MaterialApp.router(
+          scrollBehavior: const MaterialScrollBehavior(),
+          routerConfig: router,
+          theme: themeData,
+          debugShowCheckedModeBanner: false,
+          title: 'SmartCity',
+          locale: locale.value,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+        );
+      }),
     );
   }
 }

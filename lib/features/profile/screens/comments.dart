@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/features/news/screens/details.dart';
 import 'package:smart_city/features/profile/controller.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:timeago_flutter/timeago_flutter.dart' as timeago;
 
 class ProfileComments extends StatelessWidget {
@@ -62,7 +63,7 @@ class ProfileComments extends StatelessWidget {
                                         timeago.format(
                                             DateTime.parse(comment['created_at']
                                                 .toString()),
-                                            locale: 'ru'),
+                                            locale: loc.value.languageCode),
                                         style: TextStyle(
                                             color: Colors.grey.shade600),
                                       ),

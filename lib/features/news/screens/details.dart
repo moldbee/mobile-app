@@ -8,6 +8,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/features/news/screens/upsert.dart';
 import 'package:smart_city/features/news/widgets/comments_bottom_sheet.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/shared/widgets/delete_confirm.dart';
 import 'package:timeago_flutter/timeago_flutter.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
@@ -75,9 +76,11 @@ class NewsDetailsScreen extends HookWidget {
       return null;
     }, []);
 
+    final locale = getAppLoc(context)!.localeName;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Статья'),
+        title: Text(getAppLoc(context)!.article),
         actions: [
           IconButton(
               onPressed: () async {
@@ -116,7 +119,7 @@ class NewsDetailsScreen extends HookWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 14, 10, 20),
                 child: Text(
-                  newData['title_ru'],
+                  newData['title_$locale'],
                   style: TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.w500,
@@ -156,7 +159,7 @@ class NewsDetailsScreen extends HookWidget {
                           child: Text(
                             timeago.format(
                                 DateTime.parse(newData['created_at']),
-                                locale: 'ru'),
+                                locale: loc.value.languageCode),
                             style: TextStyle(color: Colors.grey.shade500),
                           ),
                         )
@@ -189,7 +192,7 @@ class NewsDetailsScreen extends HookWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                 child: Linkify(
-                  text: newData['description_ru'],
+                  text: newData['description_$locale'],
                   onOpen: (link) async {
                     final url = Uri.parse(link.url);
 
@@ -207,8 +210,8 @@ class NewsDetailsScreen extends HookWidget {
                             onPressed: () {
                               showCommentsBottomSheet();
                             },
-                            child: const Text(
-                              'Комментарии',
+                            child: Text(
+                              getAppLoc(context)!.comments,
                             ))),
                   ],
                 ),

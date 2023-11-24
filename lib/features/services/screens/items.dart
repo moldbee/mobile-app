@@ -5,6 +5,7 @@ import 'package:smart_city/features/services/controller.dart';
 import 'package:smart_city/features/services/screens/details.dart';
 import 'package:smart_city/features/services/screens/upsert.dart';
 import 'package:smart_city/features/services/widgets/company_tile.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/shared/config/permissions.dart';
 import 'package:smart_city/shared/widgets/delete_confirm.dart';
 
@@ -17,12 +18,13 @@ class ServicesCompaniesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final servicesController = Get.find<ServicesController>();
+    final locale = getAppLoc(context)!.localeName;
     final category = servicesController.categories.firstWhere(
         (element) => element['id'].toString() == categoryId.toString());
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(category['title_ru']),
+        title: Text(category['title_$locale']),
         actions: [
           if (Permissions().getForServiceCategories()) ...[
             IconButton(
@@ -68,7 +70,7 @@ class ServicesCompaniesScreen extends StatelessWidget {
               },
               child: CompanyTile(
                 logoUrl: company['logo'] ?? category['icon'],
-                title: company['title_ru'],
+                title: company['title_$locale'],
               ),
             );
           }).toList()),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/shared/widgets/call_button.dart';
 
 class EmergenciesScreen extends StatelessWidget {
@@ -9,19 +10,19 @@ class EmergenciesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Map> items = [
       {
-        'title': 'Полиция',
+        'title': getAppLoc(context)!.police,
         'icon': Icons.local_police_rounded,
         'number': '112',
         'iconColor': Colors.blue.shade500,
       },
       {
-        'title': 'Скорая',
+        'title': getAppLoc(context)!.ambulance,
         'icon': Icons.local_hospital_rounded,
         'number': '112',
         'iconColor': Colors.red.shade500,
       },
       {
-        'title': 'Пожарные',
+        'title': getAppLoc(context)!.fire,
         'icon': Icons.local_fire_department_rounded,
         'number': '112',
         'iconColor': Colors.orange.shade500,
@@ -33,7 +34,7 @@ class EmergenciesScreen extends StatelessWidget {
         'iconColor': Colors.yellow.shade500,
       },
       {
-        'title': 'Газовая служба',
+        'title': getAppLoc(context)!.gasService,
         'icon': Icons.propane_tank_rounded,
         'number': '904',
         'iconColor': Colors.orange.shade500,
@@ -45,7 +46,7 @@ class EmergenciesScreen extends StatelessWidget {
         'iconColor': Colors.blue.shade500,
       },
       {
-        'title': 'Аварийная служба лифтов МП ЖКХ',
+        'title': getAppLoc(context)!.liftSupportService,
         'icon': Icons.elevator_rounded,
         'number': '0231 8-00-49',
         'iconColor': Colors.orange.shade500,

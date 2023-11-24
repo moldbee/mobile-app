@@ -9,6 +9,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/config/permissions.dart';
 import 'package:smart_city/shared/hooks/use_preserved_state.dart';
@@ -425,7 +426,7 @@ class Comment extends HookWidget {
                               children: [
                                 Text(
                                   timeago.format(DateTime.parse(createdAt),
-                                      locale: 'ru'),
+                                      locale: loc.value.languageCode),
                                   style: TextStyle(color: Colors.grey.shade500),
                                 ),
                               ],

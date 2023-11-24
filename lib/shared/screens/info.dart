@@ -5,6 +5,7 @@ import 'package:smart_city/features/events/screens/events.dart';
 import 'package:smart_city/features/events/screens/upsert.dart';
 import 'package:smart_city/features/news/screens/news.dart';
 import 'package:smart_city/features/news/screens/upsert.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/shared/config/permissions.dart';
 import 'package:smart_city/shared/hooks/use_preserved_state.dart';
 
@@ -21,19 +22,19 @@ class InfoScreen extends HookWidget {
       initialIndex: selectedTab.value,
       child: Scaffold(
           appBar: AppBar(
-            title: const Text("Информация"),
+            title: Text(getAppLoc(context)!.info),
             bottom: TabBar(
               physics: const NeverScrollableScrollPhysics(),
               onTap: (index) {
                 selectedTab.value = index;
               },
-              tabs: const <Widget>[
+              tabs: <Widget>[
                 Tab(
                     icon: Text(
-                  'Новости',
+                  getAppLoc(context)!.news,
                 )),
                 Tab(
-                  icon: Text('Афиша'),
+                  icon: Text(getAppLoc(context)!.events),
                 ),
               ],
             ),

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/services/controller.dart';
 import 'package:smart_city/features/services/screens/category_upsert.dart';
 import 'package:smart_city/features/services/screens/items.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/shared/config/permissions.dart';
 import 'package:smart_city/shared/widgets/tile.dart';
 
@@ -15,11 +16,11 @@ class ServicesScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final servicesController = Get.find<ServicesController>();
-
+    final locale = getAppLoc(context)!.localeName;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Услуги"),
+        title: Text(getAppLoc(context)!.services),
         actions: [
           if (Permissions().getForServiceCategories()) ...[
             IconButton(
@@ -31,7 +32,7 @@ class ServicesScreen extends HookWidget {
         ],
       ),
       body: Obx(() => GridView.count(
-        padding: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10),
             crossAxisCount: 3,
             children: servicesController.categories.map((element) {
               return GestureDetector(
@@ -43,7 +44,7 @@ class ServicesScreen extends HookWidget {
                       });
                 },
                 child: Tile(
-                  title: element['title_ru'],
+                  title: element['title_$locale'],
                   icon: element['icon'],
                   iconColor: Colors.orange.shade300,
                 ),

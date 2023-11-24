@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:smart_city/features/news/widgets/tile.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
 import '../controller.dart';
@@ -29,8 +30,9 @@ class NewsTab extends HookWidget {
           isLoading: newsController.isLoading.value,
           itemBuilder: (context, index) {
             final newsItem = newsController.newsSortedByTime[index];
+            final locale = getAppLoc(context)!.localeName;
             return NewsTile(
-              title: newsItem['title_ru'],
+              title: newsItem['title_$locale'],
               imageUrl: newsItem['image'],
               id: newsItem['id'],
               createdAt: newsItem['created_at'],

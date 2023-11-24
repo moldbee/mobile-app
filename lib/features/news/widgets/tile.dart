@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:smart_city/features/news/screens/details.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:timeago_flutter/timeago_flutter.dart' as timeago;
 
 class NewsTile extends StatelessWidget {
@@ -97,7 +98,7 @@ class NewTime extends StatelessWidget {
     timeago.setLocaleMessages('ru', timeago.RuMessages());
 
     return Text(
-      timeago.format(DateTime.parse(time), locale: 'ru'),
+      timeago.format(DateTime.parse(time), locale: loc.value.languageCode),
       style: TextStyle(color: Colors.grey.shade500),
     );
   }

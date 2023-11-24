@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_city/features/events/screens/upsert.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/shared/config/permissions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -42,11 +43,11 @@ class EventTile extends StatelessWidget {
       final eventDate =
           DateTime(dateToCheck.year, dateToCheck.month, dateToCheck.day);
       if (eventDate == today) {
-        return 'cегодня, ${DateFormat('d MMMM, HH:mm', locale).format(dateToCheck)}';
+        return '${getAppLoc(context)!.today}, ${DateFormat('d MMMM, HH:mm', locale).format(dateToCheck)}';
       } else if (eventDate == yesterday) {
-        return 'вчера, ${DateFormat('d MMMM, HH:mm', locale).format(dateToCheck)}';
+        return '${getAppLoc(context)!.yesterday}, ${DateFormat('d MMMM, HH:mm', locale).format(dateToCheck)}';
       } else if (eventDate == tomorrow) {
-        return 'завтра, ${DateFormat('d MMMM, HH:mm', locale).format(dateToCheck)}';
+        return '${getAppLoc(context)!.tommorow}, ${DateFormat('d MMMM, HH:mm', locale).format(dateToCheck)}';
       }
       return DateFormat('${DateFormat.WEEKDAY} d MMMM, HH:mm', locale)
           .format(DateTime.parse(date));
@@ -179,7 +180,10 @@ class EventTile extends StatelessWidget {
                             color: Colors.orange.shade400,
                           ),
                         ),
-                        Text(price is String ? '$price MDL' : 'Бесплатно',
+                        Text(
+                            price is String
+                                ? '$price MDL'
+                                : getAppLoc(context)!.free,
                             style: TextStyle(color: Colors.grey.shade600))
                       ],
                     ),
