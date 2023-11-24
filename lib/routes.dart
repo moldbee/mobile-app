@@ -7,8 +7,8 @@ import 'package:smart_city/features/events/screens/upsert.dart';
 import 'package:smart_city/features/news/screens/details.dart';
 import 'package:smart_city/features/news/screens/upsert.dart';
 import 'package:smart_city/features/profile/controller.dart';
-import 'package:smart_city/features/profile/screens/my_comments.dart';
 import 'package:smart_city/features/profile/screens/edit.dart';
+import 'package:smart_city/features/profile/screens/my_comments.dart';
 import 'package:smart_city/features/profile/screens/notifications.dart';
 import 'package:smart_city/features/profile/screens/profile.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
@@ -21,6 +21,7 @@ import 'package:smart_city/features/services/screens/info_upsert.dart';
 import 'package:smart_city/features/services/screens/services.dart';
 import 'package:smart_city/features/services/screens/upsert.dart';
 import 'package:smart_city/features/settings/screens/about.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/shared/screens/info.dart';
 import 'package:smart_city/shared/screens/policy.dart';
 
@@ -41,9 +42,9 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             duration: const Duration(milliseconds: 500),
             backgroundColor: Colors.grey.shade900,
-            content: const Text(
-              'Нажмите еще раз, чтобы выйти',
-              style: TextStyle(color: Colors.white),
+            content: Text(
+              getAppLoc(context)!.tapAgainToExit,
+              style: const TextStyle(color: Colors.white),
             ),
           ));
           return Future.value(false);
