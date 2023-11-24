@@ -98,7 +98,8 @@ class NewTime extends StatelessWidget {
     timeago.setLocaleMessages('ru', timeago.RuMessages());
 
     return Text(
-      timeago.format(DateTime.parse(time), locale: loc.value.languageCode),
+      timeago.format(DateTime.parse(time),
+          locale: getAppLoc(context)!.localeName),
       style: TextStyle(color: Colors.grey.shade500),
     );
   }

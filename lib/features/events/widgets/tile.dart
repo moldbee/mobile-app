@@ -49,7 +49,7 @@ class EventTile extends StatelessWidget {
       } else if (eventDate == tomorrow) {
         return '${getAppLoc(context)!.tommorow}, ${DateFormat('d MMMM, HH:mm', locale).format(dateToCheck)}';
       }
-      return DateFormat('${DateFormat.WEEKDAY} d MMMM, HH:mm', locale)
+      return DateFormat('${DateFormat.WEEKDAY}, d MMMM, HH:mm', locale)
           .format(DateTime.parse(date));
     }
 

@@ -18,12 +18,12 @@ class ProfileComments extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Мои комментарии'),
+          title: Text(getAppLoc(context)!.myComments),
         ),
         body: profileController.comments.isEmpty
             ? Center(
                 child: Text(
-                  'Нет комментариев',
+                  getAppLoc(context)!.noComments,
                   style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
                 ),
               )
@@ -63,7 +63,7 @@ class ProfileComments extends StatelessWidget {
                                         timeago.format(
                                             DateTime.parse(comment['created_at']
                                                 .toString()),
-                                            locale: loc.value.languageCode),
+                                            locale: getAppLoc(context)!.localeName),
                                         style: TextStyle(
                                             color: Colors.grey.shade600),
                                       ),

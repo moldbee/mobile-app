@@ -6,10 +6,11 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smart_city/features/profile/controller.dart';
-import 'package:smart_city/features/profile/screens/comments.dart';
 import 'package:smart_city/features/profile/screens/edit.dart';
+import 'package:smart_city/features/profile/screens/my_comments.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
 import 'package:smart_city/features/settings/screens/settings.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/screens/policy.dart';
 import 'package:uuid/uuid.dart';
@@ -27,7 +28,7 @@ class ProfileScreen extends HookWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Профиль"),
+          title: Text(getAppLoc(context)!.profile),
           actions: [
             IconButton(
                 onPressed: () {
@@ -122,7 +123,7 @@ class ProfileScreen extends HookWidget {
                           context.push(const ProfileComments().route);
                         },
                         child: Text(
-                          'Мои комментарии',
+                          getAppLoc(context)!.myComments,
                           style: TextStyle(color: Colors.orange.shade400),
                         )),
                     const SizedBox(height: 10),
@@ -131,7 +132,7 @@ class ProfileScreen extends HookWidget {
                           context.push(const PolicyScreen().route);
                         },
                         child: Text(
-                          'Политика конфиденциальности',
+                          getAppLoc(context)!.policy,
                           style: TextStyle(color: Colors.orange.shade400),
                         )),
                     const SizedBox(height: 10),
@@ -152,7 +153,7 @@ class ProfileScreen extends HookWidget {
                               [profileController.avatar.value.split('/').last]);
                           profileController.avatar.value = defaultAvatar;
                         },
-                        child: const Text('Удалить аватар')),
+                        child: Text(getAppLoc(context)!.deleteAvatar)),
                     const SizedBox(height: 10),
                     OutlinedButton(
                         onPressed: () async {
@@ -162,7 +163,7 @@ class ProfileScreen extends HookWidget {
                           context.go(ProfileSignInScreen().route);
                         },
                         child: Text(
-                          'Выйти',
+                          getAppLoc(context)!.exit,
                           style: TextStyle(color: Colors.orange.shade400),
                         )),
                   ],

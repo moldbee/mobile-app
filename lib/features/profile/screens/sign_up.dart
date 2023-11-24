@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/profile/screens/profile.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/screens/policy.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';
@@ -56,9 +57,9 @@ class ProfileSignUpScreen extends HookWidget {
           // Check the type of exception and handle it.
           if (e.statusCode == '400') {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                duration: Duration(seconds: 1),
-                content: Text('Пользователь с такой почтой уже существует'),
+              SnackBar(
+                duration: const Duration(seconds: 1),
+                content: Text(getAppLoc(context)!.emailExists),
                 backgroundColor: Colors.red,
               ),
             );
@@ -71,7 +72,7 @@ class ProfileSignUpScreen extends HookWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Регистрация"),
+          title: Text(getAppLoc(context)!.signUp),
         ),
         body: SingleChildScrollView(
           child: FormBuilder(
@@ -89,7 +90,7 @@ class ProfileSignUpScreen extends HookWidget {
                 children: [
                   TextInput(
                     name: 'login',
-                    title: 'Почта',
+                    title: getAppLoc(context)!.email,
                     type: TextInputType.emailAddress,
                     validators: [
                       FormBuilderValidators.required(
@@ -99,14 +100,19 @@ class ProfileSignUpScreen extends HookWidget {
                     ],
                   ),
                   spacing,
-                  TextInput(name: 'nick', title: 'Никнейм', validators: [
-                    FormBuilderValidators.required(
-                        errorText: 'Это поле обязательно для заполнения'),
-                    FormBuilderValidators.minLength(3,
-                        errorText: 'Никнейм должен быть не менее 3 символов'),
-                    FormBuilderValidators.maxLength(20,
-                        errorText: 'Никнейм должен быть не более 20 символов')
-                  ]),
+                  TextInput(
+                      name: 'nick',
+                      title: getAppLoc(context)!.nick,
+                      validators: [
+                        FormBuilderValidators.required(
+                            errorText: 'Это поле обязательно для заполнения'),
+                        FormBuilderValidators.minLength(3,
+                            errorText:
+                                'Никнейм должен быть не менее 3 символов'),
+                        FormBuilderValidators.maxLength(20,
+                            errorText:
+                                'Никнейм должен быть не более 20 символов')
+                      ]),
                   spacing,
                   TextInput(
                     name: 'password',
@@ -116,7 +122,7 @@ class ProfileSignUpScreen extends HookWidget {
                       FormBuilderValidators.minLength(8,
                           errorText: 'Пароль должен быть не менее 8 символов')
                     ],
-                    title: 'Пароль',
+                    title: getAppLoc(context)!.password,
                     isPassword: true,
                   ),
                   const SizedBox(
@@ -133,7 +139,7 @@ class ProfileSignUpScreen extends HookWidget {
                         onTap: () {
                           isAgree.value = !isAgree.value;
                         },
-                        child: Text('Я согласен с условиями использования',
+                        child: Text(getAppLoc(context)!.agreeTerms,
                             style: TextStyle(
                                 fontSize: 13, color: Colors.grey.shade600)),
                       ),
@@ -157,9 +163,9 @@ class ProfileSignUpScreen extends HookWidget {
                           padding: const EdgeInsets.only(top: 20),
                           child: FilledButton(
                               onPressed: isAgree.value ? signUp : null,
-                              child: const Text(
-                                'Регистрация',
-                                style: TextStyle(color: Colors.white),
+                              child: Text(
+                                getAppLoc(context)!.signUp,
+                                style: const TextStyle(color: Colors.white),
                               )),
                         ),
                       ),
@@ -169,7 +175,7 @@ class ProfileSignUpScreen extends HookWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Text(
-                      'или',
+                      getAppLoc(context)!.or,
                       style: TextStyle(color: Colors.grey.shade600),
                     ),
                   ),
@@ -185,9 +191,9 @@ class ProfileSignUpScreen extends HookWidget {
                             FontAwesomeIcons.facebook,
                             color: Colors.white,
                           ),
-                          label: const Text(
-                            'Войти через Google',
-                            style: TextStyle(color: Colors.white),
+                          label: Text(
+                            getAppLoc(context)!.googleAuth,
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ),
                       ),

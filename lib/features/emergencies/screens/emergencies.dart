@@ -55,7 +55,7 @@ class EmergenciesScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Экстренные службы'),
+        title: Text(getAppLoc(context)!.emergency),
       ),
       body: ListView.separated(
           itemBuilder: (context, index) {

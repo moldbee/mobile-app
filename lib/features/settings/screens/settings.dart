@@ -18,7 +18,7 @@ class SettingsScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.info),
+          title: Text(AppLocalizations.of(context)!.settings),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

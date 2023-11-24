@@ -8,6 +8,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/profile/screens/profile.dart';
 import 'package:smart_city/features/profile/screens/sign_up.dart';
+import 'package:smart_city/features/settings/screens/settings.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -53,10 +55,10 @@ class ProfileSignInScreen extends HookWidget {
           // Check the type of exception and handle it.
           if (e.statusCode == '400') {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
+              SnackBar(
                 backgroundColor: Colors.red,
-                duration: Duration(seconds: 1),
-                content: Text('Неверный логин или пароль'),
+                duration: const Duration(seconds: 1),
+                content: Text(getAppLoc(context)!.wrongEmailOrPassword),
               ),
             );
           }
@@ -68,7 +70,16 @@ class ProfileSignInScreen extends HookWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Вход"),
+          title: Text(getAppLoc(context)!.signIn),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  context.push(const SettingsScreen().route);
+                },
+                icon: const Icon(
+                  Icons.settings,
+                )),
+          ],
         ),
         body: SingleChildScrollView(
           child: FormBuilder(
@@ -82,12 +93,12 @@ class ProfileSignInScreen extends HookWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const TextInput(name: 'login', title: 'Почта'),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 40),
+                  TextInput(name: 'login', title: getAppLoc(context)!.email),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 40),
                     child: TextInput(
                       name: 'password',
-                      title: 'Пароль',
+                      title: getAppLoc(context)!.password,
                       isPassword: true,
                     ),
                   ),
@@ -98,9 +109,9 @@ class ProfileSignInScreen extends HookWidget {
                           padding: const EdgeInsets.only(top: 40),
                           child: FilledButton(
                               onPressed: isLoading.value ? null : signIn,
-                              child: const Text(
-                                'Войти',
-                                style: TextStyle(color: Colors.white),
+                              child: Text(
+                                getAppLoc(context)!.signIn,
+                                style: const TextStyle(color: Colors.white),
                               )),
                         ),
                       ),
@@ -115,7 +126,7 @@ class ProfileSignInScreen extends HookWidget {
                               onPressed: () {
                                 context.push(ProfileSignUpScreen().route);
                               },
-                              child: const Text('Регистрация')),
+                              child: Text(getAppLoc(context)!.signUp)),
                         )
                       ],
                     ),
@@ -123,7 +134,7 @@ class ProfileSignInScreen extends HookWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Text(
-                      'или',
+                      getAppLoc(context)!.or,
                       style: TextStyle(color: Colors.grey.shade600),
                     ),
                   ),
@@ -176,9 +187,9 @@ class ProfileSignInScreen extends HookWidget {
                             FontAwesomeIcons.google,
                             color: Colors.white,
                           ),
-                          label: const Text(
-                            'Войти через Google',
-                            style: TextStyle(color: Colors.white),
+                          label: Text(
+                            getAppLoc(context)!.googleAuth,
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ),
                       ),

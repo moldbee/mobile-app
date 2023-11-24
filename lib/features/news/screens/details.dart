@@ -159,7 +159,7 @@ class NewsDetailsScreen extends HookWidget {
                           child: Text(
                             timeago.format(
                                 DateTime.parse(newData['created_at']),
-                                locale: loc.value.languageCode),
+                                locale: getAppLoc(context)!.localeName),
                             style: TextStyle(color: Colors.grey.shade500),
                           ),
                         )

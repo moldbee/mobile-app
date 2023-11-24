@@ -224,14 +224,15 @@ class CommentsBottomSheet extends HookWidget {
                           _formKey.currentState?.save();
                           formState.value = _formKey.currentState?.value;
                         },
-                        child: const Expanded(
+                        child: Expanded(
                           child: TextInput(
-                            contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 19),
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(20, 0, 20, 19),
                             disableBorders: true,
                             name: 'comment',
                             minLines: 1,
                             maxLines: 5,
-                            hintText: 'Введите комментарий',
+                            hintText: getAppLoc(context)!.inputComment,
                             title: '',
                           ),
                         ),
@@ -261,10 +262,10 @@ class CommentsBottomSheet extends HookWidget {
                                       .currentState!.value['comment']?.length <
                                   2) {
                                 ScaffoldMessenger.of(context)
-                                    .showSnackBar(const SnackBar(
+                                    .showSnackBar(SnackBar(
                                   showCloseIcon: true,
                                   content: Text(
-                                      'Комментарий должен быть не менее 5 символов'),
+                                      getAppLoc(context)!.fieldMinLength(5)),
                                   backgroundColor: Colors.red,
                                 ));
                                 return;
@@ -313,8 +314,7 @@ class CommentsBottomSheet extends HookWidget {
                       child: Row(
                         children: [
                           Expanded(
-                            child: Text(
-                                'Что бы оставить комментарий, вам необходимо войти в аккаунт',
+                            child: Text(getAppLoc(context)!.toLeaveComment,
                                 style: TextStyle(
                                     color: Colors.grey.shade600, fontSize: 14)),
                           )
@@ -426,7 +426,8 @@ class Comment extends HookWidget {
                               children: [
                                 Text(
                                   timeago.format(DateTime.parse(createdAt),
-                                      locale: loc.value.languageCode),
+                                      locale: getAppLoc(context)!.localeName,
+                                      allowFromNow: true),
                                   style: TextStyle(color: Colors.grey.shade500),
                                 ),
                               ],
@@ -445,11 +446,11 @@ class Comment extends HookWidget {
                         id, profileController.id.value);
                     await fetchLikesInfo();
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Войдите в аккаунт'),
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(getAppLoc(context)!.signInToLike),
                       backgroundColor: Colors.red,
-                      padding: EdgeInsets.all(20),
-                      duration: Duration(seconds: 2),
+                      padding: const EdgeInsets.all(20),
+                      duration: const Duration(seconds: 2),
                     ));
                   }
                 },
@@ -535,7 +536,7 @@ class Comment extends HookWidget {
                       onReply(id);
                     },
                     child: Text(
-                      'Ответить',
+                      getAppLoc(context)!.reply,
                       style: TextStyle(color: Colors.grey.shade600),
                     ),
                   ),
@@ -555,7 +556,7 @@ class Comment extends HookWidget {
                         onTap: () {
                           onEdit(id);
                         },
-                        child: Text('Редактировать',
+                        child: Text(getAppLoc(context)!.edit,
                             style: TextStyle(color: Colors.grey.shade600))),
                     const SizedBox(
                       width: 20,
@@ -579,7 +580,7 @@ class Comment extends HookWidget {
                                         .fetchCommentsForNew(newId));
                                   }));
                         },
-                        child: Text('Удалить',
+                        child: Text(getAppLoc(context)!.delete,
                             style: TextStyle(color: Colors.grey.shade600))),
                   ]
                 ],
@@ -600,7 +601,7 @@ class NoCommentsMessage extends StatelessWidget {
     return Padding(
       padding:
           EdgeInsets.only(top: MediaQuery.of(context).size.height / 100 * 30),
-      child: Text('Нет комментариев',
+      child: Text(getAppLoc(context)!.noCommentsForNews,
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 16, color: Colors.grey.shade500)),
     );

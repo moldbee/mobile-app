@@ -5,6 +5,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/profile/controller.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/hooks/use_preserved_state.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';
@@ -29,7 +30,7 @@ class ProfileEdit extends HookWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Редактирование профиля'),
+          title: Text(getAppLoc(context)!.profileEdit),
           actions: [
             IconButton(
               icon: const Icon(
@@ -62,14 +63,17 @@ class ProfileEdit extends HookWidget {
             padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 12),
             child: Column(
               children: [
-                TextInput(name: 'nick', title: 'Никнейм', validators: [
-                  FormBuilderValidators.required(
-                      errorText: 'Поле не может быть пустым'),
-                  FormBuilderValidators.minLength(3,
-                      errorText: 'Минимум 3 символа'),
-                  FormBuilderValidators.maxLength(20,
-                      errorText: 'Максимум 20 символов'),
-                ]),
+                TextInput(
+                    name: 'nick',
+                    title: getAppLoc(context)!.nick,
+                    validators: [
+                      FormBuilderValidators.required(
+                          errorText: getAppLoc(context)!.fieldRequired),
+                      FormBuilderValidators.minLength(3,
+                          errorText: getAppLoc(context)!.fieldMaxLength(3)),
+                      FormBuilderValidators.maxLength(20,
+                          errorText: getAppLoc(context)!.fieldMaxLength(20)),
+                    ]),
               ],
             ),
           ),

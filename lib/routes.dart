@@ -7,7 +7,7 @@ import 'package:smart_city/features/events/screens/upsert.dart';
 import 'package:smart_city/features/news/screens/details.dart';
 import 'package:smart_city/features/news/screens/upsert.dart';
 import 'package:smart_city/features/profile/controller.dart';
-import 'package:smart_city/features/profile/screens/comments.dart';
+import 'package:smart_city/features/profile/screens/my_comments.dart';
 import 'package:smart_city/features/profile/screens/edit.dart';
 import 'package:smart_city/features/profile/screens/notifications.dart';
 import 'package:smart_city/features/profile/screens/profile.dart';
