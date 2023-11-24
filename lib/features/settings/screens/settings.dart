@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/controller.dart';
 import 'package:smart_city/features/settings/screens/about.dart';
+import 'package:smart_city/l10n/main.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -28,23 +29,23 @@ class SettingsScreen extends StatelessWidget {
                 height: blockHeight,
                 child: Row(
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
-                        "Язык",
-                        style: TextStyle(fontSize: 14),
+                        getAppLoc(context)!.language,
+                        style: const TextStyle(fontSize: 14),
                       ),
                     ),
                     TextButton(
                       onPressed: () {
                         globalController.locale.value = const Locale('ru');
                       },
-                      child: const Text("Русский"),
+                      child: Text(getAppLoc(context)!.russian),
                     ),
                     TextButton(
                       onPressed: () {
                         globalController.locale.value = const Locale('ro');
                       },
-                      child: const Text("Румынский"),
+                      child: Text(getAppLoc(context)!.romanian),
                     )
                   ],
                 ),
@@ -54,17 +55,17 @@ class SettingsScreen extends StatelessWidget {
                 height: blockHeight,
                 child: Row(
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
-                        "О приложении",
-                        style: TextStyle(fontSize: 14),
+                        getAppLoc(context)!.about,
+                        style: const TextStyle(fontSize: 14),
                       ),
                     ),
                     TextButton(
                       onPressed: () {
                         context.push(const AboutScreen().route);
                       },
-                      child: const Text("О приложении"),
+                      child: Text(getAppLoc(context)!.about),
                     ),
                   ],
                 ),
@@ -74,15 +75,15 @@ class SettingsScreen extends StatelessWidget {
                 height: blockHeight,
                 child: Row(
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
-                        "Поделиться",
-                        style: TextStyle(fontSize: 14),
+                        getAppLoc(context)!.share,
+                        style: const TextStyle(fontSize: 14),
                       ),
                     ),
                     TextButton(
                       onPressed: () {},
-                      child: const Text("Поделиться"),
+                      child: Text(getAppLoc(context)!.share),
                     ),
                   ],
                 ),
@@ -92,10 +93,10 @@ class SettingsScreen extends StatelessWidget {
                 height: blockHeight,
                 child: Row(
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
-                        "Версия",
-                        style: TextStyle(fontSize: 14),
+                        getAppLoc(context)!.version,
+                        style: const TextStyle(fontSize: 14),
                       ),
                     ),
                     TextButton(
