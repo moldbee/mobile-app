@@ -24,6 +24,24 @@ class ProfileSignInScreen extends HookWidget {
     final isLoading = useState(false);
     final profileController = Get.find<ProfileController>();
 
+    Future<void> fetchAndSetProfile() async {
+      final profile = await supabase
+          .from('profiles')
+          .select('*, role(name)')
+          .eq('uid', supabase.auth.currentUser!.id)
+          .single();
+      profileController.setProfileData(
+          role: profile['role']['name'],
+          avatar: profile['avatar'],
+          nick: profile['nick'],
+          email: profile['email'],
+          uid: profile['uid'],
+          id: profile['id'].toString());
+
+      if (!context.mounted) return;
+      context.go(ProfileScreen().route);
+    }
+
     void signIn() async {
       try {
         _formKey.currentState?.save();
@@ -31,21 +49,7 @@ class ProfileSignInScreen extends HookWidget {
           final data = _formKey.currentState!.value;
           await supabase.auth.signInWithPassword(
               email: data['login'], password: data['password']);
-          final profile = await supabase
-              .from('profiles')
-              .select('*, role(name)')
-              .eq('uid', supabase.auth.currentUser!.id)
-              .single();
-          profileController.setProfileData(
-              role: profile['role']['name'],
-              avatar: profile['avatar'],
-              nick: profile['nick'],
-              email: profile['email'],
-              uid: profile['uid'],
-              id: profile['id'].toString());
-
-          if (!context.mounted) return;
-          context.go(ProfileScreen().route);
+          await fetchAndSetProfile();
         }
       } catch (e) {
         // ignore: avoid_print
@@ -143,23 +147,17 @@ class ProfileSignInScreen extends HookWidget {
                       Expanded(
                         child: FilledButton.icon(
                           onPressed: () async {
-                            /// TODO: update the Web client ID with your own.
-                            ///
                             /// Web Client ID that you registered with Google Cloud.
                             const webClientId =
-                                'my-web.apps.googleusercontent.com';
+                                '310797220104-1ek32g9adpvl8ai2giaka1k3jisikfn6.apps.googleusercontent.com';
 
-                            /// TODO: update the iOS client ID with your own.
-                            ///
                             /// iOS Client ID that you registered with Google Cloud.
-                            const iosClientId =
-                                'my-ios.apps.googleusercontent.com';
+                            // const iosClientId =
+                            //     'my-ios.apps.googleusercontent.com';
 
                             // Google sign in on Android will work without providing the Android
                             // Client ID registered on Google Cloud.
-
                             final GoogleSignIn googleSignIn = GoogleSignIn(
-                              clientId: iosClientId,
                               serverClientId: webClientId,
                             );
                             final googleUser = await googleSignIn.signIn();
@@ -179,6 +177,8 @@ class ProfileSignInScreen extends HookWidget {
                               idToken: idToken,
                               accessToken: accessToken,
                             );
+
+                            await fetchAndSetProfile();
                           },
                           style: ButtonStyle(
                               backgroundColor: MaterialStatePropertyAll(
