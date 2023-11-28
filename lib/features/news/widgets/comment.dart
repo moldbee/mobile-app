@@ -252,6 +252,7 @@ class Comment extends HookWidget {
                           showDialog(
                               context: context,
                               builder: (context) => DeleteConfirmAlert(
+                                  text: getAppLoc(context)!.sureDeleteComment,
                                   disableDoublePop: true,
                                   onDelete: () async {
                                     await supabase

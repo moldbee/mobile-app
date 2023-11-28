@@ -13,6 +13,7 @@ import 'package:smart_city/features/settings/screens/settings.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/screens/policy.dart';
+import 'package:smart_city/shared/widgets/delete_confirm.dart';
 import 'package:uuid/uuid.dart';
 
 class ProfileScreen extends HookWidget {
@@ -145,13 +146,25 @@ class ProfileScreen extends HookWidget {
                     // const SizedBox(height: 10),
                     OutlinedButton(
                         onPressed: () async {
-                          await supabase
-                              .from('profiles')
-                              .update({'avatar': null}).eq(
-                                  'uid', supabase.auth.currentUser!.id);
-                          await supabase.storage.from('avatars').remove(
-                              [profileController.avatar.value.split('/').last]);
-                          profileController.avatar.value = defaultAvatar;
+                          showDialog(
+                              context: context,
+                              builder: (context) => DeleteConfirmAlert(
+                                  text: getAppLoc(context)!.sureDeleteAvatar,
+                                  onDelete: () async {
+                                    await supabase
+                                        .from('profiles')
+                                        .update({'avatar': null}).eq('uid',
+                                            supabase.auth.currentUser!.id);
+                                    await supabase.storage
+                                        .from('avatars')
+                                        .remove([
+                                      profileController.avatar.value
+                                          .split('/')
+                                          .last
+                                    ]);
+                                    profileController.avatar.value =
+                                        defaultAvatar;
+                                  }));
                         },
                         child: Text(getAppLoc(context)!.deleteAvatar)),
                     const SizedBox(height: 10),

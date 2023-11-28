@@ -10,6 +10,7 @@ import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/shared/config/permissions.dart';
 import 'package:smart_city/shared/utils/formatter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class ServiceDetailsScreen extends HookWidget {
   const ServiceDetailsScreen({Key? key, this.serviceId}) : super(key: key);
@@ -197,6 +198,15 @@ class ServiceDetailsScreen extends HookWidget {
                 ),
               ),
             ],
+            SizedBox(
+              height: 300,
+              width: double.infinity,
+              child: WebViewWidget(
+                  controller: WebViewController()
+                    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                    ..loadHtmlString(
+                        '<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10726.284406369314!2d27.9457687!3d47.770373!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40cb60d99ec69f6f%3A0x1488c68f28449553!2sVerix%20Centru!5e0!3m2!1sro!2s!4v1701034539385!5m2!1sro!2s" width="100%" style="border:0;" allowfullscreen="true" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>')),
+            ),
             if (discounts.isNotEmpty)
               ...discounts.map((item) => Padding(
                     padding: const EdgeInsets.fromLTRB(14, 20, 14, 0),

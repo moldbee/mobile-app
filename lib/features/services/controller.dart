@@ -33,13 +33,14 @@ class ServicesController extends GetxController {
   }
 
   fetchServices() async {
-    services.value = await supabase.from('services').select();
+    services.value =
+        await supabase.from('services').select('*, category: category(*)');
   }
 
   List<dynamic> getServicesByCategory(String categoryId) {
     return services
         .where((element) =>
-            element['category'].toString() == categoryId.toString())
+            element['category']['id'].toString() == categoryId.toString())
         .toList();
   }
 
@@ -75,7 +76,7 @@ class ServicesController extends GetxController {
     await supabase.from('services_alerts').upsert(payload);
   }
 
-    Future<void> upsertInfo(String serviceId, String descRu, String descRo,
+  Future<void> upsertInfo(String serviceId, String descRu, String descRo,
       String startDate, String endDate, String? id) async {
     dynamic payload = {
       'service': serviceId,

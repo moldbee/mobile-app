@@ -53,5 +53,10 @@
   "signInToLike": "Pentru a aprecia, trebuie să vă autentificați",
   "noCommentsForNews": "Nu sunt comentarii",
   "emergency": "Servicii de urgență",
-  "tapAgainToExit": "Apăsați din nou pentru a ieși"
+  "tapAgainToExit": "Apăsați din nou pentru a ieși",
+  "deleting": "Ștergere",
+  "sureDeleteComment": "Sigur doriți să ștergeți acest comentariu?",
+  "sureDeleteAvatar": "Sigur doriți să ștergeți avatarul?",
+  "yes": "Da",
+  "no": "Nu"
 }
