@@ -9,8 +9,8 @@ import 'package:smart_city/features/services/screens/info_upsert.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/shared/config/permissions.dart';
 import 'package:smart_city/shared/utils/formatter.dart';
+import 'package:smart_city/shared/widgets/content_block.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class ServiceDetailsScreen extends HookWidget {
   const ServiceDetailsScreen({Key? key, this.serviceId}) : super(key: key);
@@ -70,143 +70,160 @@ class ServiceDetailsScreen extends HookWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (selectedService['logo'] != null) ...[
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Image.network(
-                        selectedService['logo'],
-                        fit: BoxFit.scaleDown,
-                        height: 100,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                    GestureDetector(
-                      onTap: () {
-                        launchUrl(Uri.parse(selectedService['website']));
-                      },
-                      child: Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        alignment: WrapAlignment.center,
-                        spacing: 6,
-                        children: [
-                          Icon(
-                            Icons.public_rounded,
-                            color: Colors.grey.shade400,
-                            size: 20,
-                          ),
-                          Text(
-                            selectedService['website'],
-                            style: const TextStyle(
-                                color: Colors.blue, fontSize: 14),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: GestureDetector(
-                        onTap: () {
-                          launchUrl(Uri(
-                              scheme: 'tel', path: selectedService['phone']));
-                        },
-                        child: Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          alignment: WrapAlignment.center,
-                          spacing: 6,
-                          children: [
-                            Icon(
-                              Icons.phone_rounded,
-                              color: Colors.grey.shade400,
-                              size: 20,
-                            ),
-                            Text(
-                              selectedService['phone'],
-                              style: const TextStyle(
-                                  color: Colors.blue, fontSize: 14),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Text(
-                        selectedService['description_$locale'],
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  ],
-                )),
-            if (Permissions().getForCompany(selectedService['owner'])) ...[
-              Padding(
-                padding: const EdgeInsets.only(top: 14),
-                child: SingleChildScrollView(
-                  child: SizedBox(
-                    height: 40,
-                    child: ListView(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (selectedService['logo'] != null) ...[
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Image.network(
+                    selectedService['logo'],
+                    fit: BoxFit.scaleDown,
+                    height: 100,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
+                ContentBlock(
+                    title: 'Контакты',
+                    enableTopDivider: true,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(
-                          width: 15,
+                        GestureDetector(
+                          onTap: () {
+                            launchUrl(Uri.parse(selectedService['website']));
+                          },
+                          child: Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            alignment: WrapAlignment.center,
+                            spacing: 6,
+                            children: [
+                              Icon(
+                                Icons.public_rounded,
+                                color: Colors.grey.shade400,
+                                size: 20,
+                              ),
+                              Text(
+                                selectedService['website'],
+                                style: const TextStyle(
+                                    color: Colors.blue, fontSize: 14),
+                              ),
+                            ],
+                          ),
                         ),
-                        OutlinedButton.icon(
-                            icon: const Icon(Icons.percent_rounded),
-                            onPressed: () {
-                              context.pushNamed(
-                                  const ServiceDiscountUpsert().route,
-                                  queryParameters: {'serviceId': serviceId});
-                            },
-                            label: Text(getAppLoc(context)!.addDiscount)),
                         const SizedBox(
-                          width: 10,
+                          height: 10,
                         ),
-                        OutlinedButton.icon(
-                            icon: const Icon(Icons.info_outline_rounded),
-                            onPressed: () {
-                              context.pushNamed(const ServiceInfoUpsert().route,
-                                  queryParameters: {'serviceId': serviceId});
-                            },
-                            label: Text(getAppLoc(context)!.addInfo)),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        OutlinedButton.icon(
-                            icon: const Icon(Icons.warning_amber_rounded),
-                            onPressed: () {
-                              context.pushNamed(
-                                  const ServiceAlertUpsert().route,
-                                  queryParameters: {'serviceId': serviceId});
-                            },
-                            label: Text(getAppLoc(context)!.addAlert)),
-                        const SizedBox(
-                          width: 10,
+                        GestureDetector(
+                          onTap: () {
+                            launchUrl(Uri(
+                                scheme: 'tel', path: selectedService['phone']));
+                          },
+                          child: Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            alignment: WrapAlignment.center,
+                            spacing: 6,
+                            children: [
+                              Icon(
+                                Icons.phone_rounded,
+                                color: Colors.grey.shade400,
+                                size: 20,
+                              ),
+                              Text(
+                                selectedService['phone'],
+                                style: const TextStyle(
+                                    color: Colors.blue, fontSize: 14),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
-                    ),
+                    )),
+                ContentBlock(
+                  title: 'Описание',
+                  child: Text(
+                    selectedService['description_$locale'],
+                    style: const TextStyle(fontSize: 16),
                   ),
-                ),
-              ),
-            ],
-            SizedBox(
-              height: 300,
-              width: double.infinity,
-              child: WebViewWidget(
-                  controller: WebViewController()
-                    ..setJavaScriptMode(JavaScriptMode.unrestricted)
-                    ..loadHtmlString(
-                        '<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10726.284406369314!2d27.9457687!3d47.770373!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40cb60d99ec69f6f%3A0x1488c68f28449553!2sVerix%20Centru!5e0!3m2!1sro!2s!4v1701034539385!5m2!1sro!2s" width="100%" style="border:0;" allowfullscreen="true" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>')),
+                )
+              ],
             ),
+            ContentBlock(
+                title: 'Управление',
+                child: Column(children: [
+                  if (Permissions()
+                      .getForCompany(selectedService['owner'])) ...[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 14),
+                      child: SingleChildScrollView(
+                        child: SizedBox(
+                          height: 40,
+                          child: ListView(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              OutlinedButton.icon(
+                                  icon: const Icon(Icons.percent_rounded),
+                                  onPressed: () {
+                                    context.pushNamed(
+                                        const ServiceDiscountUpsert().route,
+                                        queryParameters: {
+                                          'serviceId': serviceId
+                                        });
+                                  },
+                                  label: Text(getAppLoc(context)!.addDiscount)),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              OutlinedButton.icon(
+                                  icon: const Icon(Icons.info_outline_rounded),
+                                  onPressed: () {
+                                    context.pushNamed(
+                                        const ServiceInfoUpsert().route,
+                                        queryParameters: {
+                                          'serviceId': serviceId
+                                        });
+                                  },
+                                  label: Text(getAppLoc(context)!.addInfo)),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              OutlinedButton.icon(
+                                  icon: const Icon(Icons.warning_amber_rounded),
+                                  onPressed: () {
+                                    context.pushNamed(
+                                        const ServiceAlertUpsert().route,
+                                        queryParameters: {
+                                          'serviceId': serviceId
+                                        });
+                                  },
+                                  label: Text(getAppLoc(context)!.addAlert)),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]
+                ])),
+            // SizedBox(
+            //   height: 300,
+            //   width: double.infinity,
+            //   child: WebViewWidget(
+            //       controller: WebViewController()
+            //         ..setJavaScriptMode(JavaScriptMode.unrestricted)
+            //         ..loadHtmlString(
+            //             '<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10726.284406369314!2d27.9457687!3d47.770373!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40cb60d99ec69f6f%3A0x1488c68f28449553!2sVerix%20Centru!5e0!3m2!1sro!2s!4v1701034539385!5m2!1sro!2s" width="100%" style="border:0;" allowfullscreen="true" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>')),
+            // ),
             if (discounts.isNotEmpty)
               ...discounts.map((item) => Padding(
                     padding: const EdgeInsets.fromLTRB(14, 20, 14, 0),
