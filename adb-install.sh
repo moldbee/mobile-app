@@ -1,0 +1,1 @@
+adb -s R9DW60382TN install ./build/app/outputs/flutter-apk/app-release.apk 
