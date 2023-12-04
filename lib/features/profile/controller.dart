@@ -88,12 +88,12 @@ class ProfileController extends GetxController {
       {String? nick,
       String? email,
       String? id,
-      String? avatar,
+      String? avatar = '',
       String? role,
       String? uid}) async {
     this.nick.value = nick;
     this.email.value = email;
-    this.avatar.value = avatar ?? defaultAvatar;
+    this.avatar.value = avatar!.length > 1 ? avatar : defaultAvatar;
     this.role.value = role;
     this.uid.value = uid;
     this.id.value = id;
@@ -109,6 +109,8 @@ class ProfileController extends GetxController {
   }
 
   void updateAvatar(String avatarUrl) {
-    avatar.value = avatarUrl;
+    if (avatarUrl.length > 1) {
+      avatar.value = avatarUrl;
+    }
   }
 }
