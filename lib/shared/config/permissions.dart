@@ -23,6 +23,6 @@ class Permissions {
 
   getForCompany(int? profileId) {
     return role == 'admin' ||
-        (role == 'user' && profileController.id.value == profileId.toString());
+        profileController.id.value == profileId.toString();
   }
 }

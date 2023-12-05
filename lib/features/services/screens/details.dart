@@ -78,10 +78,13 @@ class ServiceDetailsScreen extends HookWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Image.network(
-                    selectedService['logo'],
-                    fit: BoxFit.scaleDown,
-                    height: 100,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Image.network(
+                      selectedService['logo'],
+                      fit: BoxFit.scaleDown,
+                      height: 100,
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -152,69 +155,62 @@ class ServiceDetailsScreen extends HookWidget {
                 )
               ],
             ),
-            ContentBlock(
-                title: 'Управление',
-                child: Column(children: [
-                  if (Permissions()
-                      .getForCompany(selectedService['owner'])) ...[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 14),
-                      child: SingleChildScrollView(
-                        child: SizedBox(
-                          height: 40,
-                          child: ListView(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            children: [
-                              const SizedBox(
-                                width: 15,
-                              ),
-                              OutlinedButton.icon(
-                                  icon: const Icon(Icons.percent_rounded),
-                                  onPressed: () {
-                                    context.pushNamed(
-                                        const ServiceDiscountUpsert().route,
-                                        queryParameters: {
-                                          'serviceId': serviceId
-                                        });
-                                  },
-                                  label: Text(getAppLoc(context)!.addDiscount)),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              OutlinedButton.icon(
-                                  icon: const Icon(Icons.info_outline_rounded),
-                                  onPressed: () {
-                                    context.pushNamed(
-                                        const ServiceInfoUpsert().route,
-                                        queryParameters: {
-                                          'serviceId': serviceId
-                                        });
-                                  },
-                                  label: Text(getAppLoc(context)!.addInfo)),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              OutlinedButton.icon(
-                                  icon: const Icon(Icons.warning_amber_rounded),
-                                  onPressed: () {
-                                    context.pushNamed(
-                                        const ServiceAlertUpsert().route,
-                                        queryParameters: {
-                                          'serviceId': serviceId
-                                        });
-                                  },
-                                  label: Text(getAppLoc(context)!.addAlert)),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                            ],
-                          ),
+            if (Permissions().getForCompany(selectedService['owner'])) ...[
+              ContentBlock(
+                  title: 'Управление',
+                  child: Column(children: [
+                    SingleChildScrollView(
+                      child: SizedBox(
+                        height: 40,
+                        child: ListView(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            OutlinedButton.icon(
+                                icon: const Icon(Icons.percent_rounded),
+                                onPressed: () {
+                                  context.pushNamed(
+                                      const ServiceDiscountUpsert().route,
+                                      queryParameters: {
+                                        'serviceId': serviceId
+                                      });
+                                },
+                                label: Text(getAppLoc(context)!.addDiscount)),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            OutlinedButton.icon(
+                                icon: const Icon(Icons.info_outline_rounded),
+                                onPressed: () {
+                                  context.pushNamed(
+                                      const ServiceInfoUpsert().route,
+                                      queryParameters: {
+                                        'serviceId': serviceId
+                                      });
+                                },
+                                label: Text(getAppLoc(context)!.addInfo)),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            OutlinedButton.icon(
+                                icon: const Icon(Icons.warning_amber_rounded),
+                                onPressed: () {
+                                  context.pushNamed(
+                                      const ServiceAlertUpsert().route,
+                                      queryParameters: {
+                                        'serviceId': serviceId
+                                      });
+                                },
+                                label: Text(getAppLoc(context)!.addAlert)),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ]
-                ])),
+                  ])),
+            ],
             // SizedBox(
             //   height: 300,
             //   width: double.infinity,
