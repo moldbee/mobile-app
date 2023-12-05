@@ -36,12 +36,6 @@ ThemeData themeData = ThemeData(
       elevation: 0,
       titleTextStyle:
           TextStyle(fontSize: FontSize.subtitle, color: Colors.grey.shade600)),
-  textTheme: TextTheme(
-    titleMedium: TextStyle(
-      fontSize: 22,
-      color: Colors.grey.shade800,
-    ),
-  ),
   tabBarTheme: TabBarTheme(
     dividerColor: Colors.transparent,
     labelStyle: const TextStyle(fontSize: 16),

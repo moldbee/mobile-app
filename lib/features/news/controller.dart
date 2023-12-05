@@ -21,6 +21,11 @@ class NewsController extends GetxController {
           .compareTo(DateTime.parse(a['created_at'])));
   }
 
+  Future<void> refetchNews() async {
+    news.value = [];
+    await fetchNews();
+  }
+
   Future<dynamic> fetchNews({int start = 0, int end = 10}) async {
     try {
       if (loadedAllNews.value) {
@@ -95,7 +100,7 @@ class NewsController extends GetxController {
 
   Future<dynamic> createNew(Map<String, dynamic> data) async {
     await supabase.from('news').insert(data);
-    await fetchNews();
+    await refetchNews();
   }
 
   Future<void> updateNew(String? id, Map<String, dynamic> data) async {

@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/events/controller.dart';
+import 'package:smart_city/shared/helpers/translate_inputs.dart';
 import 'package:smart_city/shared/widgets/delete_confirm.dart';
 import 'package:smart_city/shared/widgets/form/date_time_picker_input.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';
@@ -24,6 +25,11 @@ class EventsUpsertScreen extends HookWidget {
           title:
               Text(id == null ? 'Создание события' : 'Редактирование события'),
           actions: [
+            IconButton(
+                onPressed: () {
+                  translateInuts(_formKey, ['title', 'place']);
+                },
+                icon: const Icon(Icons.translate_rounded)),
             if (id != null) ...[
               IconButton(
                   onPressed: () async {

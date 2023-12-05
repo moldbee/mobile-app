@@ -1,1 +1,3 @@
-adb -s R9DW60382TN install ./build/app/outputs/flutter-apk/app-release.apk 
+# flutter build apk --release --no-tree-shake-icons
+pwd=$(pwd)
+adb -s R9DW60382TN install $pwd/build/app/outputs/apk/release/app-release.apk 
