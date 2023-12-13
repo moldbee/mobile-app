@@ -87,7 +87,7 @@ class ServiceDetailsScreen extends HookWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                 ],
                 ContentBlock(
@@ -112,8 +112,12 @@ class ServiceDetailsScreen extends HookWidget {
                               ),
                               Text(
                                 selectedService['website'],
-                                style: const TextStyle(
-                                    color: Colors.blue, fontSize: 14),
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .fontSize),
                               ),
                             ],
                           ),
@@ -138,8 +142,12 @@ class ServiceDetailsScreen extends HookWidget {
                               ),
                               Text(
                                 selectedService['phone'],
-                                style: const TextStyle(
-                                    color: Colors.blue, fontSize: 14),
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .fontSize),
                               ),
                             ],
                           ),
@@ -150,7 +158,9 @@ class ServiceDetailsScreen extends HookWidget {
                   title: 'Описание',
                   child: Text(
                     selectedService['description_$locale'],
-                    style: const TextStyle(fontSize: 16),
+                    style: TextStyle(
+                        fontSize:
+                            Theme.of(context).textTheme.bodyMedium!.fontSize),
                   ),
                 )
               ],

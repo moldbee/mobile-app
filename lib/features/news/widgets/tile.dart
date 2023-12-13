@@ -55,7 +55,7 @@ class NewsTile extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -66,7 +66,8 @@ class NewsTile extends StatelessWidget {
                       maxLines: 3,
                       textAlign: TextAlign.start,
                       style: TextStyle(
-                          fontSize: 15,
+                          fontSize:
+                              Theme.of(context).textTheme.titleSmall!.fontSize,
                           fontWeight: FontWeight.w500,
                           color: Colors.grey.shade800),
                     ),
@@ -100,7 +101,9 @@ class NewTime extends StatelessWidget {
     return Text(
       timeago.format(DateTime.parse(time),
           locale: getAppLoc(context)!.localeName),
-      style: TextStyle(color: Colors.grey.shade500),
+      style: TextStyle(
+          color: Colors.grey.shade500,
+          fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize),
     );
   }
 }

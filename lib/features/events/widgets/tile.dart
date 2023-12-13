@@ -46,13 +46,7 @@ class EventTile extends StatelessWidget {
         return {
           'text':
               '${getAppLoc(context)!.today}, ${DateFormat('d MMMM, HH:mm', locale).format(dateToCheck)}',
-          'color': Colors.red.shade400
-        };
-      } else if (eventDate == yesterday) {
-        return {
-          'text':
-              '${getAppLoc(context)!.yesterday}, ${DateFormat('d MMMM, HH:mm', locale).format(dateToCheck)}',
-          'color': Colors.grey.shade500
+          'color': Colors.grey.shade600
         };
       } else if (eventDate == tomorrow) {
         return {
@@ -101,7 +95,10 @@ class EventTile extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: Colors.grey.shade800,
-                                fontSize: 14,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .fontSize,
                                 overflow: TextOverflow.ellipsis,
                                 fontWeight: FontWeight.w500)),
                       ),
@@ -135,7 +132,12 @@ class EventTile extends StatelessWidget {
                           ),
                           Text(
                             getDate()['text'].toString().capitalizeFirst!,
-                            style: TextStyle(color: getDate()['color']),
+                            style: TextStyle(
+                                color: getDate()['color'],
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .fontSize),
                           )
                         ],
                       ),
@@ -175,7 +177,12 @@ class EventTile extends StatelessWidget {
                               ),
                             ),
                             Text(place,
-                                style: TextStyle(color: Colors.grey.shade600))
+                                style: TextStyle(
+                                    color: Colors.grey.shade600,
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .fontSize))
                           ],
                         ),
                       ),
@@ -201,7 +208,12 @@ class EventTile extends StatelessWidget {
                               price is String
                                   ? '$price MDL'
                                   : getAppLoc(context)!.free,
-                              style: TextStyle(color: Colors.grey.shade600))
+                              style: TextStyle(
+                                  color: Colors.orange.shade400,
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .fontSize))
                         ],
                       ),
                     ],

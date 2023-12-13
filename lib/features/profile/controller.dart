@@ -23,7 +23,7 @@ class ProfileController extends GetxController {
         setProfileData(
             nick: box.read('nick'),
             email: box.read('email'),
-            avatar: box.read('avatar'),
+            avatar: box.read('avatar') ?? "",
             role: box.read('role'),
             uid: box.read('uid'),
             id: box.read('id'));

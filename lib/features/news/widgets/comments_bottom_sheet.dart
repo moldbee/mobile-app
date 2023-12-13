@@ -96,7 +96,8 @@ class CommentsBottomSheet extends HookWidget {
               Text(
                 getAppLoc(context)!.comments,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 22),
+                style: TextStyle(
+                    fontSize: Theme.of(context).textTheme.titleLarge!.fontSize),
               ),
             ],
           ),
@@ -336,7 +337,9 @@ class NoCommentsMessage extends StatelessWidget {
           EdgeInsets.only(top: MediaQuery.of(context).size.height / 100 * 30),
       child: Text(getAppLoc(context)!.noCommentsForNews,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 16, color: Colors.grey.shade500)),
+          style: TextStyle(
+              fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
+              color: Colors.grey.shade500)),
     );
   }
 }

@@ -36,7 +36,7 @@ class Comment extends HookWidget {
   final String newId;
   final String authorId;
   final Function(String? id) setSelectedForReplyComment;
-  final String? avatar;
+  final String avatar;
   final String createdAt;
   final void Function(String id) onEdit;
   final int? replyCommentId;
@@ -78,7 +78,8 @@ class Comment extends HookWidget {
                 children: [
                   CircleAvatar(
                     radius: 26,
-                    backgroundImage: NetworkImage(avatar ?? defaultAvatar),
+                    backgroundImage: NetworkImage(
+                        avatar.length > 2 ? avatar : defaultAvatar),
                   ),
                   Wrap(
                     direction: Axis.vertical,

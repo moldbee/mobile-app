@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -94,7 +95,6 @@ class NewsController extends GetxController {
             'id, created_at, created_by: created_by(nick, id, avatar), message, new_id, reply_comment_id, likes')
         .eq('new_id', newId)
         .order('created_at', ascending: true);
-    (res);
     return res;
   }
 

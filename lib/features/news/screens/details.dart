@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/features/news/screens/upsert.dart';
@@ -121,7 +122,8 @@ class NewsDetailsScreen extends HookWidget {
                 child: Text(
                   newData['title_$locale'],
                   style: TextStyle(
-                      fontSize: 26,
+                      fontSize:
+                          Theme.of(context).textTheme.titleLarge!.fontSize,
                       fontWeight: FontWeight.w500,
                       color: Colors.grey.shade800),
                 ),
@@ -150,17 +152,22 @@ class NewsDetailsScreen extends HookWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Icon(
-                          Icons.timelapse_rounded,
+                          Icons.date_range_rounded,
                           size: 22,
                           color: Colors.grey.shade400,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 8),
                           child: Text(
-                            timeago.format(
-                                DateTime.parse(newData['created_at']),
-                                locale: getAppLoc(context)!.localeName),
-                            style: TextStyle(color: Colors.grey.shade500),
+                            DateFormat('dd MMMM yyyy, HH:mm',
+                                    getAppLoc(context)!.localeName)
+                                .format(DateTime.parse(newData['created_at'])),
+                            style: TextStyle(
+                                color: Colors.grey.shade500,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .fontSize),
                           ),
                         )
                       ],
@@ -179,8 +186,11 @@ class NewsDetailsScreen extends HookWidget {
                             child: Text(
                               comments.value.length.toString(),
                               style: TextStyle(
-                                color: Colors.grey.shade500,
-                              ),
+                                  color: Colors.grey.shade500,
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .fontSize),
                             ),
                           )
                         ],
@@ -198,7 +208,9 @@ class NewsDetailsScreen extends HookWidget {
 
                     launchUrl(url);
                   },
-                  style: TextStyle(fontSize: 18, color: Colors.grey.shade800),
+                  style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+                      color: Colors.grey.shade800),
                 ),
               ),
               Padding(

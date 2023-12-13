@@ -22,6 +22,12 @@ class ServicesScreen extends HookWidget {
         centerTitle: true,
         title: Text(getAppLoc(context)!.services),
         actions: [
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.percent_rounded,
+                color: Colors.red.shade500,
+              )),
           if (Permissions().getForServiceCategories()) ...[
             IconButton(
                 onPressed: () async {
