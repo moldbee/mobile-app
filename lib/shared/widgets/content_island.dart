@@ -48,8 +48,12 @@ class ContentIsland extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      title as String,
-                      style: TextStyle(fontSize: FontSize.info),
+                      'dwadwad' as String,
+                      style: TextStyle(
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .headlineLarge!
+                              .fontSize),
                     ),
                     if (actionIcon is Widget) ...[
                       Padding(

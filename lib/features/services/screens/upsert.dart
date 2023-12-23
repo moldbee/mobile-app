@@ -50,7 +50,7 @@ class ServiceUpsert extends HookWidget {
     };
     final servicesController = Get.find<ServicesController>();
     final existingService = servicesController.services
-        .firstWhere((element) => element['id'].toString() == serviceId);
+        .firstWhereOrNull((element) => element['id'].toString() == serviceId);
     final pickedImage = usePreservedState('picked-service-image', context);
     final hasSelectedImage = pickedImage.value != null;
     if (serviceId != null) {

@@ -19,6 +19,9 @@ class ServiceDetailsScreen extends HookWidget {
   final String? serviceId;
   @override
   Widget build(BuildContext context) {
+    final blinkingAnimationController =
+        useAnimationController(duration: const Duration(milliseconds: 500));
+    blinkingAnimationController.repeat(reverse: true);
     final locale = getAppLoc(context)!.localeName;
     final servicesController = Get.find<ServicesController>();
     final discounts =
@@ -34,11 +37,6 @@ class ServiceDetailsScreen extends HookWidget {
         ),
         centerTitle: true,
         actions: [
-          IconButton(
-              onPressed: () {
-                launchUrl(Uri.parse(selectedService['place']));
-              },
-              icon: const Icon(Icons.place_rounded)),
           IconButton(
               onPressed: () {
                 launchUrl(Uri.parse(selectedService['message']));
@@ -76,10 +74,10 @@ class ServiceDetailsScreen extends HookWidget {
               children: [
                 if (selectedService['logo'] != null) ...[
                   const SizedBox(
-                    height: 10,
+                    height: 16,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 20),
+                    padding: const EdgeInsets.only(left: 10),
                     child: Image.network(
                       selectedService['logo'],
                       fit: BoxFit.scaleDown,
@@ -100,26 +98,15 @@ class ServiceDetailsScreen extends HookWidget {
                           onTap: () {
                             launchUrl(Uri.parse(selectedService['website']));
                           },
-                          child: Wrap(
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            alignment: WrapAlignment.center,
-                            spacing: 6,
-                            children: [
-                              Icon(
-                                Icons.public_rounded,
-                                color: Colors.grey.shade400,
-                                size: 20,
-                              ),
-                              Text(
-                                selectedService['website'],
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .fontSize),
-                              ),
-                            ],
+                          child: SelectableText(
+                            selectedService['website'],
+                            style: TextStyle(
+                                color: Colors.blue,
+                                height: 1,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .fontSize),
                           ),
                         ),
                         const SizedBox(
@@ -130,26 +117,15 @@ class ServiceDetailsScreen extends HookWidget {
                             launchUrl(Uri(
                                 scheme: 'tel', path: selectedService['phone']));
                           },
-                          child: Wrap(
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            alignment: WrapAlignment.center,
-                            spacing: 6,
-                            children: [
-                              Icon(
-                                Icons.phone_rounded,
-                                color: Colors.grey.shade400,
-                                size: 20,
-                              ),
-                              Text(
-                                selectedService['phone'],
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .fontSize),
-                              ),
-                            ],
+                          child: SelectableText(
+                            selectedService['phone'],
+                            style: TextStyle(
+                                height: 1,
+                                color: Colors.blue,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .fontSize),
                           ),
                         ),
                       ],
@@ -164,6 +140,68 @@ class ServiceDetailsScreen extends HookWidget {
                   ),
                 )
               ],
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: Card(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Market',
+                            style: TextStyle(
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .fontSize,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey.shade800),
+                          ),
+                          FadeTransition(
+                            opacity: blinkingAnimationController,
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 10),
+                              height: 10,
+                              width: 10,
+                              decoration: const BoxDecoration(
+                                  color: Colors.green,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(50))),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Click to see on map',
+                            style: TextStyle(
+                                color: Colors.grey.shade600,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .fontSize),
+                          ),
+                          Text('18:30')
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ),
             if (Permissions().getForCompany(selectedService['owner'])) ...[
               ContentBlock(

@@ -66,7 +66,7 @@ class EmergenciesScreen extends StatelessWidget {
                 items[index]['title'],
                 style: TextStyle(
                     color: Colors.grey.shade800,
-                    fontSize: 16,
+                    fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
                     fontWeight: FontWeight.w500),
               ),
               leading: Icon(

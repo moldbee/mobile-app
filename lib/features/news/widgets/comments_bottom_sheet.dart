@@ -165,6 +165,7 @@ class CommentsBottomSheet extends HookWidget {
                     child: Row(
                       children: [
                         CircleAvatar(
+                          backgroundColor: Colors.transparent,
                           radius: 18,
                           backgroundImage: NetworkImage(
                               comment['created_by']['avatar'] ?? defaultAvatar),

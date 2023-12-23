@@ -18,11 +18,12 @@ class Permissions {
   }
 
   getForServices() {
-    return role == 'dadawdawdawawdaw';
+    return role == 'admin';
   }
 
   getForCompany(int? profileId) {
-    return role == 'admin' ||
-        profileController.id.value == profileId.toString();
+    // return role == 'admin' ||
+    //     profileController.id.value == profileId.toString();
+    return false;
   }
 }

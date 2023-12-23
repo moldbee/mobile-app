@@ -77,6 +77,7 @@ class Comment extends HookWidget {
               Row(
                 children: [
                   CircleAvatar(
+                    backgroundColor: Colors.transparent,
                     radius: 26,
                     backgroundImage: NetworkImage(
                         avatar.length > 2 ? avatar : defaultAvatar),

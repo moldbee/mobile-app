@@ -65,8 +65,6 @@ class ProfileScreen extends HookWidget {
                             final pickedFile = await _imagePicker.pickImage(
                                 source: ImageSource.gallery);
                             if (pickedFile != null) {
-                              final currentAvatarUrl =
-                                  profileController.avatar.value;
                               final avatarKeyInBucket =
                                   'avatar-${supabase.auth.currentUser!.id}-${const Uuid().v4()}';
                               await supabase.storage.from('avatars').upload(
@@ -80,9 +78,6 @@ class ProfileScreen extends HookWidget {
                                   .from('profiles')
                                   .update({'avatar': uploadedAvatarFileUrl}).eq(
                                       'uid', supabase.auth.currentUser!.id);
-                              await supabase.storage
-                                  .from('avatars')
-                                  .remove([currentAvatarUrl.split('/').last]);
                             }
                           } catch (e) {
                             // ignore: avoid_print
