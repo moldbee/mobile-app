@@ -1,4 +1,4 @@
-package com.moldova.smartcity
+package com.moldova.baltimore
 
 import io.flutter.embedding.android.FlutterActivity
 

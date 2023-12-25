@@ -37,10 +37,9 @@ class ServicesScreen extends HookWidget {
           ]
         ],
       ),
-      body: Obx(() => GridView.count(
-            padding: const EdgeInsets.only(top: 10),
-            crossAxisCount: 3,
-            children: servicesController.categories.map((element) {
+      body: Obx(() => ListView.separated(
+            itemBuilder: (context, index) {
+              final element = servicesController.categories[index];
               return GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
@@ -49,13 +48,34 @@ class ServicesScreen extends HookWidget {
                         'categoryId': element['id'].toString()
                       });
                 },
-                child: Tile(
-                  title: element['title_$locale'],
-                  icon: element['icon'],
-                  iconColor: Colors.orange.shade300,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: Row(
+                    children: [
+                      Icon(
+                        IconData(int.parse(element['icon']!),
+                            fontFamily: 'MaterialIcons'),
+                        color: Colors.orange.shade300,
+                        size: 40,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(element['title_$locale'])
+                    ],
+                  ),
                 ),
               );
-            }).toList(),
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return Divider(
+                height: 10,
+                thickness: .1,
+                color: Colors.grey.shade500,
+              );
+            },
+            itemCount: servicesController.categories.length,
           )),
     );
   }

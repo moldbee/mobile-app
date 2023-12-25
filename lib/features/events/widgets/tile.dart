@@ -163,6 +163,36 @@ class EventTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: Icon(
+                              Icons.payments_rounded,
+                              color: Colors.orange.shade400,
+                            ),
+                          ),
+                          Text(
+                              price is String
+                                  ? '$price MDL'
+                                  : getAppLoc(context)!.free,
+                              style: TextStyle(
+                                  color: Colors.orange.shade400,
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .fontSize))
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       GestureDetector(
                         onTap: () {
                           _launchUrl(urlToPlace);
@@ -189,36 +219,6 @@ class EventTile extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: Icon(
-                              Icons.payments_rounded,
-                              color: Colors.orange.shade400,
-                            ),
-                          ),
-                          Text(
-                              price is String
-                                  ? '$price MDL'
-                                  : getAppLoc(context)!.free,
-                              style: TextStyle(
-                                  color: Colors.orange.shade400,
-                                  fontSize: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .fontSize))
-                        ],
-                      ),
-                    ],
-                  ),
-                )
               ],
             ),
           ),
