@@ -9,11 +9,9 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/main.dart';
-import 'package:smart_city/shared/helpers/translate.dart';
 import 'package:smart_city/shared/helpers/translate_inputs.dart';
 import 'package:smart_city/shared/hooks/use_preserved_state.dart';
 import 'package:smart_city/shared/screens/info.dart';
-import 'package:smart_city/shared/utils/get_opposite_lang_code.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';
 import 'package:uuid/uuid.dart';
 

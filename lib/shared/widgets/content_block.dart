@@ -14,12 +14,6 @@ class ContentBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final divider = Divider(
-      height: 1,
-      thickness: 1,
-      color: Colors.grey.shade300,
-    );
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       // mainAxisAlignment: MainAxisAlignment.start,

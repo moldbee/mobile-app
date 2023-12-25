@@ -3,8 +3,8 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:smart_city/shared/helpers/translate.dart';
 
 Future<void> translateInuts(
-    GlobalKey<FormBuilderState> _formKey, List<String> names) async {
-  final formValues = _formKey.currentState?.fields;
+    GlobalKey<FormBuilderState> formKey, List<String> names) async {
+  final formValues = formKey.currentState?.fields;
   // ignore: avoid_function_literals_in_foreach_calls
   names.forEach((key) async {
     final roInputKey = "${key}_ro";

@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -8,6 +7,7 @@ class NewsController extends GetxController {
   final isLoading = false.obs;
   final loadedAllNews = false.obs;
   final allNews = [].obs;
+  final viewedNews = [].obs;
 
   @override
   void onInit() {

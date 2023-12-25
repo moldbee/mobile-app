@@ -61,13 +61,12 @@ class EmergenciesScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             return ListTile(
               contentPadding:
-                  const EdgeInsets.symmetric(vertical: 20, horizontal: 14),
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               title: Text(
                 items[index]['title'],
                 style: TextStyle(
                     color: Colors.grey.shade800,
-                    fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
-                    fontWeight: FontWeight.w500),
+                    fontSize: Theme.of(context).textTheme.titleSmall!.fontSize),
               ),
               leading: Icon(
                 items[index]['icon'],
@@ -79,7 +78,9 @@ class EmergenciesScreen extends StatelessWidget {
             );
           },
           separatorBuilder: (context, index) => Divider(
-                color: Colors.grey.shade200,
+                height: 10,
+                thickness: .1,
+                color: Colors.grey.shade500,
               ),
           itemCount: items.length),
     );

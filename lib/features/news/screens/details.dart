@@ -11,7 +11,6 @@ import 'package:smart_city/features/news/screens/upsert.dart';
 import 'package:smart_city/features/news/widgets/comments_bottom_sheet.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/shared/widgets/delete_confirm.dart';
-import 'package:timeago_flutter/timeago_flutter.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsDetailsScreen extends HookWidget {

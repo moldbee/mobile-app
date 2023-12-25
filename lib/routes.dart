@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/controller.dart';
 import 'package:smart_city/features/emergencies/screens/emergencies.dart';
+import 'package:smart_city/features/events/screens/events.dart';
 import 'package:smart_city/features/events/screens/upsert.dart';
 import 'package:smart_city/features/news/screens/details.dart';
 import 'package:smart_city/features/news/screens/upsert.dart';
@@ -17,6 +18,7 @@ import 'package:smart_city/features/services/screens/alert_upsert.dart';
 import 'package:smart_city/features/services/screens/category_upsert.dart';
 import 'package:smart_city/features/services/screens/details.dart';
 import 'package:smart_city/features/services/screens/discount_upsert.dart';
+import 'package:smart_city/features/services/screens/discounts.dart';
 import 'package:smart_city/features/services/screens/info_upsert.dart';
 import 'package:smart_city/features/services/screens/services.dart';
 import 'package:smart_city/features/services/screens/upsert.dart';
@@ -63,6 +65,7 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               goBranch: navigationShell.goBranch,
               index: navigationShell.currentIndex,
             ),
+            // ignore: deprecated_member_use
             body: WillPopScope(onWillPop: onWillPop, child: navigationShell),
           ));
     },
@@ -96,6 +99,10 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
                         id: state.uri.queryParameters['id'],
                         commentId: state.uri.queryParameters['commentId']));
               }),
+          GoRoute(
+              path: const EventsScreen().route,
+              pageBuilder: (context, state) =>
+                  const MaterialPage(child: EventsScreen())),
         ],
       ),
       StatefulShellBranch(
@@ -105,6 +112,10 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               path: const ServicesScreen().route,
               pageBuilder: (context, state) =>
                   const MaterialPage(child: ServicesScreen())),
+          GoRoute(
+              path: const DiscountsScreen().route,
+              pageBuilder: (context, state) =>
+                  const MaterialPage(child: DiscountsScreen())),
           GoRoute(
               path: const ServiceCategoryUpsert().route,
               pageBuilder: (context, state) =>

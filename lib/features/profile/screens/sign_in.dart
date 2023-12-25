@@ -58,10 +58,12 @@ class ProfileSignInScreen extends HookWidget {
         if (e is AuthException) {
           // Check the type of exception and handle it.
           if (e.statusCode == '400') {
+            // ignore: use_build_context_synchronously
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: Colors.red,
                 duration: const Duration(seconds: 1),
+                // ignore: use_build_context_synchronously
                 content: Text(getAppLoc(context)!.wrongEmailOrPassword),
               ),
             );

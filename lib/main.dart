@@ -45,13 +45,12 @@ class MyApp extends StatelessWidget {
         systemNavigationBarDividerColor: blackColor,
         systemNavigationBarIconBrightness: Brightness.dark));
     final locale = Get.find<GlobalController>().locale;
-
     return SafeArea(
       child: Obx(() {
         return MaterialApp.router(
           scrollBehavior: const MaterialScrollBehavior(),
           routerConfig: router,
-          theme: themeData,
+          theme: getThemeData(context),
           debugShowCheckedModeBanner: false,
           title: 'SmartCity',
           locale: locale.value,

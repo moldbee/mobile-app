@@ -36,7 +36,7 @@ class EventTile extends StatelessWidget {
     Map getDate() {
       final now = DateTime.now();
       final today = DateTime(now.year, now.month, now.day);
-      final yesterday = DateTime(now.year, now.month, now.day - 1);
+      // final yesterday = DateTime(now.year, now.month, now.day - 1);
       final tomorrow = DateTime(now.year, now.month, now.day + 1);
 
       final dateToCheck = DateTime.parse(date);
@@ -69,161 +69,96 @@ class EventTile extends StatelessWidget {
       }
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Opacity(
-        opacity: getDate()['color'] == Colors.grey.shade500 ? 0.5 : 1,
-        child: Card(
-          semanticContainer: true,
+    return Stack(
+      children: [
+        Card(
+          shadowColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
           shape: RoundedRectangleBorder(
-            side: BorderSide(color: Colors.grey.shade300, width: 1),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 0,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
+              borderRadius: BorderRadius.circular(10.0),
+              side: BorderSide(width: 1, color: Colors.grey.shade300)),
+          elevation: 5,
+          margin: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Image.network(
+                'https://moldovaconcert.md/wp-content/uploads/2023/11/image-4.png',
+                fit: BoxFit.cover,
+                width: double.maxFinite,
+                height: 150,
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                child: Column(
                   children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(3, 0, 30, 0),
-                        child: Text('$emoji   $title',
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: Colors.grey.shade800,
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .fontSize,
-                                overflow: TextOverflow.ellipsis,
-                                fontWeight: FontWeight.w500)),
-                      ),
+                    Text(
+                      'Esse voluptate sunt elit eu. dwa dad ad wad awd awd awd wa',
+                      style: TextStyle(
+                          fontSize:
+                              Theme.of(context).textTheme.titleMedium!.fontSize,
+                          fontWeight: FontWeight.w400),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        _launchUrl(urlToInfo);
-                      },
-                      child: Icon(
-                        Icons.info,
-                        size: 23,
-                        color: Colors.grey.shade400.withOpacity(0.7),
-                      ),
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: Icon(
-                              Icons.calendar_month_rounded,
-                              color: Colors.grey.shade400,
-                            ),
-                          ),
-                          Text(
-                            getDate()['text'].toString().capitalizeFirst!,
-                            style: TextStyle(
-                                color: getDate()['color'],
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .fontSize),
-                          )
-                        ],
-                      ),
-                      if (Permissions().getForNewsAndEvents()) ...[
-                        GestureDetector(
-                          child: Icon(
-                            Icons.edit,
-                            size: 23,
-                            color: Colors.grey.shade400.withOpacity(0.9),
-                          ),
-                          onTap: () {
-                            context.pushNamed(EventsUpsertScreen().route,
-                                queryParameters: {'id': id});
-                          },
+                    // Divider(
+                    //   height: 20,
+                    //   thickness: .5,
+                    //   color: Colors.grey.shade400,
+                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '12:30',
+                          style: TextStyle(color: Colors.grey.shade500),
+                        ),
+                        Text(
+                          '12 September, 2023',
+                          style: TextStyle(color: Colors.grey.shade500),
+                          // style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                       ],
-                    ],
-                  ),
+                    )
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: Icon(
-                              Icons.payments_rounded,
-                              color: Colors.orange.shade400,
-                            ),
-                          ),
-                          Text(
-                              price is String
-                                  ? '$price MDL'
-                                  : getAppLoc(context)!.free,
-                              style: TextStyle(
-                                  color: Colors.orange.shade400,
-                                  fontSize: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .fontSize))
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          _launchUrl(urlToPlace);
-                        },
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8),
-                              child: Icon(
-                                Icons.place_rounded,
-                                color: Colors.grey.shade400,
-                              ),
-                            ),
-                            Text(place,
-                                style: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .fontSize))
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              )
+            ],
           ),
         ),
+        const Positioned(
+            top: 25,
+            right: 20,
+            child: Wrapper(
+              color: Colors.orange,
+              child: Text(
+                '1900 MDL',
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+              ),
+            )),
+      ],
+    );
+  }
+}
+
+class Wrapper extends StatelessWidget {
+  const Wrapper({Key? key, required this.child, this.color}) : super(key: key);
+
+  final Widget child;
+  final Color? color;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: color ?? Colors.grey.shade800,
       ),
+      child: child,
     );
   }
 }

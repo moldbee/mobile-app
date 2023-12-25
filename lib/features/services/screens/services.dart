@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/services/controller.dart';
 import 'package:smart_city/features/services/screens/category_upsert.dart';
+import 'package:smart_city/features/services/screens/discounts.dart';
 import 'package:smart_city/features/services/screens/items.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/shared/config/permissions.dart';
-import 'package:smart_city/shared/widgets/tile.dart';
 
 class ServicesScreen extends HookWidget {
   const ServicesScreen({Key? key}) : super(key: key);
@@ -23,7 +23,9 @@ class ServicesScreen extends HookWidget {
         title: Text(getAppLoc(context)!.services),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                context.push(const DiscountsScreen().route);
+              },
               icon: Icon(
                 Icons.percent_rounded,
                 color: Colors.red.shade500,
@@ -38,6 +40,7 @@ class ServicesScreen extends HookWidget {
         ],
       ),
       body: Obx(() => ListView.separated(
+            padding: const EdgeInsets.symmetric(vertical: 5),
             itemBuilder: (context, index) {
               final element = servicesController.categories[index];
               return GestureDetector(
@@ -62,7 +65,14 @@ class ServicesScreen extends HookWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      Text(element['title_$locale'])
+                      Text(
+                        element['title_$locale'],
+                        style: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .fontSize),
+                      )
                     ],
                   ),
                 ),

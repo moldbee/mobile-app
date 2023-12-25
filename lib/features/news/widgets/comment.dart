@@ -160,7 +160,7 @@ class Comment extends HookWidget {
                     Icon(
                       Icons.thumb_up_rounded,
                       color: isLiked.value
-                          ? Colors.orange.shade400
+                          ? Colors.orange.shade300
                           : Colors.grey.shade400,
                     ),
                   ],

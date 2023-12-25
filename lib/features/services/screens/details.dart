@@ -195,7 +195,7 @@ class ServiceDetailsScreen extends HookWidget {
                                     .bodyMedium!
                                     .fontSize),
                           ),
-                          Text('18:30')
+                          const Text('18:30')
                         ],
                       )
                     ],

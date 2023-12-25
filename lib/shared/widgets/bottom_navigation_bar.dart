@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:smart_city/features/profile/controller.dart';
 
 Color bottomNavbarIconColor = Colors.white;
-Color bottomNavbarSelectedIconColor = Colors.orange.shade400;
+Color bottomNavbarSelectedIconColor = Colors.orange.shade300;
 
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({super.key, this.goBranch, this.index});

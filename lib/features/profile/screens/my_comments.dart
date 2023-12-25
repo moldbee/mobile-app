@@ -63,7 +63,8 @@ class ProfileComments extends StatelessWidget {
                                         timeago.format(
                                             DateTime.parse(comment['created_at']
                                                 .toString()),
-                                            locale: getAppLoc(context)!.localeName),
+                                            locale:
+                                                getAppLoc(context)!.localeName),
                                         style: TextStyle(
                                             color: Colors.grey.shade600),
                                       ),
@@ -91,7 +92,7 @@ class ProfileComments extends StatelessWidget {
                               // trailing: Row(
                               //   children: [
                               //     Icon(Icons.thumb_up_rounded,
-                              //         color: Colors.orange.shade400),
+                              //         color: Colors.orange.shade300),
                               //     const SizedBox(
                               //       width: 5,
                               //     ),

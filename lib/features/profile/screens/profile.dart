@@ -120,7 +120,7 @@ class ProfileScreen extends HookWidget {
                         },
                         child: Text(
                           getAppLoc(context)!.myComments,
-                          style: TextStyle(color: Colors.orange.shade400),
+                          style: TextStyle(color: Colors.orange.shade300),
                         )),
                     const SizedBox(height: 10),
                     OutlinedButton(
@@ -129,14 +129,14 @@ class ProfileScreen extends HookWidget {
                         },
                         child: Text(
                           getAppLoc(context)!.policy,
-                          style: TextStyle(color: Colors.orange.shade400),
+                          style: TextStyle(color: Colors.orange.shade300),
                         )),
                     const SizedBox(height: 10),
                     // OutlinedButton(
                     //     onPressed: () {},
                     //     child: Text(
                     //       'Удалить аккаунт',
-                    //       style: TextStyle(color: Colors.orange.shade400),
+                    //       style: TextStyle(color: Colors.orange.shade300),
                     //     )),
                     // const SizedBox(height: 10),
                     OutlinedButton(
@@ -161,7 +161,9 @@ class ProfileScreen extends HookWidget {
                                         defaultAvatar;
                                   }));
                         },
-                        child: Text(getAppLoc(context)!.deleteAvatar)),
+                        child: Text(
+                          getAppLoc(context)!.deleteAvatar,
+                        )),
                     const SizedBox(height: 10),
                     OutlinedButton(
                         onPressed: () async {
@@ -172,7 +174,7 @@ class ProfileScreen extends HookWidget {
                         },
                         child: Text(
                           getAppLoc(context)!.exit,
-                          style: TextStyle(color: Colors.orange.shade400),
+                          style: TextStyle(color: Colors.orange.shade300),
                         )),
                   ],
                 ),
