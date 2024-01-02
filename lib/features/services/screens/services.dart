@@ -60,7 +60,7 @@ class ServicesScreen extends HookWidget {
                         IconData(int.parse(element['icon']!),
                             fontFamily: 'MaterialIcons'),
                         color: Colors.orange.shade300,
-                        size: 40,
+                        size: 30,
                       ),
                       const SizedBox(
                         width: 10,

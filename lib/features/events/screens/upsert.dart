@@ -76,7 +76,6 @@ class EventsUpsertScreen extends HookWidget {
                 }
               : {
                   'date': DateTime.now(),
-                  'emoji': '',
                   'title_ro': '',
                   'title_ru': '',
                   'place_ro': '',
@@ -88,10 +87,6 @@ class EventsUpsertScreen extends HookWidget {
           child: ListView(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
             children: [
-              const TextInput(name: 'emoji', title: 'Эмодзи'),
-              SizedBox(
-                height: itemsSpacing,
-              ),
               const TextInput(name: 'info_url', title: 'Ссылка на информацию'),
               SizedBox(
                 height: itemsSpacing,

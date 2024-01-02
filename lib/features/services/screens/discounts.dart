@@ -16,7 +16,11 @@ class DiscountsScreen extends StatelessWidget {
             SizedBox(
               width: 10,
             ),
-            Text('Is in development')
+            Text('Is in development'),
+            SizedBox(
+              width: 10,
+            ),
+            Icon(Icons.construction_rounded),
           ],
         ),
       ),

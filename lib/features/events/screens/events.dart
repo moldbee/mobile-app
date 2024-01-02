@@ -45,7 +45,6 @@ class EventsScreen extends StatelessWidget {
                       price: event['price'],
                       id: event['id'].toString(),
                       date: event['date'],
-                      emoji: event['emoji'],
                       title: event['title_$locale'],
                       place: event['place_$locale'],
                       infoUrl: event['info_url'],

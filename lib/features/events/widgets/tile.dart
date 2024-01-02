@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_city/features/events/screens/upsert.dart';
@@ -16,7 +17,6 @@ class EventTile extends StatelessWidget {
     required this.place,
     required this.placeUrl,
     required this.id,
-    required this.emoji,
     required this.infoUrl,
   }) : super(key: key);
   final String id;
@@ -25,7 +25,6 @@ class EventTile extends StatelessWidget {
   final String place;
   final String placeUrl;
   final String? price;
-  final String emoji;
   final String infoUrl;
 
   @override
@@ -33,34 +32,6 @@ class EventTile extends StatelessWidget {
     final locale = Localizations.localeOf(context).languageCode;
     final Uri urlToPlace = Uri.parse(placeUrl);
     final Uri urlToInfo = Uri.parse(infoUrl);
-    Map getDate() {
-      final now = DateTime.now();
-      final today = DateTime(now.year, now.month, now.day);
-      // final yesterday = DateTime(now.year, now.month, now.day - 1);
-      final tomorrow = DateTime(now.year, now.month, now.day + 1);
-
-      final dateToCheck = DateTime.parse(date);
-      final eventDate =
-          DateTime(dateToCheck.year, dateToCheck.month, dateToCheck.day);
-      if (eventDate == today) {
-        return {
-          'text':
-              '${getAppLoc(context)!.today}, ${DateFormat('d MMMM, HH:mm', locale).format(dateToCheck)}',
-          'color': Colors.grey.shade600
-        };
-      } else if (eventDate == tomorrow) {
-        return {
-          'text':
-              '${getAppLoc(context)!.tommorow}, ${DateFormat('d MMMM, HH:mm', locale).format(dateToCheck)}',
-          'color': Colors.grey.shade600
-        };
-      }
-      return {
-        'text': DateFormat('${DateFormat.WEEKDAY}, d MMMM, HH:mm', locale)
-            .format(DateTime.parse(date)),
-        'color': Colors.grey.shade600
-      };
-    }
 
     // ignore: no_leading_underscores_for_local_identifiers
     Future<void> _launchUrl(url) async {
@@ -72,15 +43,16 @@ class EventTile extends StatelessWidget {
     return Stack(
       children: [
         Card(
-          shadowColor: Colors.transparent,
+          shadowColor: Colors.grey.shade100.withOpacity(0.3),
           surfaceTintColor: Colors.transparent,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
               side: BorderSide(width: 1, color: Colors.grey.shade300)),
-          elevation: 5,
+          elevation: 3,
           margin: const EdgeInsets.all(10),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Image.network(
@@ -90,54 +62,49 @@ class EventTile extends StatelessWidget {
                 height: 150,
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Esse voluptate sunt elit eu. dwa dad ad wad awd awd awd wa',
+                      title,
+                      textAlign: TextAlign.start,
                       style: TextStyle(
                           fontSize:
                               Theme.of(context).textTheme.titleMedium!.fontSize,
                           fontWeight: FontWeight.w400),
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
-                    // Divider(
-                    //   height: 20,
-                    //   thickness: .5,
-                    //   color: Colors.grey.shade400,
-                    // ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '12:30',
-                          style: TextStyle(color: Colors.grey.shade500),
-                        ),
-                        Text(
-                          '12 September, 2023',
-                          style: TextStyle(color: Colors.grey.shade500),
-                          // style: TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    )
+                    Text(
+                      DateFormat('HH:mm • d MMMM yyyy • EEEEE', locale)
+                          .format(DateTime.parse(date))
+                          .capitalizeFirst as String,
+                      style: TextStyle(color: Colors.grey.shade600),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      place,
+                      style: TextStyle(color: Colors.grey.shade600),
+                    ),
                   ],
                 ),
               )
             ],
           ),
         ),
-        const Positioned(
-            top: 25,
-            right: 20,
+        Positioned(
+            top: 20,
+            left: 20,
             child: Wrapper(
               color: Colors.orange,
               child: Text(
-                '1900 MDL',
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                price != null ? '$price MDL' : getAppLoc(context)!.free,
+                style: const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.w500),
               ),
             )),
       ],

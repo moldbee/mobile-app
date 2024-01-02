@@ -25,7 +25,7 @@ class EmergenciesScreen extends StatelessWidget {
         'title': getAppLoc(context)!.fire,
         'icon': Icons.local_fire_department_rounded,
         'number': '112',
-        'iconColor': Colors.orange.shade500,
+        'iconColor': Colors.orange.shade400,
       },
       {
         'title': 'RED-Nord',
@@ -37,7 +37,7 @@ class EmergenciesScreen extends StatelessWidget {
         'title': getAppLoc(context)!.gasService,
         'icon': Icons.propane_tank_rounded,
         'number': '904',
-        'iconColor': Colors.orange.shade500,
+        'iconColor': Colors.orange.shade400,
       },
       {
         'title': 'CET-NORD',
@@ -49,7 +49,7 @@ class EmergenciesScreen extends StatelessWidget {
         'title': getAppLoc(context)!.liftSupportService,
         'icon': Icons.elevator_rounded,
         'number': '0231 8-00-49',
-        'iconColor': Colors.orange.shade500,
+        'iconColor': Colors.orange.shade400,
       },
     ];
 
