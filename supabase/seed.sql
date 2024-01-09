@@ -10,6 +10,7 @@ INSERT INTO "storage"."buckets" ("id", "name", "owner", "created_at", "updated_a
 	('avatars', 'avatars', NULL, '2023-09-21 22:34:03.866859+00', '2023-09-21 22:34:03.866859+00', true, false, NULL, NULL, NULL),
 	('news', 'news', NULL, '2023-09-22 18:43:19.922812+00', '2023-09-22 18:43:19.922812+00', true, false, NULL, NULL, NULL),
 	('services', 'services', NULL, '2023-10-09 09:45:59.930996+00', '2023-10-09 09:45:59.930996+00', true, false, NULL, NULL, NULL);
+	('events', 'events', NULL, '2023-10-09 09:45:59.930996+00', '2023-10-09 09:45:59.930996+00', true, false, NULL, NULL, NULL);
 
 INSERT INTO public.events (created_at, title_ro, title_ru, date, place_url, place_ru, place_ro, emoji, info_url, price)
 VALUES
