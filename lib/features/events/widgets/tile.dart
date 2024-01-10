@@ -12,6 +12,7 @@ class EventTile extends StatelessWidget {
   const EventTile({
     Key? key,
     required this.date,
+    required this.imageUrl,
     required this.price,
     required this.title,
     required this.place,
@@ -25,6 +26,7 @@ class EventTile extends StatelessWidget {
   final String place;
   final String placeUrl;
   final String? price;
+  final String imageUrl;
   final String infoUrl;
 
   @override
@@ -56,7 +58,7 @@ class EventTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Image.network(
-                'https://moldovaconcert.md/wp-content/uploads/2023/11/image-4.png',
+                imageUrl,
                 fit: BoxFit.cover,
                 width: double.maxFinite,
                 height: 150,
