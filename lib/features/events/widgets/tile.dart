@@ -109,6 +109,25 @@ class EventTile extends StatelessWidget {
                     color: Colors.white, fontWeight: FontWeight.w500),
               ),
             )),
+        if (Permissions().getForNewsAndEvents()) ...[
+          Positioned(
+              top: 20,
+              right: 20,
+              child: GestureDetector(
+                onTap: () {
+                  context.pushNamed(EventsUpsertScreen().route,
+                      queryParameters: {'id': id});
+                },
+                child: Wrapper(
+                  color: Colors.orange,
+                  child: Text(
+                    getAppLoc(context)!.edit,
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              )),
+        ]
       ],
     );
   }

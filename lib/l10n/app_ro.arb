@@ -1,4 +1,12 @@
 {
+  "gotIt": "Am înțeles",
+  "other": "Altele",
+  "intro_welcome": "Bun venit la Moldbee - prima superaplicație din Moldova, unde inovația și confortul se întâlnesc într-o singură experiență!",
+  "intro_news": "Știrile noastre de calitate, adaptate oricărui gust, fac din Moldbee sursa ta indispensabilă de informații!",
+  "intro_events": "Moldbee - ghidul tău prin toate evenimentele țării! Avem informații despre fiecare eveniment, astfel încât să fii mereu la curent cu momentele importante.",
+  "intro_services": "Descoperă o listă imensă de organizații, clasificate pe categorii, cu multe date în Moldbee - sursa ta de informații complete!",
+  "intro_other": "Moldbee nu oferă doar știri și evenimente, ci și multe altele, precum comentarii, servicii de urgență și multe altele. Bine ai venit în lumea comodității și diversității!",
+  "edit": "Editare",
   "info": "Informații",
   "events": "Evenimente",
   "news": "Știri",

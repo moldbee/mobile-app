@@ -23,6 +23,7 @@ void main() async {
     anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
   );
   await GetStorage.init();
+
   // await GetStorage().erase();
   Get.put(GlobalController());
   Get.put(ProfileController());
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
           routerConfig: router,
           theme: getThemeData(context),
           debugShowCheckedModeBanner: false,
-          title: 'SmartCity',
+          title: 'Moldbee',
           locale: locale.value,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,

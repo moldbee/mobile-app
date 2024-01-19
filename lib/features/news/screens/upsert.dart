@@ -11,7 +11,7 @@ import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/helpers/translate_inputs.dart';
 import 'package:smart_city/shared/hooks/use_preserved_state.dart';
-import 'package:smart_city/shared/screens/info.dart';
+import 'package:smart_city/features/news/screens/news.dart';
 import 'package:smart_city/shared/widgets/form/text_input.dart';
 import 'package:uuid/uuid.dart';
 
@@ -105,7 +105,7 @@ class NewsUpsertScreen extends HookWidget {
           await newsController
               .createNew({...formValue, 'image': uploadedImageFileUrl});
           if (!context.mounted) return;
-          context.go(const InfoScreen().route);
+          context.go(const NewsScreen().route);
         }
       } catch (e) {
         // ignore: avoid_print

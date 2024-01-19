@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -10,8 +11,10 @@ import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/features/news/screens/upsert.dart';
 import 'package:smart_city/features/news/widgets/comments_bottom_sheet.dart';
 import 'package:smart_city/l10n/main.dart';
+import 'package:smart_city/shared/config/permissions.dart';
 import 'package:smart_city/shared/widgets/delete_confirm.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:video_player/video_player.dart';
 
 class NewsDetailsScreen extends HookWidget {
   const NewsDetailsScreen({Key? key, this.id, this.commentId})
@@ -22,6 +25,8 @@ class NewsDetailsScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final videoPlayerController = useState<VideoPlayerController?>(null);
+    final chewieController = useState<ChewieController?>(null);
     final newsController = Get.find<NewsController>();
     final newFromList = newsController.news.firstWhereOrNull(
         (element) => element['id'].toString() == id.toString());
@@ -59,6 +64,18 @@ class NewsDetailsScreen extends HookWidget {
     }
 
     useEffect(() {
+      final internalVideoPlayerController = VideoPlayerController.networkUrl(
+        Uri.parse('https://www.youtube.com/watch?v=YBqJgQuutYc'),
+      );
+
+      internalVideoPlayerController.initialize().then((value) => {
+            videoPlayerController.value = internalVideoPlayerController,
+            chewieController.value = ChewieController(
+              videoPlayerController: internalVideoPlayerController,
+              autoPlay: true,
+              looping: true,
+            )
+          });
       if (commentId == null) {
         newsController
             .fetchCommentsForNew(newData['id'].toString())
@@ -82,38 +99,35 @@ class NewsDetailsScreen extends HookWidget {
       appBar: AppBar(
         title: Text(getAppLoc(context)!.article),
         actions: [
-          IconButton(
-              onPressed: () async {
-                await showDialog(
-                    context: context,
-                    builder: (context) => DeleteConfirmAlert(
-                          onDelete: () async {
-                            await newsController.deleteNew(id);
-                          },
-                        ));
-              },
-              icon: const Icon(Icons.delete_rounded)),
-          IconButton(
-              onPressed: () {
-                context.pushNamed(NewsUpsertScreen().route,
-                    queryParameters: {'id': id});
-              },
-              icon: const Icon(
-                Icons.edit_rounded,
-                size: 26,
-              )),
-          // IconButton(
-          //     onPressed: () {},
-          //     icon: const Icon(
-          //       Icons.share_rounded,
-          //       size: 26,
-          //     ))
+          if (Permissions().getForNewsAndEvents()) ...[
+            IconButton(
+                onPressed: () async {
+                  await showDialog(
+                      context: context,
+                      builder: (context) => DeleteConfirmAlert(
+                            onDelete: () async {
+                              await newsController.deleteNew(id);
+                            },
+                          ));
+                },
+                icon: const Icon(Icons.delete_rounded)),
+            IconButton(
+                onPressed: () {
+                  context.pushNamed(NewsUpsertScreen().route,
+                      queryParameters: {'id': id});
+                },
+                icon: const Icon(
+                  Icons.edit_rounded,
+                  size: 26,
+                )),
+          ]
         ],
       ),
       body: SingleChildScrollView(
         child: SizedBox(
           width: double.maxFinite,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
@@ -212,6 +226,17 @@ class NewsDetailsScreen extends HookWidget {
                       color: Colors.grey.shade800),
                 ),
               ),
+              Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: chewieController.value != null
+                      ? AspectRatio(
+                          aspectRatio:
+                              16 / 9, // Adjust the aspect ratio as needed
+                          child: Chewie(
+                            controller: chewieController.value!,
+                          ),
+                        )
+                      : Container()),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 30, 10, 20),
                 child: Row(

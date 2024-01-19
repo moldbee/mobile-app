@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/controller.dart';
 import 'package:smart_city/features/emergencies/screens/emergencies.dart';
@@ -24,7 +25,8 @@ import 'package:smart_city/features/services/screens/services.dart';
 import 'package:smart_city/features/services/screens/upsert.dart';
 import 'package:smart_city/features/settings/screens/about.dart';
 import 'package:smart_city/l10n/main.dart';
-import 'package:smart_city/shared/screens/info.dart';
+import 'package:smart_city/features/news/screens/news.dart';
+import 'package:smart_city/shared/screens/intro_screen.dart';
 import 'package:smart_city/shared/screens/policy.dart';
 
 import 'features/services/screens/items.dart';
@@ -54,28 +56,46 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
         return Future.value(true);
       }
 
-      return Obx(() => Scaffold(
-            floatingActionButton: globalState.isLoading.value
-                ? Container(
-                    padding: const EdgeInsets.all(10),
-                    child: const CircularProgressIndicator(),
-                  )
-                : null,
-            bottomNavigationBar: CustomBottomNavigationBar(
-              goBranch: navigationShell.goBranch,
-              index: navigationShell.currentIndex,
-            ),
-            // ignore: deprecated_member_use
-            body: WillPopScope(onWillPop: onWillPop, child: navigationShell),
-          ));
+      final storage = GetStorage();
+      final isViewedIntroScreen =
+          (storage.read('isViewedIntroScreen') == true).obs;
+
+      onSkip() {
+        storage.write('isViewedIntroScreen', true);
+        isViewedIntroScreen.value = true;
+      }
+
+      return Obx(() {
+        if (!isViewedIntroScreen.value) {
+          return IntroScreen(
+            onSkip: onSkip,
+            onDone: onSkip,
+          );
+        }
+
+        return Scaffold(
+          floatingActionButton: globalState.isLoading.value
+              ? Container(
+                  padding: const EdgeInsets.all(10),
+                  child: const CircularProgressIndicator(),
+                )
+              : null,
+          bottomNavigationBar: CustomBottomNavigationBar(
+            goBranch: navigationShell.goBranch,
+            index: navigationShell.currentIndex,
+          ),
+          // ignore: deprecated_member_use
+          body: WillPopScope(onWillPop: onWillPop, child: navigationShell),
+        );
+      });
     },
     branches: [
       StatefulShellBranch(
         routes: [
           GoRoute(
-              path: const InfoScreen().route,
+              path: const NewsScreen().route,
               pageBuilder: (context, state) =>
-                  const MaterialPage(child: InfoScreen())),
+                  const MaterialPage(child: NewsScreen())),
           GoRoute(
               name: NewsUpsertScreen().route,
               path: NewsUpsertScreen().route,
