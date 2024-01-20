@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:smart_city/features/news/widgets/tile.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:very_good_infinite_list/very_good_infinite_list.dart';
@@ -14,7 +15,11 @@ class NewsScreenContentBody extends HookWidget {
   Widget build(BuildContext context) {
     final NewsController newsController = Get.find<NewsController>();
 
-    return Obx(() => RefreshIndicator(
+    return Obx(() => LiquidPullToRefresh(
+        animSpeedFactor: 3,
+        color: Colors.orange.shade400,
+        showChildOpacityTransition: false,
+        springAnimationDurationInMilliseconds: 500,
         child: InfiniteList(
           separatorBuilder: (context, index) => Divider(
             color: Colors.grey.shade200,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:smart_city/features/events/controller.dart';
 import 'package:smart_city/features/events/screens/upsert.dart';
 import 'package:smart_city/features/events/widgets/tile.dart';
@@ -31,7 +32,11 @@ class EventsScreen extends StatelessWidget {
             ]
           ],
         ),
-        body: Obx(() => RefreshIndicator(
+        body: Obx(() => LiquidPullToRefresh(
+            animSpeedFactor: 3,
+            springAnimationDurationInMilliseconds: 500,
+            color: Colors.orange.shade400,
+            showChildOpacityTransition: false,
             onRefresh: () async {
               await eventsController.fetchEvents();
             },

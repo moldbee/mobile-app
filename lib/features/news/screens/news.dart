@@ -8,7 +8,6 @@ import 'package:smart_city/features/news/widgets/news_body.dart';
 import 'package:smart_city/features/news/screens/upsert.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/shared/config/permissions.dart';
-import 'package:smart_city/shared/screens/intro_screen.dart';
 
 class NewsScreen extends HookWidget {
   const NewsScreen({Key? key}) : super(key: key);

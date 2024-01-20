@@ -64,18 +64,6 @@ class NewsDetailsScreen extends HookWidget {
     }
 
     useEffect(() {
-      final internalVideoPlayerController = VideoPlayerController.networkUrl(
-        Uri.parse('https://www.youtube.com/watch?v=YBqJgQuutYc'),
-      );
-
-      internalVideoPlayerController.initialize().then((value) => {
-            videoPlayerController.value = internalVideoPlayerController,
-            chewieController.value = ChewieController(
-              videoPlayerController: internalVideoPlayerController,
-              autoPlay: true,
-              looping: true,
-            )
-          });
       if (commentId == null) {
         newsController
             .fetchCommentsForNew(newData['id'].toString())
@@ -226,17 +214,6 @@ class NewsDetailsScreen extends HookWidget {
                       color: Colors.grey.shade800),
                 ),
               ),
-              Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: chewieController.value != null
-                      ? AspectRatio(
-                          aspectRatio:
-                              16 / 9, // Adjust the aspect ratio as needed
-                          child: Chewie(
-                            controller: chewieController.value!,
-                          ),
-                        )
-                      : Container()),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 30, 10, 20),
                 child: Row(

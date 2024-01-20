@@ -16,7 +16,7 @@ class IntroScreen extends StatelessWidget {
       pages: [
         PageViewModel(
           title: 'Moldbee',
-          image: const Icon(Icons.emoji_nature_rounded, size: 80),
+          image: const Icon(Icons.emoji_nature_rounded, size: 50),
           body: locale!.intro_welcome,
         ),
         PageViewModel(
