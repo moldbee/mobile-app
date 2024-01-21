@@ -100,7 +100,7 @@ class EventTile extends StatelessWidget {
         ),
         Positioned(
             top: 20,
-            left: 20,
+            right: 20,
             child: Wrapper(
               color: Colors.orange,
               child: Text(
@@ -112,7 +112,7 @@ class EventTile extends StatelessWidget {
         if (Permissions().getForNewsAndEvents()) ...[
           Positioned(
               top: 20,
-              right: 20,
+              left: 20,
               child: GestureDetector(
                 onTap: () {
                   context.pushNamed(EventsUpsertScreen().route,

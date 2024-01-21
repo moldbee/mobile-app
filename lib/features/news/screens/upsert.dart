@@ -58,6 +58,7 @@ class NewsUpsertScreen extends HookWidget {
       'title_ru': '',
       'description_ro': '',
       'description_ru': '',
+      'source': ''
     };
 
     if (id != null) {
@@ -66,6 +67,7 @@ class NewsUpsertScreen extends HookWidget {
         'title_ru': editingNew['title_ru'],
         'description_ro': editingNew['description_ro'],
         'description_ru': editingNew['description_ru'],
+        'source': editingNew['source']
       };
     }
     final formState =
@@ -216,6 +218,13 @@ class NewsUpsertScreen extends HookWidget {
                     validators: [
                       FormBuilderValidators.required(),
                     ]),
+                SizedBox(
+                  height: itemsSpacing,
+                ),
+                const TextInput(
+                    name: 'source',
+                    title: 'Ссылка на источник',
+                    validators: []),
               ],
             )));
   }

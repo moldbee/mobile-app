@@ -215,6 +215,35 @@ class NewsDetailsScreen extends HookWidget {
                 ),
               ),
               Padding(
+                padding: const EdgeInsets.fromLTRB(10, 6, 10, 10),
+                child: GestureDetector(
+                  onTap: () {
+                    launchUrl(Uri.parse(newData['source']));
+                  },
+                  child: Row(
+                    children: [
+                      Image.network(
+                          '${Uri.parse(newData['source']).origin}/favicon.ico',
+                          width: 20,
+                          scale: 0.9,
+                          height: 20),
+                      const SizedBox(
+                        width: 7,
+                      ),
+                      Text(
+                        Uri.parse(newData['source']).host,
+                        style: TextStyle(
+                            color: Colors.grey.shade500,
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .fontSize),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
                 padding: const EdgeInsets.fromLTRB(10, 30, 10, 20),
                 child: Row(
                   children: [

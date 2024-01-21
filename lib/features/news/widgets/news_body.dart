@@ -52,7 +52,7 @@ class NewsScreenContentBody extends HookWidget {
         onRefresh: () async {
           newsController.loadedAllNews.value = false;
           newsController.news.value = [];
-          await newsController.fetchNews();
+          await newsController.fetchNews(disableLoading: true);
         }));
   }
 }
