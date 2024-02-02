@@ -1,4 +1,8 @@
 {
+  "in_development": "În dezvoltare",
+  "promotions": "Promoții",
+  "about_app_description": "Bună! Aplicația este în faza de testare și acesta este doar MVP. Dacă ți-a plăcut această idee, te rog să-mi scrii pe instagram ce ai vrea să adaugi sau ce ai vrea să schimbi, acest lucru este foarte important pentru viitorul aplicației.",
+  "click_to_see_on_map": "Apăsați pentru a vedea pe hartă",
   "gotIt": "Am înțeles",
   "other": "Altele",
   "intro_welcome": "Bun venit la Moldbee - prima superaplicație din Moldova, unde inovația și confortul se întâlnesc într-o singură experiență!",

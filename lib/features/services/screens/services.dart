@@ -3,11 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/services/controller.dart';
-import 'package:smart_city/features/services/screens/category_upsert.dart';
 import 'package:smart_city/features/services/screens/discounts.dart';
 import 'package:smart_city/features/services/screens/items.dart';
 import 'package:smart_city/l10n/main.dart';
-import 'package:smart_city/shared/config/permissions.dart';
 
 class ServicesScreen extends HookWidget {
   const ServicesScreen({Key? key}) : super(key: key);
@@ -30,13 +28,6 @@ class ServicesScreen extends HookWidget {
                 Icons.percent_rounded,
                 color: Colors.red.shade500,
               )),
-          if (Permissions().getForServiceCategories()) ...[
-            IconButton(
-                onPressed: () async {
-                  context.push(const ServiceCategoryUpsert().route);
-                },
-                icon: const Icon(Icons.add_home_work_rounded)),
-          ]
         ],
       ),
       body: Obx(() => ListView.separated(

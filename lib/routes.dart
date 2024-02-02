@@ -15,12 +15,14 @@ import 'package:smart_city/features/profile/screens/notifications.dart';
 import 'package:smart_city/features/profile/screens/profile.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
 import 'package:smart_city/features/profile/screens/sign_up.dart';
-import 'package:smart_city/features/services/screens/alert_upsert.dart';
-import 'package:smart_city/features/services/screens/category_upsert.dart';
+import 'package:smart_city/features/services/screens/company_services.dart';
+import 'package:smart_city/features/services/screens/contacts.dart';
 import 'package:smart_city/features/services/screens/details.dart';
-import 'package:smart_city/features/services/screens/discount_upsert.dart';
 import 'package:smart_city/features/services/screens/discounts.dart';
-import 'package:smart_city/features/services/screens/info_upsert.dart';
+import 'package:smart_city/features/services/screens/faq.dart';
+import 'package:smart_city/features/services/screens/info.dart';
+import 'package:smart_city/features/services/screens/offices.dart';
+import 'package:smart_city/features/services/screens/promotions.dart';
 import 'package:smart_city/features/services/screens/services.dart';
 import 'package:smart_city/features/services/screens/upsert.dart';
 import 'package:smart_city/features/settings/screens/about.dart';
@@ -137,31 +139,6 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               pageBuilder: (context, state) =>
                   const MaterialPage(child: DiscountsScreen())),
           GoRoute(
-              path: const ServiceCategoryUpsert().route,
-              pageBuilder: (context, state) =>
-                  const MaterialPage(child: ServiceCategoryUpsert())),
-          GoRoute(
-              name: const ServiceInfoUpsert().route,
-              path: const ServiceInfoUpsert().route,
-              pageBuilder: (context, state) => MaterialPage(
-                  child: ServiceInfoUpsert(
-                      serviceId: state.uri.queryParameters['serviceId'],
-                      infoId: state.uri.queryParameters['infoId']))),
-          GoRoute(
-              name: const ServiceDiscountUpsert().route,
-              path: const ServiceDiscountUpsert().route,
-              pageBuilder: (context, state) => MaterialPage(
-                  child: ServiceDiscountUpsert(
-                      serviceId: state.uri.queryParameters['serviceId'],
-                      discountId: state.uri.queryParameters['discountId']))),
-          GoRoute(
-              name: const ServiceAlertUpsert().route,
-              path: const ServiceAlertUpsert().route,
-              pageBuilder: (context, state) => MaterialPage(
-                  child: ServiceAlertUpsert(
-                      serviceId: state.uri.queryParameters['serviceId'],
-                      alertId: state.uri.queryParameters['alertId']))),
-          GoRoute(
               name: ServiceUpsert().route,
               path: ServiceUpsert().route,
               pageBuilder: (context, state) => MaterialPage(
@@ -182,6 +159,60 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
                 return MaterialPage(
                     child: ServiceDetailsScreen(
                   serviceId: state.uri.queryParameters['serviceId'],
+                ));
+              }),
+          GoRoute(
+              name: const CompanyServicesScreen().route,
+              path: const CompanyServicesScreen().route,
+              pageBuilder: (context, state) {
+                return MaterialPage(
+                    child: CompanyServicesScreen(
+                  id: state.uri.queryParameters['companyId'],
+                ));
+              }),
+          GoRoute(
+              name: const CompanyContactsScreen().route,
+              path: const CompanyContactsScreen().route,
+              pageBuilder: (context, state) {
+                return MaterialPage(
+                    child: CompanyContactsScreen(
+                  id: state.uri.queryParameters['companyId'],
+                ));
+              }),
+          GoRoute(
+              name: const CompanyPromotionsScreen().route,
+              path: const CompanyPromotionsScreen().route,
+              pageBuilder: (context, state) {
+                return MaterialPage(
+                    child: CompanyPromotionsScreen(
+                  id: state.uri.queryParameters['companyId'],
+                ));
+              }),
+          GoRoute(
+              name: const CompanyInfoScreen().route,
+              path: const CompanyInfoScreen().route,
+              pageBuilder: (context, state) {
+                return MaterialPage(
+                    child: CompanyInfoScreen(
+                  id: state.uri.queryParameters['companyId'],
+                ));
+              }),
+          GoRoute(
+              name: const CompanyFaqScreen().route,
+              path: const CompanyFaqScreen().route,
+              pageBuilder: (context, state) {
+                return MaterialPage(
+                    child: CompanyFaqScreen(
+                  id: state.uri.queryParameters['companyId'],
+                ));
+              }),
+          GoRoute(
+              name: const CompanyOfficesScreen().route,
+              path: const CompanyOfficesScreen().route,
+              pageBuilder: (context, state) {
+                return MaterialPage(
+                    child: CompanyOfficesScreen(
+                  id: state.uri.queryParameters['companyId'],
                 ));
               }),
         ],

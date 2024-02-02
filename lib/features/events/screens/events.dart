@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:smart_city/features/events/controller.dart';
-import 'package:smart_city/features/events/screens/upsert.dart';
 import 'package:smart_city/features/events/widgets/tile.dart';
 import 'package:smart_city/l10n/main.dart';
-import 'package:smart_city/shared/config/permissions.dart';
 
 class EventsScreen extends StatelessWidget {
   const EventsScreen({Key? key}) : super(key: key);
@@ -19,18 +16,6 @@ class EventsScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(getAppLoc(context)!.events),
-          actions: [
-            if (Permissions().getForNewsAndEvents()) ...[
-              IconButton(
-                  onPressed: () {
-                    context.push(EventsUpsertScreen().route);
-                  },
-                  icon: const Icon(
-                    Icons.add_rounded,
-                    size: 30,
-                  ))
-            ]
-          ],
         ),
         body: Obx(() => LiquidPullToRefresh(
             animSpeedFactor: 3,

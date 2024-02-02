@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_city/l10n/main.dart';
 
 class DiscountsScreen extends StatelessWidget {
   const DiscountsScreen({Key? key}) : super(key: key);
@@ -6,21 +7,23 @@ class DiscountsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localiz = getAppLoc(context);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Discounts')),
-      body: const Center(
+      appBar: AppBar(title: Text(localiz!.promotions)),
+      body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.construction_rounded),
-            SizedBox(
+            const Icon(Icons.construction_rounded),
+            const SizedBox(
               width: 10,
             ),
-            Text('Is in development'),
-            SizedBox(
+            Text(localiz.in_development),
+            const SizedBox(
               width: 10,
             ),
-            Icon(Icons.construction_rounded),
+            const Icon(Icons.construction_rounded),
           ],
         ),
       ),

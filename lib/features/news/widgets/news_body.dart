@@ -36,6 +36,7 @@ class NewsScreenContentBody extends HookWidget {
           itemBuilder: (context, index) {
             final newsItem = newsController.newsSortedByTime[index];
             final locale = getAppLoc(context)!.localeName;
+
             return NewsTile(
               title: newsItem['title_$locale'],
               imageUrl: newsItem['image'],

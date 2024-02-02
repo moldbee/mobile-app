@@ -5,7 +5,6 @@ import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/main.dart';
-import 'package:smart_city/shared/config/permissions.dart';
 import 'package:smart_city/shared/widgets/delete_confirm.dart';
 import 'package:timeago_flutter/timeago_flutter.dart' as timeago;
 
@@ -238,8 +237,7 @@ class Comment extends HookWidget {
                   //   'Пожаловаться',
                   //   style: TextStyle(color: Colors.grey.shade600),
                   // ),
-                  if (nick == profileController.nick.value ||
-                      Permissions().getForComments()) ...[
+                  if (nick == profileController.nick.value) ...[
                     GestureDetector(
                         onTap: () {
                           onEdit(id);

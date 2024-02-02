@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:smart_city/features/events/widgets/details_tile.dart';
 import 'package:smart_city/features/services/controller.dart';
-import 'package:smart_city/features/services/screens/alert_upsert.dart';
-import 'package:smart_city/features/services/screens/discount_upsert.dart';
-import 'package:smart_city/features/services/screens/info_upsert.dart';
+import 'package:smart_city/features/services/screens/company_services.dart';
+import 'package:smart_city/features/services/screens/contacts.dart';
+import 'package:smart_city/features/services/screens/faq.dart';
+import 'package:smart_city/features/services/screens/info.dart';
+import 'package:smart_city/features/services/screens/offices.dart';
+import 'package:smart_city/features/services/screens/promotions.dart';
 import 'package:smart_city/l10n/main.dart';
-import 'package:smart_city/shared/config/permissions.dart';
-import 'package:smart_city/shared/utils/formatter.dart';
-import 'package:smart_city/shared/widgets/content_block.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ServiceDetailsScreen extends HookWidget {
   const ServiceDetailsScreen({Key? key, this.serviceId}) : super(key: key);
@@ -24,420 +24,90 @@ class ServiceDetailsScreen extends HookWidget {
     blinkingAnimationController.repeat(reverse: true);
     final locale = getAppLoc(context)!.localeName;
     final servicesController = Get.find<ServicesController>();
-    final discounts =
-        servicesController.getDiscountsForService(serviceId as String);
-    final alerts = servicesController.getAlertsForService(serviceId as String);
-    final infos = servicesController.getInfosForService(serviceId as String);
     final selectedService = servicesController.services.firstWhere(
         (element) => element['id'].toString() == serviceId.toString());
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          selectedService['title_$locale'] as String,
+          selectedService['title_$locale'],
+          style: TextStyle(color: Colors.grey.shade900),
         ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: () {
-                launchUrl(Uri.parse(selectedService['message']));
-              },
-              icon: const Icon(Icons.send_rounded)),
-          // if (Permissions().getForCompany(selectedService['owner'])) ...[
-          //   IconButton(
-          //       onPressed: () {
-          //         context.pushNamed(ServiceUpsert().route,
-          //             queryParameters: {'serviceId': serviceId, 'categoryId': selectedService['category'].toString()});
-          //       },
-          //       icon: const Icon(Icons.edit_rounded)),
-          //   IconButton(
-          //       onPressed: () async {
-          //         await showDeleteConfirm(() async {
-          //           await supabase
-          //               .from('services')
-          //               .delete()
-          //               .eq('id', selectedService['id']);
-          //           await servicesController.fetchServices();
-          //           if (!context.mounted) return;
-          //           context.pop();
-          //         }, context, disableDoublePop: true);
-          //       },
-          //       icon: const Icon(Icons.delete_rounded)),
-          // ]
-        ],
+        shadowColor: Colors.transparent,
+        iconTheme: IconThemeData(color: Colors.grey.shade900),
+        backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 if (selectedService['logo'] != null) ...[
                   const SizedBox(
                     height: 16,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Image.network(
-                      selectedService['logo'],
-                      fit: BoxFit.scaleDown,
-                      height: 100,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
+                  Image.network(
+                    selectedService['logo'],
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.center,
+                    height: 100,
+                    width: double.infinity,
                   ),
                 ],
-                ContentBlock(
-                    title: 'Контакты',
-                    enableTopDivider: true,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            launchUrl(Uri.parse(selectedService['website']));
-                          },
-                          child: SelectableText(
-                            selectedService['website'],
-                            style: TextStyle(
-                                color: Colors.blue,
-                                height: 1,
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .fontSize),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            launchUrl(Uri(
-                                scheme: 'tel', path: selectedService['phone']));
-                          },
-                          child: SelectableText(
-                            selectedService['phone'],
-                            style: TextStyle(
-                                height: 1,
-                                color: Colors.blue,
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .fontSize),
-                          ),
-                        ),
-                      ],
-                    )),
-                ContentBlock(
-                  title: 'Описание',
-                  child: Text(
-                    selectedService['description_$locale'],
-                    style: TextStyle(
-                        fontSize:
-                            Theme.of(context).textTheme.bodyMedium!.fontSize),
-                  ),
-                )
               ],
             ),
-            const SizedBox(
-              height: 4,
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: Card(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Market',
-                            style: TextStyle(
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium!
-                                    .fontSize,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey.shade800),
-                          ),
-                          FadeTransition(
-                            opacity: blinkingAnimationController,
-                            child: Container(
-                              margin: const EdgeInsets.only(right: 10),
-                              height: 10,
-                              width: 10,
-                              decoration: const BoxDecoration(
-                                  color: Colors.green,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(50))),
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Click to see on map',
-                            style: TextStyle(
-                                color: Colors.grey.shade600,
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .fontSize),
-                          ),
-                          const Text('18:30')
-                        ],
-                      )
-                    ],
-                  ),
+            GridView.count(
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.only(top: 50),
+              shrinkWrap: true,
+              crossAxisCount: 3,
+              children: [
+                ServiceDetailsTile(
+                    onTap: () {
+                      context.pushNamed(const CompanyServicesScreen().route,
+                          queryParameters: {'id': serviceId});
+                    },
+                    icon: Icons.grid_view_rounded,
+                    title: 'Услуги'),
+                ServiceDetailsTile(
+                  onTap: () {
+                    context.pushNamed(const CompanyPromotionsScreen().route,
+                        queryParameters: {'id': serviceId});
+                  },
+                  icon: Icons.percent_rounded,
+                  title: 'Акции',
+                  iconColor: Colors.red,
                 ),
-              ),
-            ),
-            if (Permissions().getForCompany(selectedService['owner'])) ...[
-              ContentBlock(
-                  title: 'Управление',
-                  child: Column(children: [
-                    SingleChildScrollView(
-                      child: SizedBox(
-                        height: 40,
-                        child: ListView(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            OutlinedButton.icon(
-                                icon: const Icon(Icons.percent_rounded),
-                                onPressed: () {
-                                  context.pushNamed(
-                                      const ServiceDiscountUpsert().route,
-                                      queryParameters: {
-                                        'serviceId': serviceId
-                                      });
-                                },
-                                label: Text(getAppLoc(context)!.addDiscount)),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            OutlinedButton.icon(
-                                icon: const Icon(Icons.info_outline_rounded),
-                                onPressed: () {
-                                  context.pushNamed(
-                                      const ServiceInfoUpsert().route,
-                                      queryParameters: {
-                                        'serviceId': serviceId
-                                      });
-                                },
-                                label: Text(getAppLoc(context)!.addInfo)),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            OutlinedButton.icon(
-                                icon: const Icon(Icons.warning_amber_rounded),
-                                onPressed: () {
-                                  context.pushNamed(
-                                      const ServiceAlertUpsert().route,
-                                      queryParameters: {
-                                        'serviceId': serviceId
-                                      });
-                                },
-                                label: Text(getAppLoc(context)!.addAlert)),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ])),
-            ],
-            // SizedBox(
-            //   height: 300,
-            //   width: double.infinity,
-            //   child: WebViewWidget(
-            //       controller: WebViewController()
-            //         ..setJavaScriptMode(JavaScriptMode.unrestricted)
-            //         ..loadHtmlString(
-            //             '<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10726.284406369314!2d27.9457687!3d47.770373!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40cb60d99ec69f6f%3A0x1488c68f28449553!2sVerix%20Centru!5e0!3m2!1sro!2s!4v1701034539385!5m2!1sro!2s" width="100%" style="border:0;" allowfullscreen="true" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>')),
-            // ),
-            if (discounts.isNotEmpty)
-              ...discounts.map((item) => Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 20, 14, 0),
-                    child: GestureDetector(
-                      onTap: () {
-                        context.pushNamed(const ServiceDiscountUpsert().route,
-                            queryParameters: {
-                              'serviceId': serviceId,
-                              'discountId': item['id'].toString()
-                            });
-                      },
-                      child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 14),
-                          decoration: BoxDecoration(
-                              color: Colors.red.shade400,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10))),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.percent_rounded,
-                                color: Colors.white,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    item['description_$locale'] as String,
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14),
-                                  ),
-                                  if (item['start_date'] != 'null' &&
-                                      item['end_date'] != 'null') ...[
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      '${formatter(context).format(DateTime.parse(item['start_date']))} - ${formatter(context).format(DateTime.parse(item['end_date']))}',
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                    )
-                                  ]
-                                ],
-                              )),
-                            ],
-                          )),
-                    ),
-                  )),
-            if (alerts.isNotEmpty)
-              ...alerts.map((item) => Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 20, 14, 0),
-                    child: GestureDetector(
-                      onTap: () {
-                        context.pushNamed(const ServiceAlertUpsert().route,
-                            queryParameters: {
-                              'serviceId': serviceId,
-                              'alertId': item['id'].toString()
-                            });
-                      },
-                      child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 14),
-                          decoration: BoxDecoration(
-                              color: Colors.red.shade400,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10))),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.warning_rounded,
-                                color: Colors.white,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    item['description_$locale'] as String,
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14),
-                                  ),
-                                  if (item['start_date'] != 'null' &&
-                                      item['end_date'] != 'null') ...[
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      '${formatter(context).format(DateTime.parse(item['start_date']))} - ${formatter(context).format(DateTime.parse(item['end_date']))}',
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                    )
-                                  ]
-                                ],
-                              )),
-                            ],
-                          )),
-                    ),
-                  )),
-            if (infos.isNotEmpty)
-              ...infos.map((item) => Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 20, 14, 0),
-                    child: GestureDetector(
-                      onTap: () {
-                        context.pushNamed(const ServiceInfoUpsert().route,
-                            queryParameters: {
-                              'serviceId': serviceId,
-                              'infoId': item['id'].toString()
-                            });
-                      },
-                      child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 14),
-                          decoration: BoxDecoration(
-                              color: Colors.blue.shade400,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10))),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.info,
-                                color: Colors.white,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    item['description_$locale'] as String,
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14),
-                                  ),
-                                  if (item['start_date'] != 'null' &&
-                                      item['end_date'] != 'null') ...[
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      '${formatter(context).format(DateTime.parse(item['start_date']))} - ${formatter(context).format(DateTime.parse(item['end_date']))}',
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                    )
-                                  ]
-                                ],
-                              )),
-                            ],
-                          )),
-                    ),
-                  )),
-            const SizedBox(
-              height: 30,
+                ServiceDetailsTile(
+                    onTap: () {
+                      context.pushNamed(const CompanyFaqScreen().route,
+                          queryParameters: {'id': serviceId});
+                    },
+                    icon: Icons.question_answer_rounded,
+                    title: 'FAQ'),
+                ServiceDetailsTile(
+                    onTap: () {
+                      context.pushNamed(const CompanyContactsScreen().route,
+                          queryParameters: {'id': serviceId});
+                    },
+                    icon: Icons.contacts_sharp,
+                    title: 'Контакты'),
+                ServiceDetailsTile(
+                    onTap: () {
+                      context.pushNamed(const CompanyOfficesScreen().route,
+                          queryParameters: {'id': serviceId});
+                    },
+                    icon: Icons.apartment_rounded,
+                    title: 'Адреса'),
+                ServiceDetailsTile(
+                    onTap: () {
+                      context.pushNamed(const CompanyInfoScreen().route,
+                          queryParameters: {'id': serviceId});
+                    },
+                    icon: Icons.info_rounded,
+                    title: 'Информация'),
+              ],
             )
           ],
         ),
@@ -445,3 +115,64 @@ class ServiceDetailsScreen extends HookWidget {
     );
   }
 }
+
+
+// SizedBox(
+//               width: double.infinity,
+//               child: Card(
+//                 child: Padding(
+//                   padding:
+//                       const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+//                   child: Column(
+//                     children: [
+//                       Row(
+//                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                         crossAxisAlignment: CrossAxisAlignment.center,
+//                         children: [
+//                           Text(
+//                             'Market',
+//                             style: TextStyle(
+//                                 fontSize: Theme.of(context)
+//                                     .textTheme
+//                                     .titleMedium!
+//                                     .fontSize,
+//                                 fontWeight: FontWeight.w500,
+//                                 color: Colors.grey.shade800),
+//                           ),
+//                           FadeTransition(
+//                             opacity: blinkingAnimationController,
+//                             child: Container(
+//                               margin: const EdgeInsets.only(right: 10),
+//                               height: 10,
+//                               width: 10,
+//                               decoration: const BoxDecoration(
+//                                   color: Colors.green,
+//                                   borderRadius:
+//                                       BorderRadius.all(Radius.circular(50))),
+//                             ),
+//                           )
+//                         ],
+//                       ),
+//                       const SizedBox(
+//                         height: 4,
+//                       ),
+//                       Row(
+//                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                         children: [
+//                           Text(
+//                             'Click to see on map',
+//                             style: TextStyle(
+//                                 color: Colors.grey.shade600,
+//                                 fontSize: Theme.of(context)
+//                                     .textTheme
+//                                     .bodyMedium!
+//                                     .fontSize),
+//                           ),
+//                           const Text('18:30')
+//                         ],
+//                       )
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ),

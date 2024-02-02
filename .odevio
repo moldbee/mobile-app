@@ -1,0 +1,8 @@
+build-type=configuration
+flutter=3.16.5
+minimal-ios-version=12.0
+app-version=1.0.0
+build-number=1
+mode=release
+target=lib/main.dart
+tunnel-host=localhost

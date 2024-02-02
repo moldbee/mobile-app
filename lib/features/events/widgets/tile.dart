@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:smart_city/features/events/screens/upsert.dart';
 import 'package:smart_city/l10n/main.dart';
-import 'package:smart_city/shared/config/permissions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class EventTile extends StatelessWidget {
@@ -48,11 +44,7 @@ class EventTile extends StatelessWidget {
           shadowColor: Colors.grey.shade100.withOpacity(0.3),
           surfaceTintColor: Colors.transparent,
           clipBehavior: Clip.antiAliasWithSaveLayer,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              side: BorderSide(width: 1, color: Colors.grey.shade300)),
-          elevation: 3,
-          margin: const EdgeInsets.all(10),
+          elevation: 0,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,6 +84,13 @@ class EventTile extends StatelessWidget {
                       place,
                       style: TextStyle(color: Colors.grey.shade600),
                     ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Divider(
+                      height: 1,
+                      color: Colors.grey.shade300,
+                    ),
                   ],
                 ),
               )
@@ -109,25 +108,6 @@ class EventTile extends StatelessWidget {
                     color: Colors.white, fontWeight: FontWeight.w500),
               ),
             )),
-        if (Permissions().getForNewsAndEvents()) ...[
-          Positioned(
-              top: 20,
-              left: 20,
-              child: GestureDetector(
-                onTap: () {
-                  context.pushNamed(EventsUpsertScreen().route,
-                      queryParameters: {'id': id});
-                },
-                child: Wrapper(
-                  color: Colors.orange,
-                  child: Text(
-                    getAppLoc(context)!.edit,
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w500),
-                  ),
-                ),
-              )),
-        ]
       ],
     );
   }

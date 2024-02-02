@@ -6,19 +6,19 @@ class Permissions {
   String? role = profileController.role.value;
 
   getForNewsAndEvents() {
-    return role == 'admin' || role == 'editor';
+    return false;
   }
 
   getForComments() {
-    return role == 'admin' || role == 'editor' || role == 'moderator';
+    return false;
   }
 
   getForServiceCategories() {
-    return role == 'admin';
+    return false;
   }
 
   getForServices() {
-    return role == 'admin';
+    return false;
   }
 
   getForCompany(int? profileId) {

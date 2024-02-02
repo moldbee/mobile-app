@@ -12,7 +12,7 @@ class Details extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Детали события'),
       ),
-      body: Column(),
+      body: const Column(),
     );
   }
 }
