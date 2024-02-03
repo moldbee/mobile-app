@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/events/screens/events.dart';
 import 'package:smart_city/features/news/widgets/news_body.dart';
-import 'package:smart_city/features/news/screens/upsert.dart';
 import 'package:smart_city/l10n/main.dart';
 
 class NewsScreen extends HookWidget {
@@ -16,16 +15,6 @@ class NewsScreen extends HookWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(getAppLoc(context)!.news),
-        actions: [
-          IconButton(
-              onPressed: () {
-                context.push(const EventsScreen().route);
-              },
-              icon: const Icon(
-                CupertinoIcons.calendar,
-                size: 26,
-              ))
-        ],
       ),
       body: const NewsScreenContentBody(),
     );

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smart_city/features/profile/controller.dart';
@@ -72,28 +73,26 @@ class CustomBottomNavigationBar extends StatelessWidget {
         ),
         NavigationDestination(
           selectedIcon: Icon(
-            Icons.widgets_rounded,
+            Icons.local_activity_rounded,
+            size: 26,
+            weight: 900,
             color: bottomNavbarSelectedIconColor,
           ),
           icon: Icon(
-            Icons.widgets_rounded,
+            Icons.local_activity_rounded,
+            size: 26,
+            weight: 900,
             color: bottomNavbarIconColor,
           ),
           label: '',
         ),
         NavigationDestination(
           selectedIcon: Icon(
-            Icons.emergency_rounded,
-            size: 28,
-            weight: 900,
-            opticalSize: 25,
+            Icons.widgets_rounded,
             color: bottomNavbarSelectedIconColor,
           ),
           icon: Icon(
-            Icons.emergency_rounded,
-            weight: 900,
-            opticalSize: 25,
-            size: 28,
+            Icons.widgets_rounded,
             color: bottomNavbarIconColor,
           ),
           label: '',

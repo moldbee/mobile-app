@@ -73,6 +73,7 @@ dependencies:
   liquid_pull_to_refresh: ^3.0.1
   faker: ^2.1.0
   shimmer: ^3.0.0
+  accordion: ^2.6.0
 
 dev_dependencies:
   flutter_test:

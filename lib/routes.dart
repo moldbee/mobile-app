@@ -3,11 +3,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/controller.dart';
-import 'package:smart_city/features/emergencies/screens/emergencies.dart';
 import 'package:smart_city/features/events/screens/events.dart';
-import 'package:smart_city/features/events/screens/upsert.dart';
+import 'package:smart_city/features/events/screens/details.dart';
 import 'package:smart_city/features/news/screens/details.dart';
-import 'package:smart_city/features/news/screens/upsert.dart';
 import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/profile/screens/edit.dart';
 import 'package:smart_city/features/profile/screens/my_comments.dart';
@@ -99,20 +97,6 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               pageBuilder: (context, state) =>
                   const MaterialPage(child: NewsScreen())),
           GoRoute(
-              name: NewsUpsertScreen().route,
-              path: NewsUpsertScreen().route,
-              pageBuilder: (context, state) => MaterialPage(
-                      child: NewsUpsertScreen(
-                    id: state.uri.queryParameters['id'],
-                  ))),
-          GoRoute(
-              name: EventsUpsertScreen().route,
-              path: EventsUpsertScreen().route,
-              pageBuilder: (context, state) => MaterialPage(
-                      child: EventsUpsertScreen(
-                    id: state.uri.queryParameters['id'],
-                  ))),
-          GoRoute(
               name: const NewsDetailsScreen().route,
               path: const NewsDetailsScreen().route,
               pageBuilder: (context, state) {
@@ -121,10 +105,24 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
                         id: state.uri.queryParameters['id'],
                         commentId: state.uri.queryParameters['commentId']));
               }),
+        ],
+      ),
+      StatefulShellBranch(
+        initialLocation: const EventsScreen().route,
+        routes: [
           GoRoute(
               path: const EventsScreen().route,
               pageBuilder: (context, state) =>
                   const MaterialPage(child: EventsScreen())),
+          GoRoute(
+              name: const EventDetailsScreen().route,
+              path: const EventDetailsScreen().route,
+              pageBuilder: (context, state) {
+                return MaterialPage(
+                    child: EventDetailsScreen(
+                  id: state.uri.queryParameters['id'],
+                ));
+              }),
         ],
       ),
       StatefulShellBranch(
@@ -215,15 +213,6 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
                   id: state.uri.queryParameters['companyId'],
                 ));
               }),
-        ],
-      ),
-      StatefulShellBranch(
-        initialLocation: const EmergenciesScreen().route,
-        routes: [
-          GoRoute(
-              path: const EmergenciesScreen().route,
-              pageBuilder: (context, state) =>
-                  const MaterialPage(child: EmergenciesScreen())),
         ],
       ),
       StatefulShellBranch(
