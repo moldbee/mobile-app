@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/profile/screens/edit.dart';
-import 'package:smart_city/features/profile/screens/my_comments.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
 import 'package:smart_city/features/settings/screens/settings.dart';
 import 'package:smart_city/l10n/main.dart';
@@ -114,15 +113,6 @@ class ProfileScreen extends HookWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    OutlinedButton(
-                        onPressed: () {
-                          context.push(const ProfileComments().route);
-                        },
-                        child: Text(
-                          getAppLoc(context)!.myComments,
-                          style: TextStyle(color: Colors.orange.shade300),
-                        )),
-                    const SizedBox(height: 10),
                     OutlinedButton(
                         onPressed: () {
                           context.push(const PolicyScreen().route);

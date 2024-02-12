@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
-import 'package:smart_city/features/news/controller.dart';
+import 'package:intl/intl.dart';
 import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/main.dart';
@@ -12,15 +13,15 @@ class Comment extends HookWidget {
   const Comment({
     super.key,
     required this.onReply,
+    required this.avatar,
+    required this.setState,
+    required this.nick,
+    required this.authorId,
     required this.message,
     required this.setSelectedForReplyComment,
     required this.id,
-    required this.authorId,
-    required this.nick,
     required this.newId,
-    required this.setComments,
     required this.comments,
-    required this.avatar,
     required this.onEdit,
     required this.createdAt,
     this.replyCommentId,
@@ -28,43 +29,27 @@ class Comment extends HookWidget {
 
   final Function(String id) onReply;
   final String message;
+  final void Function(void Function()) setState;
   final List<dynamic>? comments;
-  final Function setComments;
   final String id;
-  final String nick;
-  final String newId;
-  final String authorId;
-  final Function(String? id) setSelectedForReplyComment;
   final String avatar;
+  final String nick;
+  final String authorId;
+  final String newId;
+  final Function(String id) onEdit;
+  final Function(String? id) setSelectedForReplyComment;
   final String createdAt;
-  final void Function(String id) onEdit;
   final int? replyCommentId;
 
   @override
   Widget build(BuildContext context) {
-    final isLiked = useState(false);
-    final likes = useState('0');
     final profileController = Get.find<ProfileController>();
-    final newsController = Get.find<NewsController>();
-
-    Future<void> fetchLikesInfo() async {
-      newsController.getLikesForComment(id).then((value) {
-        if (!context.mounted) return null;
-        return likes.value = value.count.toString();
-      });
-      newsController.getHasLiked(id, profileController.id.value).then((value) {
-        if (!context.mounted) return null;
-        return isLiked.value = value;
-      });
-    }
-
-    useEffect(() {
-      fetchLikesInfo();
-      return null;
-    }, []);
+    final likesStream = supabase
+        .from('news_comments_likes')
+        .stream(primaryKey: ['id']).eq('comment', id);
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -124,47 +109,74 @@ class Comment extends HookWidget {
                   ),
                 ],
               ),
-              GestureDetector(
-                onTap: () async {
-                  if (profileController.id.value != null) {
-                    await newsController.toggleLike(
-                        id, profileController.id.value);
-                    await fetchLikesInfo();
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(getAppLoc(context)!.signInToLike),
-                      backgroundColor: Colors.red,
-                      padding: const EdgeInsets.all(20),
-                      duration: const Duration(seconds: 2),
-                    ));
-                  }
-                },
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 3),
-                      child: Text(
-                        likes.value,
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: isLiked.value
-                                ? Colors.orange.shade600
-                                : Colors.grey.shade600),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Icon(
-                      Icons.thumb_up_rounded,
-                      color: isLiked.value
-                          ? Colors.orange.shade300
-                          : Colors.grey.shade400,
-                    ),
-                  ],
-                ),
-              )
+              StreamBuilder(
+                  stream: likesStream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final isLiked = snapshot.data!.firstWhereOrNull(
+                          (element) =>
+                              element['user'].toString() ==
+                              profileController.id.value.toString());
+                      return GestureDetector(
+                          onTap: () async {
+                            HapticFeedback.lightImpact();
+                            if (profileController.id.value != null) {
+                              if (isLiked == null) {
+                                await supabase
+                                    .from('news_comments_likes')
+                                    .upsert({
+                                  'comment': id,
+                                  'user': profileController.id.value
+                                });
+                              } else {
+                                await supabase
+                                    .from('news_comments_likes')
+                                    .delete()
+                                    .eq('comment', id)
+                                    .eq('user', profileController.id.value);
+                              }
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(getAppLoc(context)!.signInToLike),
+                                backgroundColor: Colors.red,
+                                padding: const EdgeInsets.all(20),
+                                duration: const Duration(seconds: 2),
+                              ));
+                            }
+                          },
+                          child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 5, 5, 0),
+                                  child: Text(
+                                    NumberFormat.compactCurrency(
+                                      decimalDigits: 0,
+                                      symbol:
+                                          '', // if you want to add currency symbol then pass that in this else leave it empty.
+                                    ).format(snapshot.data!.length).toString(),
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: isLiked != null
+                                            ? Colors.orange.shade600
+                                            : Colors.grey.shade600),
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.thumb_up,
+                                  color: isLiked != null
+                                      ? Colors.orange.shade600
+                                      : Colors.grey.shade500,
+                                ),
+                              ]));
+                    }
+
+                    return const CircularProgressIndicator();
+                  })
             ],
           ),
           if (replyCommentId != null &&
@@ -230,13 +242,6 @@ class Comment extends HookWidget {
                       width: 20,
                     ),
                   ],
-                  // const SizedBox(
-                  //   width: 20,
-                  // ),
-                  // Text(
-                  //   'Пожаловаться',
-                  //   style: TextStyle(color: Colors.grey.shade600),
-                  // ),
                   if (nick == profileController.nick.value) ...[
                     GestureDetector(
                         onTap: () {
@@ -263,8 +268,8 @@ class Comment extends HookWidget {
                                         .from('news_comments')
                                         .delete()
                                         .eq('id', id);
-                                    setComments(await newsController
-                                        .fetchCommentsForNew(newId));
+
+                                    setState(() => {});
                                   }));
                         },
                         child: Text(getAppLoc(context)!.delete,

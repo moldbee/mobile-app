@@ -66,14 +66,14 @@ class ServiceDetailsScreen extends HookWidget {
                 ServiceDetailsTile(
                     onTap: () {
                       context.pushNamed(const CompanyServicesScreen().route,
-                          queryParameters: {'id': serviceId});
+                          queryParameters: {'companyId': serviceId});
                     },
                     icon: Icons.grid_view_rounded,
                     title: 'Услуги'),
                 ServiceDetailsTile(
                   onTap: () {
                     context.pushNamed(const CompanyPromotionsScreen().route,
-                        queryParameters: {'id': serviceId});
+                        queryParameters: {'companyId': serviceId});
                   },
                   icon: Icons.percent_rounded,
                   title: 'Акции',
@@ -82,28 +82,28 @@ class ServiceDetailsScreen extends HookWidget {
                 ServiceDetailsTile(
                     onTap: () {
                       context.pushNamed(const CompanyFaqScreen().route,
-                          queryParameters: {'id': serviceId});
+                          queryParameters: {'companyId': serviceId});
                     },
                     icon: Icons.question_answer_rounded,
                     title: 'FAQ'),
                 ServiceDetailsTile(
                     onTap: () {
                       context.pushNamed(const CompanyContactsScreen().route,
-                          queryParameters: {'id': serviceId});
+                          queryParameters: {'companyId': serviceId});
                     },
                     icon: Icons.contacts_sharp,
                     title: 'Контакты'),
                 ServiceDetailsTile(
                     onTap: () {
                       context.pushNamed(const CompanyOfficesScreen().route,
-                          queryParameters: {'id': serviceId});
+                          queryParameters: {'companyId': serviceId});
                     },
                     icon: Icons.apartment_rounded,
                     title: 'Адреса'),
                 ServiceDetailsTile(
                     onTap: () {
                       context.pushNamed(const CompanyInfoScreen().route,
-                          queryParameters: {'id': serviceId});
+                          queryParameters: {'companyId': serviceId});
                     },
                     icon: Icons.info_rounded,
                     title: 'Информация'),

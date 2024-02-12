@@ -16,8 +16,8 @@ class ServiceDetailsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(2000),
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: onTap as void Function()?,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

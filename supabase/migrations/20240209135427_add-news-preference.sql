@@ -1,0 +1,1 @@
+alter table "public"."profiles" add column "selected_news_categories" bigint[];

@@ -13,11 +13,7 @@ class CompanyPromotionsScreen extends StatelessWidget {
         title: const Text('Акции / Metro'),
       ),
       body: ListView(
-        children: [
-          Container(
-            child: Text('Promotion 1'),
-          )
-        ],
+        children: const [Text('Promotion 1')],
       ),
     );
   }

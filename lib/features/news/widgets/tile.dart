@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/features/news/screens/details.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:timeago_flutter/timeago_flutter.dart' as timeago;
@@ -24,14 +22,11 @@ class NewsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final newsController = Get.find<NewsController>();
-    return GestureDetector(onTap: () {
-      newsController.viewedNews.add(id);
-      context.pushNamed(const NewsDetailsScreen().route,
-          queryParameters: {'id': id.toString()});
-    }, child: Obx(() {
-      return Opacity(
-        opacity: newsController.viewedNews.contains(id) ? 0.5 : 1,
+    return GestureDetector(
+        onTap: () {
+          context.pushNamed(const NewsDetailsScreen().route,
+              queryParameters: {'id': id.toString()});
+        },
         child: Container(
           height: 90,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
@@ -87,9 +82,7 @@ class NewsTile extends StatelessWidget {
               ),
             )
           ]),
-        ),
-      );
-    }));
+        ));
   }
 }
 
@@ -111,7 +104,7 @@ class NewTime extends StatelessWidget {
           locale: getAppLoc(context)!.localeName),
       style: TextStyle(
           color: Colors.grey.shade500,
-          fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize),
+          fontSize: Theme.of(context).textTheme.bodySmall!.fontSize),
     );
   }
 }

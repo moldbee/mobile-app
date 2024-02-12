@@ -12,11 +12,7 @@ class CompanyInfoScreen extends StatelessWidget {
           title: const Text('Информация'),
         ),
         body: ListView(
-          children: [
-            Container(
-              child: Text('Info 1'),
-            )
-          ],
+          children: const [Text('Info 1')],
         ));
   }
 }

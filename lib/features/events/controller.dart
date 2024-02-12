@@ -21,7 +21,10 @@ class EventsController extends GetxController {
   }
 
   Future<dynamic> fetchEvents() async {
-    final events = await supabase.from('events').select();
+    final events = await supabase
+        .from('events')
+        .select()
+        .gte('date', DateTime.now().subtract(const Duration(days: 1)));
     this.events.value = events;
   }
 

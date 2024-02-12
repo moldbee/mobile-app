@@ -12,11 +12,7 @@ class CompanyContactsScreen extends StatelessWidget {
         title: const Text('Контакты / Metro'),
       ),
       body: ListView(
-        children: [
-          Container(
-            child: Text('Contacts 1'),
-          )
-        ],
+        children: const [Text('Contacts 1')],
       ),
     );
   }

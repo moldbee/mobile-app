@@ -8,7 +8,6 @@ import 'package:smart_city/features/events/screens/details.dart';
 import 'package:smart_city/features/news/screens/details.dart';
 import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/profile/screens/edit.dart';
-import 'package:smart_city/features/profile/screens/my_comments.dart';
 import 'package:smart_city/features/profile/screens/notifications.dart';
 import 'package:smart_city/features/profile/screens/profile.dart';
 import 'package:smart_city/features/profile/screens/sign_in.dart';
@@ -22,7 +21,6 @@ import 'package:smart_city/features/services/screens/info.dart';
 import 'package:smart_city/features/services/screens/offices.dart';
 import 'package:smart_city/features/services/screens/promotions.dart';
 import 'package:smart_city/features/services/screens/services.dart';
-import 'package:smart_city/features/services/screens/upsert.dart';
 import 'package:smart_city/features/settings/screens/about.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/features/news/screens/news.dart';
@@ -137,14 +135,6 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               pageBuilder: (context, state) =>
                   const MaterialPage(child: DiscountsScreen())),
           GoRoute(
-              name: ServiceUpsert().route,
-              path: ServiceUpsert().route,
-              pageBuilder: (context, state) => MaterialPage(
-                      child: ServiceUpsert(
-                    categoryId: state.uri.queryParameters['categoryId'],
-                    serviceId: state.uri.queryParameters['serviceId'],
-                  ))),
-          GoRoute(
               path: const ServicesCompaniesScreen().route,
               name: const ServicesCompaniesScreen().route,
               pageBuilder: (context, state) => MaterialPage(
@@ -237,10 +227,6 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               path: ProfileSignUpScreen().route,
               pageBuilder: (context, state) =>
                   MaterialPage(child: ProfileSignUpScreen())),
-          GoRoute(
-              path: const ProfileComments().route,
-              pageBuilder: (context, state) =>
-                  const MaterialPage(child: ProfileComments())),
           GoRoute(
               path: const ProfileNotifications().route,
               pageBuilder: (context, state) =>

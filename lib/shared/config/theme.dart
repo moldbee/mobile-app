@@ -8,6 +8,11 @@ ThemeData getThemeData(BuildContext context) {
         displayColor: Colors.grey.shade800,
       );
   return ThemeData(
+    drawerTheme: DrawerThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(6),
+      ),
+    ),
     primaryTextTheme: newTextTheme,
     textTheme: newTextTheme,
     segmentedButtonTheme: SegmentedButtonThemeData(
@@ -60,7 +65,7 @@ ThemeData getThemeData(BuildContext context) {
             overlayColor: MaterialStatePropertyAll(Colors.transparent))),
     chipTheme: const ChipThemeData(
         deleteIconColor: Colors.white,
-        side: BorderSide(width: 0, color: Colors.transparent),
+        side: BorderSide(width: 0),
         elevation: 0,
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(

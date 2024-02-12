@@ -1,4 +1,5 @@
 {
+  "no_content": "Nu are conținut",
   "in_development": "În dezvoltare",
   "promotions": "Promoții",
   "about_app_description": "Bună! Aplicația este în faza de testare și acesta este doar MVP. Dacă ți-a plăcut această idee, te rog să-mi scrii pe instagram ce ai vrea să adaugi sau ce ai vrea să schimbi, acest lucru este foarte important pentru viitorul aplicației.",
@@ -50,7 +51,7 @@
   "nick": "Nickname",
   "or": "sau",
   "googleAuth": "Autentificare cu Google",
-  "agreeTerms": "Sunt de acord cu termenii de utilizare",
+  "agreeTerms": "Eu accept termenii de utilizare",
   "profileEdit": "Editarea profilului",
   "fieldRequired": "Câmpul este obligatoriu",
   "fieldMinLength": "Minim {length} caractere",

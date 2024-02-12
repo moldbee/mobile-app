@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:smart_city/controller.dart';
 import 'package:smart_city/features/events/controller.dart';
-import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/services/controller.dart';
 import 'package:smart_city/routes.dart';
@@ -27,7 +26,6 @@ void main() async {
   // await GetStorage().erase();
   Get.put(GlobalController());
   Get.put(ProfileController());
-  Get.put(NewsController());
   Get.put(EventsController());
   Get.put(ServicesController());
   runApp(const MyApp());

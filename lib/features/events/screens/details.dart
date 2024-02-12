@@ -31,7 +31,7 @@ class EventDetailsScreen extends StatelessWidget {
             fit: BoxFit.fill,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -43,7 +43,7 @@ class EventDetailsScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
                 Text(
                   DateFormat('HH:mm • d MMMM yyyy • EEEEE', localiz.localeName)
@@ -55,7 +55,7 @@ class EventDetailsScreen extends StatelessWidget {
                           Theme.of(context).textTheme.bodyLarge!.fontSize),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Text(
                   'Dolor enim sunt voluptate Lorem commodo commodo. Consectetur proident dolor sit ad culpa qui duis enim culpa. Consectetur nisi quis adipisicing dolor id magna sunt ad labore voluptate reprehenderit.',
@@ -64,7 +64,7 @@ class EventDetailsScreen extends StatelessWidget {
                       color: Colors.grey.shade800),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,

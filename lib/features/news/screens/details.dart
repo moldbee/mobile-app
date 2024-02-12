@@ -5,9 +5,11 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:smart_city/features/news/controller.dart';
 import 'package:smart_city/features/news/widgets/comments_bottom_sheet.dart';
 import 'package:smart_city/l10n/main.dart';
+import 'package:smart_city/main.dart';
+import 'package:smart_city/shared/hooks/use_preserved_state.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsDetailsScreen extends HookWidget {
@@ -19,15 +21,10 @@ class NewsDetailsScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final newsController = Get.find<NewsController>();
-    final newFromList = newsController.news.firstWhereOrNull(
-        (element) => element['id'].toString() == id.toString());
-
-    final newFromAll = newsController.allNews.firstWhereOrNull(
-        (element) => element['id'].toString() == id.toString());
-
-    final newData = newFromList ?? newFromAll;
-    final comments = useState([]);
+    final isLoading = false.obs;
+    final newData = usePreservedState('new-data', context, {});
+    final commentsCount = useState(0);
+    final localiz = getAppLoc(context);
 
     showCommentsBottomSheet() {
       showModalBottomSheet(
@@ -39,41 +36,38 @@ class NewsDetailsScreen extends HookWidget {
           builder: (context) {
             return StatefulBuilder(builder: (context, setState) {
               return CommentsBottomSheet(
-                highlightId: commentId,
                 setState: setState,
-                setComments: (value) {
-                  if (context.mounted) {
-                    setState(() {
-                      comments.value = value;
-                    });
-                  }
-                },
                 newId: id,
-                comments: comments.value,
               );
             });
           });
     }
 
-    useEffect(() {
-      if (commentId == null) {
-        newsController
-            .fetchCommentsForNew(newData['id'].toString())
-            .then((value) => comments.value = value);
-      }
-
-      if (commentId != null) {
-        Future.delayed(const Duration(milliseconds: 0), () async {
-          final res = await newsController
-              .fetchCommentsForNew(newData['id'].toString());
-          comments.value = res;
-          showCommentsBottomSheet();
-        });
-      }
-      return null;
-    }, []);
-
     final locale = getAppLoc(context)!.localeName;
+
+    if (newData.value['id'] == null) {
+      supabase
+          .from('news')
+          .select(
+              'title_${localiz!.localeName}, description_${localiz.localeName}, image, source, created_at, id')
+          .eq('id', id)
+          .single()
+          .then((value) {
+        newData.value = value;
+        supabase
+            .from('news_comments')
+            .select('id, new_id',
+                const FetchOptions(count: CountOption.exact, head: true))
+            .eq('new_id', value['id'])
+            .then((total) {
+          print(total.count);
+          return commentsCount.value = total.count;
+        });
+      }).whenComplete(() => isLoading.value = false);
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -89,7 +83,7 @@ class NewsDetailsScreen extends HookWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 14, 10, 20),
                 child: Text(
-                  newData['title_$locale'],
+                  newData.value['title_$locale'],
                   style: TextStyle(
                       fontSize:
                           Theme.of(context).textTheme.titleLarge!.fontSize,
@@ -98,7 +92,7 @@ class NewsDetailsScreen extends HookWidget {
                 ),
               ),
               CachedNetworkImage(
-                imageUrl: newData['image'],
+                imageUrl: newData.value['image'],
                 height: 220,
                 fit: BoxFit.cover,
                 width: double.infinity,
@@ -130,7 +124,8 @@ class NewsDetailsScreen extends HookWidget {
                           child: Text(
                             DateFormat('dd MMMM yyyy, HH:mm',
                                     getAppLoc(context)!.localeName)
-                                .format(DateTime.parse(newData['created_at'])),
+                                .format(DateTime.parse(
+                                    newData.value['created_at'])),
                             style: TextStyle(
                                 color: Colors.grey.shade500,
                                 fontSize: Theme.of(context)
@@ -153,7 +148,7 @@ class NewsDetailsScreen extends HookWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: Text(
-                              comments.value.length.toString(),
+                              commentsCount.value.toString(),
                               style: TextStyle(
                                   color: Colors.grey.shade500,
                                   fontSize: Theme.of(context)
@@ -171,7 +166,7 @@ class NewsDetailsScreen extends HookWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                 child: Linkify(
-                  text: newData['description_$locale'],
+                  text: newData.value['description_$locale'],
                   onOpen: (link) async {
                     final url = Uri.parse(link.url);
 
@@ -186,12 +181,12 @@ class NewsDetailsScreen extends HookWidget {
                 padding: const EdgeInsets.fromLTRB(10, 6, 10, 10),
                 child: GestureDetector(
                   onTap: () {
-                    launchUrl(Uri.parse(newData['source']));
+                    launchUrl(Uri.parse(newData.value['source']));
                   },
                   child: Row(
                     children: [
                       Image.network(
-                          '${Uri.parse(newData['source']).origin}/favicon.ico',
+                          '${Uri.parse(newData.value['source']).origin}/favicon.ico',
                           width: 20,
                           scale: 0.9,
                           height: 20),
@@ -199,7 +194,7 @@ class NewsDetailsScreen extends HookWidget {
                         width: 7,
                       ),
                       Text(
-                        Uri.parse(newData['source']).host,
+                        Uri.parse(newData.value['source']).host,
                         style: TextStyle(
                             color: Colors.grey.shade500,
                             fontSize: Theme.of(context)

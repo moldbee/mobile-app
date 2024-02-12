@@ -141,7 +141,7 @@ class ProfileSignUpScreen extends HookWidget {
                         },
                         child: Text(getAppLoc(context)!.agreeTerms,
                             style: TextStyle(
-                                fontSize: 13, color: Colors.grey.shade600)),
+                                fontSize: 11, color: Colors.grey.shade600)),
                       ),
                       GestureDetector(
                           onTap: () {

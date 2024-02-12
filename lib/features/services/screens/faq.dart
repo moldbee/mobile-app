@@ -1,40 +1,80 @@
 import 'package:accordion/accordion.dart';
 import 'package:accordion/controllers.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:smart_city/l10n/main.dart';
+import 'package:smart_city/main.dart';
+import 'package:smart_city/shared/hooks/use_preserved_state.dart';
 
-class CompanyFaqScreen extends StatelessWidget {
+class CompanyFaqScreen extends HookWidget {
   const CompanyFaqScreen({Key? key, this.id}) : super(key: key);
   final route = '/services/company/faq';
   final String? id;
 
   @override
   Widget build(BuildContext context) {
+    final faqs = usePreservedState('service-faqs', context, null);
+    final localize = getAppLoc(context);
+    final companyName = usePreservedState('company-name', context, null);
+
+    if (faqs.value == null) {
+      supabase
+          .from('services')
+          .select('title_${localize!.localeName}, id')
+          .eq('id', id)
+          .single()
+          .then((company) {
+        companyName.value = company['title_${localize.localeName}'];
+
+        supabase
+            .from('services_faqs')
+            .select(
+                'question_${localize.localeName}, answer_${localize.localeName}, service, id')
+            .then((value) {
+          return faqs.value = value ?? [];
+        });
+      });
+
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    final noContentWidget = Center(
+      child: Text(
+        localize!.no_content,
+        style: TextStyle(
+            fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
+            color: Colors.grey.shade500),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('FAQ / Metro'),
+        title: Text('${companyName.value} / FAQ'),
       ),
-      body: Accordion(
-        rightIcon: const Icon(Icons.keyboard_arrow_down_rounded),
-        maxOpenSections: 1,
-        headerPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        headerBorderWidth: .5,
-        headerBorderColor: Colors.grey.shade400,
-        headerBorderColorOpened: Colors.grey.shade400,
-        contentBorderColor: Colors.grey.shade400,
-        contentBorderWidth: .5,
-        headerBackgroundColor: Colors.transparent,
-        scaleWhenAnimating: false,
-        scrollIntoViewOfItems: ScrollIntoViewOfItems.none,
-        children: List.generate(20, (index) => index)
-            .map(
-              (e) => getItem(
-                  answer:
-                      'Метро — это международная сеть магазинов, предлагающая широкий ассортимент товаров для дома, одежды и обуви, а также товаров для детей и спорта. Мы предлагаем товары для всей семьи по доступным ценам.',
-                  question: 'Что такое Метро?'),
-            )
-            .toList(),
-      ),
+      body: faqs.value?.length < 1
+          ? noContentWidget
+          : Accordion(
+              paddingListTop: 12,
+              rightIcon: const Icon(Icons.keyboard_arrow_down_rounded),
+              maxOpenSections: 1,
+              headerPadding:
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              headerBorderWidth: .5,
+              headerBorderColor: Colors.grey.shade400,
+              headerBorderColorOpened: Colors.grey.shade400,
+              contentBorderColor: Colors.grey.shade400,
+              contentBorderWidth: .5,
+              headerBackgroundColor: Colors.transparent,
+              scaleWhenAnimating: false,
+              scrollIntoViewOfItems: ScrollIntoViewOfItems.none,
+              children: faqs.value
+                  .map<AccordionSection>((faq) => getItem(
+                      question: faq['question_${localize.localeName}'],
+                      answer: faq['answer_${localize.localeName}']))
+                  .toList(),
+            ),
     );
   }
 }
@@ -46,6 +86,15 @@ AccordionSection getItem({question, answer}) {
       style:
           TextStyle(color: Colors.grey.shade800, fontWeight: FontWeight.w500),
     ),
-    content: Text(answer),
+    content: Row(
+      children: [
+        Expanded(
+          child: Text(
+            answer,
+            textAlign: TextAlign.left,
+          ),
+        )
+      ],
+    ),
   );
 }
