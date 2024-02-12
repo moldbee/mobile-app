@@ -60,7 +60,6 @@ class NewsDetailsScreen extends HookWidget {
                 const FetchOptions(count: CountOption.exact, head: true))
             .eq('new_id', value['id'])
             .then((total) {
-          print(total.count);
           return commentsCount.value = total.count;
         });
       }).whenComplete(() => isLoading.value = false);

@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/main.dart';
 import 'package:smart_city/shared/hooks/use_preserved_state.dart';
+import 'package:smart_city/shared/widgets/no_content.dart';
 
 class CompanyFaqScreen extends HookWidget {
   const CompanyFaqScreen({Key? key, this.id}) : super(key: key);
@@ -41,21 +42,12 @@ class CompanyFaqScreen extends HookWidget {
       );
     }
 
-    final noContentWidget = Center(
-      child: Text(
-        localize!.no_content,
-        style: TextStyle(
-            fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
-            color: Colors.grey.shade500),
-      ),
-    );
-
     return Scaffold(
       appBar: AppBar(
         title: Text('${companyName.value} / FAQ'),
       ),
       body: faqs.value?.length < 1
-          ? noContentWidget
+          ? const NoContent()
           : Accordion(
               paddingListTop: 12,
               rightIcon: const Icon(Icons.keyboard_arrow_down_rounded),
@@ -72,7 +64,7 @@ class CompanyFaqScreen extends HookWidget {
               scrollIntoViewOfItems: ScrollIntoViewOfItems.none,
               children: faqs.value
                   .map<AccordionSection>((faq) => getItem(
-                      question: faq['question_${localize.localeName}'],
+                      question: faq['question_${localize!.localeName}'],
                       answer: faq['answer_${localize.localeName}']))
                   .toList(),
             ),
