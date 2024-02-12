@@ -30,6 +30,7 @@ class CompanyFaqScreen extends HookWidget {
             .from('services_faqs')
             .select(
                 'question_${localize.localeName}, answer_${localize.localeName}, service, id')
+            .eq('service', id)
             .then((value) {
           return faqs.value = value ?? [];
         });
