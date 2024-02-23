@@ -40,7 +40,6 @@ class EventsScreen extends StatelessWidget {
                         title: event['title_$locale'],
                         place: event['place_$locale'],
                         imageUrl: event['image_url'],
-                        infoUrl: event['info_url'],
                         placeUrl: event['place_url']),
                   );
                 },

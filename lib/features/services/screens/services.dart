@@ -61,7 +61,7 @@ class ServicesScreen extends HookWidget {
                         style: TextStyle(
                             fontSize: Theme.of(context)
                                 .textTheme
-                                .titleSmall!
+                                .titleMedium!
                                 .fontSize),
                       )
                     ],

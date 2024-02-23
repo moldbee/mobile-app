@@ -1,4 +1,7 @@
 {
+  "event_details": "Детали события",
+  "addresses": "Адреса",
+  "contacts": "Контакты",
   "price_list" : "Прайс-лист",
   "no_content": "Нет ничего",
   "in_development": "В разработке",

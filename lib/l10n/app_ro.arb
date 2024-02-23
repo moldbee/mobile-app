@@ -1,4 +1,7 @@
 {
+  "event_details": "Detaliile evenimentului",
+  "addresses": "Adrese",
+  "contacts": "Contacte",
   "price_list": "Listă de prețuri",
   "no_content": "Nu-i nimic aici",
   "in_development": "În dezvoltare",

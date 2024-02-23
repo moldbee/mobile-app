@@ -15,7 +15,6 @@ class EventTile extends StatelessWidget {
     required this.place,
     required this.placeUrl,
     required this.id,
-    required this.infoUrl,
   }) : super(key: key);
   final String id;
   final String date;
@@ -24,7 +23,6 @@ class EventTile extends StatelessWidget {
   final String placeUrl;
   final String? price;
   final String imageUrl;
-  final String infoUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +33,11 @@ class EventTile extends StatelessWidget {
         context.pushNamed(const EventDetailsScreen().route,
             queryParameters: {'id': id});
       },
-      child: Card(
-        shadowColor: Colors.grey.shade100.withOpacity(0.3),
-        surfaceTintColor: Colors.transparent,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(6),
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
         ),
-        elevation: 2,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,15 +57,16 @@ class EventTile extends StatelessWidget {
                     title,
                     textAlign: TextAlign.start,
                     style: TextStyle(
+                        color: Colors.grey.shade800,
                         fontSize:
                             Theme.of(context).textTheme.titleMedium!.fontSize,
-                        fontWeight: FontWeight.w400),
+                        fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(
                     height: 5,
                   ),
                   Text(
-                    DateFormat('HH:mm • d MMMM yyyy • EEEEE', locale)
+                    DateFormat('d MMMM • HH:mm • EEEEE', locale)
                         .format(DateTime.parse(date))
                         .capitalizeFirst as String,
                     style: TextStyle(color: Colors.grey.shade600),
@@ -83,13 +79,20 @@ class EventTile extends StatelessWidget {
                     style: TextStyle(color: Colors.grey.shade600),
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 10,
                   ),
-                  Text(
-                    price != null ? '$price MDL' : getAppLoc(context)!.free,
-                    style: TextStyle(
-                        color: Colors.orange.shade400,
-                        fontWeight: FontWeight.w500),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: Colors.orange.shade400,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      price != null ? '$price lei' : getAppLoc(context)!.free,
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ],
               ),

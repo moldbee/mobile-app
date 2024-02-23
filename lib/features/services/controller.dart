@@ -30,8 +30,7 @@ class ServicesController extends GetxController {
   }
 
   fetchServices() async {
-    services.value =
-        await supabase.from('services').select('*, category: category(*)');
+    services.value = await supabase.from('services').select('*, category(*)');
   }
 
   List<dynamic> getServicesByCategory(String categoryId) {

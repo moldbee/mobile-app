@@ -104,7 +104,7 @@ class NewTime extends StatelessWidget {
           locale: getAppLoc(context)!.localeName),
       style: TextStyle(
           color: Colors.grey.shade500,
-          fontSize: Theme.of(context).textTheme.bodySmall!.fontSize),
+          fontSize: Theme.of(context).textTheme.titleSmall!.fontSize),
     );
   }
 }

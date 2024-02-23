@@ -19,6 +19,7 @@ class ServiceDetailsScreen extends HookWidget {
   final String? serviceId;
   @override
   Widget build(BuildContext context) {
+    final localize = getAppLoc(context);
     final blinkingAnimationController =
         useAnimationController(duration: const Duration(milliseconds: 500));
     blinkingAnimationController.repeat(reverse: true);
@@ -69,14 +70,14 @@ class ServiceDetailsScreen extends HookWidget {
                           queryParameters: {'companyId': serviceId});
                     },
                     icon: Icons.grid_view_rounded,
-                    title: 'Услуги'),
+                    title: localize!.services),
                 ServiceDetailsTile(
                   onTap: () {
                     context.pushNamed(const CompanyPromotionsScreen().route,
                         queryParameters: {'companyId': serviceId});
                   },
                   icon: Icons.percent_rounded,
-                  title: 'Акции',
+                  title: localize.promotions,
                   iconColor: Colors.red,
                 ),
                 ServiceDetailsTile(
@@ -92,21 +93,21 @@ class ServiceDetailsScreen extends HookWidget {
                           queryParameters: {'companyId': serviceId});
                     },
                     icon: Icons.contacts_sharp,
-                    title: 'Контакты'),
+                    title: localize.contacts),
                 ServiceDetailsTile(
                     onTap: () {
                       context.pushNamed(const CompanyOfficesScreen().route,
                           queryParameters: {'companyId': serviceId});
                     },
                     icon: Icons.apartment_rounded,
-                    title: 'Адреса'),
+                    title: localize.addresses),
                 ServiceDetailsTile(
                     onTap: () {
                       context.pushNamed(const CompanyInfoScreen().route,
                           queryParameters: {'companyId': serviceId});
                     },
                     icon: Icons.info_rounded,
-                    title: 'Информация'),
+                    title: localize.info),
               ],
             )
           ],

@@ -22,10 +22,11 @@ ThemeData getThemeData(BuildContext context) {
       )),
     )),
     platform: TargetPlatform.iOS,
-    filledButtonTheme: const FilledButtonThemeData(
+    filledButtonTheme: FilledButtonThemeData(
         style: ButtonStyle(
-            textStyle:
-                MaterialStatePropertyAll(TextStyle(color: Colors.white)))),
+            backgroundColor: MaterialStateProperty.all(Colors.orange.shade400),
+            textStyle: const MaterialStatePropertyAll(
+                TextStyle(color: Colors.white)))),
     switchTheme: SwitchThemeData(
         thumbColor: MaterialStateProperty.all(Colors.orange.shade300),
         trackColor:

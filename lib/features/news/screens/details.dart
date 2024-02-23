@@ -49,7 +49,7 @@ class NewsDetailsScreen extends HookWidget {
       supabase
           .from('news')
           .select(
-              'title_${localiz!.localeName}, description_${localiz.localeName}, image, source, created_at, id')
+              'title_${localiz!.localeName}, description_${localiz.localeName}, image, source, created_at, id, category(title_${localiz.localeName})')
           .eq('id', id)
           .single()
           .then((value) {
@@ -79,6 +79,20 @@ class NewsDetailsScreen extends HookWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Container(
+                margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                decoration: BoxDecoration(
+                  color: Colors.orange.shade400,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                child: Text(
+                  newData.value['category']['title_${localiz!.localeName}'],
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 14, 10, 20),
                 child: Text(
@@ -177,7 +191,7 @@ class NewsDetailsScreen extends HookWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 6, 10, 10),
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: GestureDetector(
                   onTap: () {
                     launchUrl(Uri.parse(newData.value['source']));
