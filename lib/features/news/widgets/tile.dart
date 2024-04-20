@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:smart_city/features/news/screens/details.dart';
 import 'package:smart_city/l10n/main.dart';
+import 'package:smart_city/main.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:timeago_flutter/timeago_flutter.dart' as timeago;
 
 class NewsTile extends StatelessWidget {
@@ -22,10 +24,32 @@ class NewsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localiz = getAppLoc(context);
+
     return GestureDetector(
-        onTap: () {
-          context.pushNamed(const NewsDetailsScreen().route,
-              queryParameters: {'id': id.toString()});
+        onTap: () async {
+          final Map newData = await supabase
+              .from('news')
+              .select(
+                  'title_${localiz!.localeName}, description_${localiz.localeName}, image, source, created_at, id, category(title_${localiz.localeName})')
+              .eq('id', id)
+              .single();
+          final commentsCount = await supabase
+              .from('news_comments')
+              .select('id, new_id',
+                  const FetchOptions(count: CountOption.exact, head: true))
+              .eq('new_id', newData['id']);
+          if (!context.mounted) return;
+          context.pushNamed(NewsDetailsScreen.route, queryParameters: {
+            'id': id.toString(),
+            'description': newData['description_${localiz.localeName}'],
+            'title': newData['title_${localiz.localeName}'],
+            'category': newData['category']['title_${localiz.localeName}'],
+            'image': newData['image'],
+            'createdAt': newData['created_at'],
+            'source': newData['source'],
+            'commentsCount': commentsCount.count.toString(),
+          });
         },
         child: Container(
           height: 90,
