@@ -5,7 +5,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 
 class TextInput extends HookWidget {
   const TextInput(
-      {Key? key,
+      {super.key,
       required this.name,
       required this.title,
       this.validators = const [],
@@ -19,8 +19,7 @@ class TextInput extends HookWidget {
       this.suffix,
       this.contentPadding,
       this.isPassword = false,
-      this.minLines})
-      : super(key: key);
+      this.minLines});
 
   final String title;
   final String name;

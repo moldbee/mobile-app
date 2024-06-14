@@ -8,7 +8,7 @@ import 'package:smart_city/features/services/screens/items.dart';
 import 'package:smart_city/l10n/main.dart';
 
 class ServicesScreen extends HookWidget {
-  const ServicesScreen({Key? key}) : super(key: key);
+  const ServicesScreen({super.key});
   final String route = '/services';
 
   @override

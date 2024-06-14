@@ -8,7 +8,7 @@ import 'package:smart_city/main.dart';
 import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
 class NewsScreen extends HookWidget {
-  const NewsScreen({Key? key}) : super(key: key);
+  const NewsScreen({super.key});
   final String route = '/';
   @override
   Widget build(BuildContext context) {
@@ -170,7 +170,7 @@ class NewsScreen extends HookWidget {
                   'id, title_${localiz!.localeName}, created_at, image');
 
               if (selectedCategory.value != null) {
-                query.eq('category', selectedCategory.value);
+                query.eq('category', selectedCategory);
               }
 
               final newNews =
@@ -184,7 +184,7 @@ class NewsScreen extends HookWidget {
                 .select('id, title_${localiz!.localeName}, created_at, image');
 
             if (selectedCategory.value != null) {
-              query.eq('category', selectedCategory.value);
+              query.eq('category', selectedCategory);
             }
 
             final newNews = await query.order('id').range(0, 10);

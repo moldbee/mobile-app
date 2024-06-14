@@ -17,35 +17,35 @@ ThemeData getThemeData(BuildContext context) {
     textTheme: newTextTheme,
     segmentedButtonTheme: SegmentedButtonThemeData(
         style: ButtonStyle(
-      textStyle: MaterialStateProperty.all(const TextStyle(
+      textStyle: WidgetStateProperty.all(const TextStyle(
         color: Colors.white,
       )),
     )),
     platform: TargetPlatform.iOS,
     filledButtonTheme: FilledButtonThemeData(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.orange.shade400),
-            textStyle: const MaterialStatePropertyAll(
+            backgroundColor: WidgetStateProperty.all(Colors.orange.shade400),
+            textStyle: const WidgetStatePropertyAll(
                 TextStyle(color: Colors.white)))),
     switchTheme: SwitchThemeData(
-        thumbColor: MaterialStateProperty.all(Colors.orange.shade300),
+        thumbColor: WidgetStateProperty.all(Colors.orange.shade300),
         trackColor:
-            MaterialStateProperty.all(Colors.grey.shade400.withOpacity(0.5)),
+            WidgetStateProperty.all(Colors.grey.shade400.withOpacity(0.5)),
         overlayColor:
-            MaterialStateProperty.all(Colors.orange.shade300.withOpacity(0.3))),
+            WidgetStateProperty.all(Colors.orange.shade300.withOpacity(0.3))),
     outlinedButtonTheme: const OutlinedButtonThemeData(
         style: ButtonStyle(
-            side: MaterialStatePropertyAll(BorderSide(color: Colors.orange)))),
+            side: WidgetStatePropertyAll(BorderSide(color: Colors.orange)))),
     splashColor: Colors.orange.shade100.withOpacity(0.3),
     highlightColor: Colors.orange.shade100.withOpacity(0.3),
     checkboxTheme: CheckboxThemeData(
-        fillColor: MaterialStateProperty.all(Colors.orange.shade300),
-        overlayColor: MaterialStatePropertyAll(Colors.orange.shade100),
+        fillColor: WidgetStateProperty.all(Colors.orange.shade300),
+        overlayColor: WidgetStatePropertyAll(Colors.orange.shade100),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-        side: MaterialStateBorderSide.resolveWith(
+        side: WidgetStateBorderSide.resolveWith(
           (states) => BorderSide(width: 2.0, color: Colors.orange.shade300),
         ),
-        checkColor: const MaterialStatePropertyAll(Colors.white)),
+        checkColor: const WidgetStatePropertyAll(Colors.white)),
     dialogTheme: DialogTheme(
         elevation: 0,
         titleTextStyle: TextStyle(
@@ -62,8 +62,8 @@ ThemeData getThemeData(BuildContext context) {
     scaffoldBackgroundColor: Colors.white,
     iconButtonTheme: const IconButtonThemeData(
         style: ButtonStyle(
-            iconSize: MaterialStatePropertyAll(28),
-            overlayColor: MaterialStatePropertyAll(Colors.transparent))),
+            iconSize: WidgetStatePropertyAll(28),
+            overlayColor: WidgetStatePropertyAll(Colors.transparent))),
     chipTheme: const ChipThemeData(
         deleteIconColor: Colors.white,
         side: BorderSide(width: 0),

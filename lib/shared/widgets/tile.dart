@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class Tile extends StatelessWidget {
   const Tile({
-    Key? key,
+    super.key,
     required this.title,
     required this.icon,
     required this.iconColor,
-  }) : super(key: key);
+  });
 
   final String? title;
   final String? icon;

@@ -4,11 +4,10 @@ import 'package:smart_city/l10n/main.dart';
 
 class DeleteConfirmAlert extends StatelessWidget {
   const DeleteConfirmAlert(
-      {Key? key,
+      {super.key,
       required this.onDelete,
       this.text,
-      this.disableDoublePop = false})
-      : super(key: key);
+      this.disableDoublePop = false});
 
   final bool disableDoublePop;
   final String? text;

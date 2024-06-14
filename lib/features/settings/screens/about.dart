@@ -3,7 +3,7 @@ import 'package:smart_city/l10n/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
-  const AboutScreen({Key? key}) : super(key: key);
+  const AboutScreen({super.key});
   final String route = '/settings/about';
 
   @override

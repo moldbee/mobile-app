@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 
 class ServiceDetailsTile extends StatelessWidget {
   const ServiceDetailsTile(
-      {Key? key,
+      {super.key,
       required this.icon,
       this.iconColor,
       required this.onTap,
-      required this.title})
-      : super(key: key);
+      required this.title});
 
   final IconData icon;
   final String title;

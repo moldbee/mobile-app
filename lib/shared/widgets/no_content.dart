@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_city/l10n/main.dart';
 
 class NoContent extends StatelessWidget {
-  const NoContent({Key? key}) : super(key: key);
+  const NoContent({super.key});
 
   @override
   Widget build(BuildContext context) {

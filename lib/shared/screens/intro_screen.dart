@@ -3,8 +3,7 @@ import 'package:introduction_screen/introduction_screen.dart';
 import 'package:smart_city/l10n/main.dart';
 
 class IntroScreen extends StatelessWidget {
-  const IntroScreen({Key? key, required this.onDone, required this.onSkip})
-      : super(key: key);
+  const IntroScreen({super.key, required this.onDone, required this.onSkip});
 
   final VoidCallback onDone;
   final VoidCallback onSkip;

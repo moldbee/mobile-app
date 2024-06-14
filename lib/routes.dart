@@ -3,15 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/controller.dart';
-import 'package:smart_city/features/events/screens/events.dart';
-import 'package:smart_city/features/events/screens/details.dart';
 import 'package:smart_city/features/news/screens/details.dart';
-import 'package:smart_city/features/profile/controller.dart';
-import 'package:smart_city/features/profile/screens/edit.dart';
-import 'package:smart_city/features/profile/screens/notifications.dart';
-import 'package:smart_city/features/profile/screens/profile.dart';
-import 'package:smart_city/features/profile/screens/sign_in.dart';
-import 'package:smart_city/features/profile/screens/sign_up.dart';
 import 'package:smart_city/features/services/screens/company_services.dart';
 import 'package:smart_city/features/services/screens/contacts.dart';
 import 'package:smart_city/features/services/screens/details.dart';
@@ -21,14 +13,11 @@ import 'package:smart_city/features/services/screens/info.dart';
 import 'package:smart_city/features/services/screens/offices.dart';
 import 'package:smart_city/features/services/screens/promotions.dart';
 import 'package:smart_city/features/services/screens/services.dart';
-import 'package:smart_city/features/settings/screens/about.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/features/news/screens/news.dart';
 import 'package:smart_city/shared/screens/intro_screen.dart';
-import 'package:smart_city/shared/screens/policy.dart';
 
 import 'features/services/screens/items.dart';
-import 'features/settings/screens/settings.dart';
 import 'shared/widgets/bottom_navigation_bar.dart';
 
 final GoRouter router = GoRouter(routes: <RouteBase>[
@@ -113,24 +102,6 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
         ],
       ),
       StatefulShellBranch(
-        initialLocation: const EventsScreen().route,
-        routes: [
-          GoRoute(
-              path: const EventsScreen().route,
-              pageBuilder: (context, state) =>
-                  const MaterialPage(child: EventsScreen())),
-          GoRoute(
-              name: const EventDetailsScreen().route,
-              path: const EventDetailsScreen().route,
-              pageBuilder: (context, state) {
-                return MaterialPage(
-                    child: EventDetailsScreen(
-                  id: state.uri.queryParameters['id'],
-                ));
-              }),
-        ],
-      ),
-      StatefulShellBranch(
         initialLocation: const ServicesScreen().route,
         routes: [
           GoRoute(
@@ -210,54 +181,6 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
                   id: state.uri.queryParameters['companyId'],
                 ));
               }),
-        ],
-      ),
-      StatefulShellBranch(
-        initialLocation: ProfileSignInScreen().route,
-        routes: [
-          GoRoute(
-              redirect: (context, state) {
-                final ProfileController profileController =
-                    Get.find<ProfileController>();
-
-                if (profileController.uid.value != null) {
-                  return ProfileScreen().route;
-                }
-
-                return ProfileSignInScreen().route;
-              },
-              path: ProfileSignInScreen().route,
-              name: ProfileSignInScreen().route,
-              pageBuilder: (context, state) =>
-                  MaterialPage(child: ProfileSignInScreen())),
-          GoRoute(
-              path: ProfileSignUpScreen().route,
-              pageBuilder: (context, state) =>
-                  MaterialPage(child: ProfileSignUpScreen())),
-          GoRoute(
-              path: const ProfileNotifications().route,
-              pageBuilder: (context, state) =>
-                  const MaterialPage(child: ProfileNotifications())),
-          GoRoute(
-              path: const ProfileEdit().route,
-              pageBuilder: (context, state) =>
-                  const MaterialPage(child: ProfileEdit())),
-          GoRoute(
-              path: ProfileScreen().route,
-              pageBuilder: (context, state) =>
-                  MaterialPage(child: ProfileScreen())),
-          GoRoute(
-              path: const PolicyScreen().route,
-              pageBuilder: (context, state) =>
-                  const MaterialPage(child: PolicyScreen())),
-          GoRoute(
-              path: const SettingsScreen().route,
-              pageBuilder: (context, state) =>
-                  const MaterialPage(child: SettingsScreen())),
-          GoRoute(
-              path: const AboutScreen().route,
-              pageBuilder: (context, state) =>
-                  const MaterialPage(child: AboutScreen()))
         ],
       ),
     ],

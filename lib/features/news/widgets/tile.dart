@@ -5,17 +5,15 @@ import 'package:shimmer/shimmer.dart';
 import 'package:smart_city/features/news/screens/details.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/main.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:timeago_flutter/timeago_flutter.dart' as timeago;
 
 class NewsTile extends StatelessWidget {
   const NewsTile(
-      {Key? key,
+      {super.key,
       required this.title,
       required this.imageUrl,
       required this.id,
-      required this.createdAt})
-      : super(key: key);
+      required this.createdAt});
 
   final String title;
   final String imageUrl;
@@ -34,11 +32,6 @@ class NewsTile extends StatelessWidget {
                   'title_${localiz!.localeName}, description_${localiz.localeName}, image, source, created_at, id, category(title_${localiz.localeName})')
               .eq('id', id)
               .single();
-          final commentsCount = await supabase
-              .from('news_comments')
-              .select('id, new_id',
-                  const FetchOptions(count: CountOption.exact, head: true))
-              .eq('new_id', newData['id']);
           if (!context.mounted) return;
           context.pushNamed(NewsDetailsScreen.route, queryParameters: {
             'id': id.toString(),
@@ -48,7 +41,6 @@ class NewsTile extends StatelessWidget {
             'image': newData['image'],
             'createdAt': newData['created_at'],
             'source': newData['source'],
-            'commentsCount': commentsCount.count.toString(),
           });
         },
         child: Container(

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CompanyTile extends StatelessWidget {
-  const CompanyTile({Key? key, required this.logoUrl, required this.title})
-      : super(key: key);
+  const CompanyTile({super.key, required this.logoUrl, required this.title});
 
   final dynamic logoUrl;
   final String title;

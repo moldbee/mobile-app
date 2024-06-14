@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 
 class CustomSnackBar extends StatelessWidget {
   const CustomSnackBar(
-      {Key? key,
+      {super.key,
       required this.content,
       this.backgroundColor = Colors.red,
-      this.duration = const Duration(seconds: 1)})
-      : super(key: key);
+      this.duration = const Duration(seconds: 1)});
 
   final String content;
   final Duration duration;

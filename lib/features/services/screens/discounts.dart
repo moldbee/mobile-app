@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_city/l10n/main.dart';
 
 class DiscountsScreen extends StatelessWidget {
-  const DiscountsScreen({Key? key}) : super(key: key);
+  const DiscountsScreen({super.key});
   final route = '/services/disounts';
 
   @override
