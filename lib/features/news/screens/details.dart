@@ -16,7 +16,6 @@ class NewsDetailsScreen extends HookWidget {
       required this.createdAt,
       required this.category,
       required this.image,
-      required this.commentsCount,
       required this.source});
   static String route = '/news/details';
   final String id;
@@ -25,7 +24,6 @@ class NewsDetailsScreen extends HookWidget {
   final String createdAt;
   final String category;
   final String image;
-  final String commentsCount;
   final String source;
 
   @override
@@ -119,18 +117,6 @@ class NewsDetailsScreen extends HookWidget {
                             size: 20,
                             color: Colors.grey.shade400,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Text(
-                              commentsCount,
-                              style: TextStyle(
-                                  color: Colors.grey.shade500,
-                                  fontSize: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .fontSize),
-                            ),
-                          )
                         ],
                       ),
                     ),
@@ -152,7 +138,7 @@ class NewsDetailsScreen extends HookWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 30),
                 child: GestureDetector(
                   onTap: () {
                     launchUrl(Uri.parse(source));

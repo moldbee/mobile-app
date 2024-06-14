@@ -13,9 +13,9 @@ import 'package:smart_city/features/services/screens/info.dart';
 import 'package:smart_city/features/services/screens/offices.dart';
 import 'package:smart_city/features/services/screens/promotions.dart';
 import 'package:smart_city/features/services/screens/services.dart';
+import 'package:smart_city/features/settings/screens/settings.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/features/news/screens/news.dart';
-import 'package:smart_city/shared/screens/intro_screen.dart';
 
 import 'features/services/screens/items.dart';
 import 'shared/widgets/bottom_navigation_bar.dart';
@@ -43,38 +43,20 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
         return Future.value(true);
       }
 
-      final storage = GetStorage();
-      final isViewedIntroScreen =
-          (storage.read('isViewedIntroScreen') == true).obs;
-
-      onSkip() {
-        storage.write('isViewedIntroScreen', true);
-        isViewedIntroScreen.value = true;
-      }
-
-      return Obx(() {
-        if (!isViewedIntroScreen.value) {
-          return IntroScreen(
-            onSkip: onSkip,
-            onDone: onSkip,
-          );
-        }
-
-        return Scaffold(
-          floatingActionButton: globalState.isLoading.value
-              ? Container(
-                  padding: const EdgeInsets.all(10),
-                  child: const CircularProgressIndicator(),
-                )
-              : null,
-          bottomNavigationBar: CustomBottomNavigationBar(
-            goBranch: navigationShell.goBranch,
-            index: navigationShell.currentIndex,
-          ),
-          // ignore: deprecated_member_use
-          body: WillPopScope(onWillPop: onWillPop, child: navigationShell),
-        );
-      });
+      return Scaffold(
+        floatingActionButton: globalState.isLoading.value
+            ? Container(
+                padding: const EdgeInsets.all(10),
+                child: const CircularProgressIndicator(),
+              )
+            : null,
+        bottomNavigationBar: CustomBottomNavigationBar(
+          goBranch: navigationShell.goBranch,
+          index: navigationShell.currentIndex,
+        ),
+        // ignore: deprecated_member_use
+        body: WillPopScope(onWillPop: onWillPop, child: navigationShell),
+      );
     },
     branches: [
       StatefulShellBranch(
@@ -91,7 +73,6 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
                 return MaterialPage(
                     child: NewsDetailsScreen(
                         category: params['category'],
-                        commentsCount: params['commentsCount'],
                         id: params['id'],
                         description: params['description'],
                         image: params['image'],
@@ -181,6 +162,14 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
                   id: state.uri.queryParameters['companyId'],
                 ));
               }),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+              path: const SettingsScreen().route,
+              pageBuilder: (context, state) =>
+                  const MaterialPage(child: SettingsScreen())),
         ],
       ),
     ],

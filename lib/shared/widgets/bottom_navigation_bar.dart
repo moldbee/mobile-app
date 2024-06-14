@@ -34,26 +34,26 @@ class CustomBottomNavigationBar extends StatelessWidget {
         ),
         NavigationDestination(
           selectedIcon: Icon(
-            Icons.local_activity_rounded,
-            size: 26,
-            weight: 900,
+            Icons.widgets_rounded,
             color: bottomNavbarSelectedIconColor,
           ),
           icon: Icon(
-            Icons.local_activity_rounded,
-            size: 26,
-            weight: 900,
+            Icons.widgets_rounded,
             color: bottomNavbarIconColor,
           ),
           label: '',
         ),
         NavigationDestination(
           selectedIcon: Icon(
-            Icons.widgets_rounded,
+            Icons.settings_rounded,
+            size: 26,
+            weight: 900,
             color: bottomNavbarSelectedIconColor,
           ),
           icon: Icon(
-            Icons.widgets_rounded,
+            Icons.settings_rounded,
+            size: 26,
+            weight: 900,
             color: bottomNavbarIconColor,
           ),
           label: '',
