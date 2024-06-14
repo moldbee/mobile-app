@@ -6,7 +6,7 @@ import 'package:smart_city/shared/hooks/use_preserved_state.dart';
 import 'package:smart_city/shared/widgets/no_content.dart';
 
 class CompanyServicesScreen extends HookWidget {
-  const CompanyServicesScreen({Key? key, this.id}) : super(key: key);
+  const CompanyServicesScreen({super.key, this.id});
   final route = '/services/company/service';
   final String? id;
 
@@ -20,7 +20,7 @@ class CompanyServicesScreen extends HookWidget {
       supabase
           .from('services')
           .select('title_${localize!.localeName}, id')
-          .eq('id', id)
+          .eq('id', id as String)
           .single()
           .then((company) {
         companyName.value = company['title_${localize.localeName}'];
@@ -28,9 +28,9 @@ class CompanyServicesScreen extends HookWidget {
         supabase
             .from('services_prices')
             .select('title_${localize.localeName}, price, service')
-            .eq('service', id)
+            .eq('service', id as String)
             .then((value) {
-          return prices.value = value ?? [];
+          return prices.value = value;
         });
       });
 

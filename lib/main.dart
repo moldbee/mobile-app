@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:smart_city/controller.dart';
-import 'package:smart_city/features/events/controller.dart';
-import 'package:smart_city/features/profile/controller.dart';
 import 'package:smart_city/features/services/controller.dart';
 import 'package:smart_city/routes.dart';
 import 'package:smart_city/shared/config/pallete.dart';
@@ -25,8 +23,6 @@ void main() async {
 
   // await GetStorage().erase();
   Get.put(GlobalController());
-  Get.put(ProfileController());
-  Get.put(EventsController());
   Get.put(ServicesController());
   runApp(const MyApp());
 }
@@ -53,8 +49,15 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Moldbee',
           locale: locale.value,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('ro'),
+            Locale('ru'),
+          ],
         );
       }),
     );

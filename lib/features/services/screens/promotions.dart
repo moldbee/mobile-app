@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CompanyPromotionsScreen extends StatelessWidget {
-  const CompanyPromotionsScreen({Key? key, this.id}) : super(key: key);
+  const CompanyPromotionsScreen({super.key, this.id});
   final route = '/services/company/promotions';
 
   final String? id;

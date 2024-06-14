@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smart_city/features/events/widgets/details_tile.dart';
 import 'package:smart_city/features/services/controller.dart';
 import 'package:smart_city/features/services/screens/company_services.dart';
 import 'package:smart_city/features/services/screens/contacts.dart';
+import 'package:smart_city/features/services/screens/details_tile.dart';
 import 'package:smart_city/features/services/screens/faq.dart';
 import 'package:smart_city/features/services/screens/info.dart';
 import 'package:smart_city/features/services/screens/offices.dart';
@@ -13,7 +13,7 @@ import 'package:smart_city/features/services/screens/promotions.dart';
 import 'package:smart_city/l10n/main.dart';
 
 class ServiceDetailsScreen extends HookWidget {
-  const ServiceDetailsScreen({Key? key, this.serviceId}) : super(key: key);
+  const ServiceDetailsScreen({super.key, this.serviceId});
   final String route = '/service/details';
 
   final String? serviceId;

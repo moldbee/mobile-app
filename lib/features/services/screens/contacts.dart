@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CompanyContactsScreen extends StatelessWidget {
-  const CompanyContactsScreen({Key? key, this.id}) : super(key: key);
+  const CompanyContactsScreen({super.key, this.id});
   final route = '/services/company/contacts';
   final String? id;
 

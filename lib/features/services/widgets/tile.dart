@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class ServiceTile extends StatelessWidget {
   const ServiceTile({
-    Key? key,
+    super.key,
     required this.title,
     required this.icon,
     this.iconSize,
-  }) : super(key: key);
+  });
 
   final String title;
   final IconData icon;

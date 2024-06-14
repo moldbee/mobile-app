@@ -7,7 +7,7 @@ import 'package:smart_city/features/settings/screens/about.dart';
 import 'package:smart_city/l10n/main.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({super.key});
   final String route = '/settings';
   final SizedBox spacing = const SizedBox(height: 10);
 

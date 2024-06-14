@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:smart_city/features/profile/controller.dart';
 
 Color bottomNavbarIconColor = Colors.white;
 Color bottomNavbarSelectedIconColor = Colors.orange.shade300;
@@ -13,42 +11,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ProfileController profileController = Get.find<ProfileController>();
-    final accountIcon = Icon(
-      Icons.account_circle,
-      color: bottomNavbarIconColor,
-    );
-    final selectedAccountIcon = Icon(
-      Icons.account_circle,
-      color: bottomNavbarSelectedIconColor,
-    );
-
-    final avatarIcon = Container(
-        decoration: const BoxDecoration(
-            color: Colors.transparent, shape: BoxShape.circle),
-        child: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          radius: 13,
-          backgroundImage: NetworkImage(
-            profileController.avatar.value,
-          ),
-        ));
-
-    final selectedAvatarIcon = Container(
-        decoration: const BoxDecoration(
-            border: Border.fromBorderSide(BorderSide(
-              color: Colors.orange,
-              width: 2,
-            )),
-            color: Colors.transparent,
-            shape: BoxShape.circle),
-        child: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          radius: 12,
-          backgroundImage: NetworkImage(
-            profileController.avatar.value,
-          ),
-        ));
     return NavigationBar(
       selectedIndex: index as int,
       surfaceTintColor: Colors.transparent,
@@ -96,16 +58,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
           ),
           label: '',
         ),
-        Obx(() {
-          return NavigationDestination(
-            selectedIcon: profileController.uid.value != null
-                ? selectedAvatarIcon
-                : selectedAccountIcon,
-            icon:
-                profileController.uid.value != null ? avatarIcon : accountIcon,
-            label: '',
-          );
-        }),
       ],
     );
   }

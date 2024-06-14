@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PolicyScreen extends StatelessWidget {
-  const PolicyScreen({Key? key}) : super(key: key);
+  const PolicyScreen({super.key});
   final String route = '/policy';
 
   @override

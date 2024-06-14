@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 
 class ContentBlock extends StatelessWidget {
   const ContentBlock(
-      {Key? key,
+      {super.key,
       required this.child,
       this.enableTopDivider,
-      required this.title})
-      : super(key: key);
+      required this.title});
 
   final Widget child;
   final bool? enableTopDivider;

@@ -7,7 +7,7 @@ import 'package:smart_city/features/services/widgets/company_tile.dart';
 import 'package:smart_city/l10n/main.dart';
 
 class ServicesCompaniesScreen extends StatelessWidget {
-  const ServicesCompaniesScreen({Key? key, this.categoryId}) : super(key: key);
+  const ServicesCompaniesScreen({super.key, this.categoryId});
   final String route = '/services/companies';
 
   final String? categoryId;

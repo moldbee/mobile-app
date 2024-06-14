@@ -4,13 +4,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:smart_city/features/news/widgets/comments_bottom_sheet.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsDetailsScreen extends HookWidget {
   const NewsDetailsScreen(
-      {Key? key,
+      {super.key,
       required this.id,
       required this.title,
       required this.description,
@@ -18,8 +17,7 @@ class NewsDetailsScreen extends HookWidget {
       required this.category,
       required this.image,
       required this.commentsCount,
-      required this.source})
-      : super(key: key);
+      required this.source});
   static String route = '/news/details';
   final String id;
   final String title;
@@ -32,23 +30,6 @@ class NewsDetailsScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    showCommentsBottomSheet() {
-      showModalBottomSheet(
-          isScrollControlled: true,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(18), topRight: Radius.circular(18))),
-          context: context,
-          builder: (context) {
-            return StatefulBuilder(builder: (context, setState) {
-              return CommentsBottomSheet(
-                setState: setState,
-                newId: id,
-              );
-            });
-          });
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text(getAppLoc(context)!.article),
@@ -196,21 +177,6 @@ class NewsDetailsScreen extends HookWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 30, 10, 20),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: OutlinedButton(
-                            onPressed: () {
-                              showCommentsBottomSheet();
-                            },
-                            child: Text(
-                              getAppLoc(context)!.comments,
-                            ))),
-                  ],
-                ),
-              )
             ],
           ),
         ),
