@@ -108,18 +108,6 @@ class NewsDetailsScreen extends HookWidget {
                         )
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.comment,
-                            size: 20,
-                            color: Colors.grey.shade400,
-                          ),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               ),
