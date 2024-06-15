@@ -13,6 +13,7 @@ import 'package:smart_city/features/services/screens/info.dart';
 import 'package:smart_city/features/services/screens/offices.dart';
 import 'package:smart_city/features/services/screens/promotions.dart';
 import 'package:smart_city/features/services/screens/services.dart';
+import 'package:smart_city/features/settings/screens/about.dart';
 import 'package:smart_city/features/settings/screens/settings.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/features/news/screens/news.dart';
@@ -170,6 +171,10 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               path: const SettingsScreen().route,
               pageBuilder: (context, state) =>
                   const MaterialPage(child: SettingsScreen())),
+          GoRoute(
+              path: const AboutScreen().route,
+              pageBuilder: (context, state) =>
+                  const MaterialPage(child: AboutScreen())),
         ],
       ),
     ],

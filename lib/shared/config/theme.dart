@@ -25,8 +25,8 @@ ThemeData getThemeData(BuildContext context) {
     filledButtonTheme: FilledButtonThemeData(
         style: ButtonStyle(
             backgroundColor: WidgetStateProperty.all(Colors.orange.shade400),
-            textStyle: const WidgetStatePropertyAll(
-                TextStyle(color: Colors.white)))),
+            textStyle:
+                const WidgetStatePropertyAll(TextStyle(color: Colors.white)))),
     switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.all(Colors.orange.shade300),
         trackColor:

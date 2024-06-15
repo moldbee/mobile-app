@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_city/shared/config/pallete.dart';
 
 class ServiceDetailsTile extends StatelessWidget {
   const ServiceDetailsTile(
@@ -22,10 +23,11 @@ class ServiceDetailsTile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.all(25),
             decoration: BoxDecoration(
-                color: Colors.grey.shade100.withOpacity(.5),
-                borderRadius: BorderRadius.circular(50)),
+                color: mutedBgColor,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: mutedColor, width: .2)),
             child: Icon(
               icon,
               color: iconColor ?? Colors.orange.shade400,

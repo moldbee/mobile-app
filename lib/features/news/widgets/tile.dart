@@ -5,6 +5,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:smart_city/features/news/screens/details.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/main.dart';
+import 'package:smart_city/shared/config/pallete.dart';
 import 'package:timeago_flutter/timeago_flutter.dart' as timeago;
 
 class NewsTile extends StatelessWidget {
@@ -119,7 +120,7 @@ class NewTime extends StatelessWidget {
       timeago.format(DateTime.parse(time),
           locale: getAppLoc(context)!.localeName),
       style: TextStyle(
-          color: Colors.grey.shade500,
+          color: mutedColor,
           fontSize: Theme.of(context).textTheme.titleSmall!.fontSize),
     );
   }
