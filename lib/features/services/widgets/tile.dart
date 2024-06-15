@@ -29,7 +29,10 @@ class ServiceTile extends StatelessWidget {
           child: Text(
             title,
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey.shade800),
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: Colors.grey.shade800),
           ),
         )
       ],

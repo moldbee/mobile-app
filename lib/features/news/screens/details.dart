@@ -5,6 +5,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:smart_city/l10n/main.dart';
+import 'package:smart_city/shared/config/pallete.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsDetailsScreen extends HookWidget {
@@ -46,22 +47,20 @@ class NewsDetailsScreen extends HookWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                child: Text(
-                  category,
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
+                child: Text(category,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .apply(color: Colors.white)),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 14, 10, 20),
                 child: Text(
                   title,
-                  style: TextStyle(
-                      fontSize:
-                          Theme.of(context).textTheme.titleLarge!.fontSize,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey.shade800),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: Colors.grey.shade800),
                 ),
               ),
               CachedNetworkImage(
@@ -98,12 +97,10 @@ class NewsDetailsScreen extends HookWidget {
                             DateFormat('dd MMMM yyyy, HH:mm',
                                     getAppLoc(context)!.localeName)
                                 .format(DateTime.parse(createdAt)),
-                            style: TextStyle(
-                                color: Colors.grey.shade500,
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .fontSize),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(color: mutedColor),
                           ),
                         )
                       ],
@@ -114,16 +111,13 @@ class NewsDetailsScreen extends HookWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                 child: Linkify(
-                  text: description,
-                  onOpen: (link) async {
-                    final url = Uri.parse(link.url);
+                    text: description,
+                    onOpen: (link) async {
+                      final url = Uri.parse(link.url);
 
-                    launchUrl(url);
-                  },
-                  style: TextStyle(
-                      fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
-                      color: Colors.grey.shade800),
-                ),
+                      launchUrl(url);
+                    },
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith()),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 30),
@@ -138,15 +132,8 @@ class NewsDetailsScreen extends HookWidget {
                       const SizedBox(
                         width: 7,
                       ),
-                      Text(
-                        Uri.parse(source).host,
-                        style: TextStyle(
-                            color: Colors.grey.shade500,
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .fontSize),
-                      )
+                      Text(Uri.parse(source).host,
+                          style: Theme.of(context).textTheme.bodyLarge!)
                     ],
                   ),
                 ),

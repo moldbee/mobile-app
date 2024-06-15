@@ -33,13 +33,13 @@ class ServicesScreen extends HookWidget {
       body: Obx(() => ListView.separated(
             padding: const EdgeInsets.symmetric(vertical: 5),
             itemBuilder: (context, index) {
-              final element = servicesController.categories[index];
+              final category = servicesController.categories[index];
               return GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
                   context.pushNamed(const ServicesCompaniesScreen().route,
                       queryParameters: {
-                        'categoryId': element['id'].toString()
+                        'categoryId': category['id'].toString()
                       });
                 },
                 child: Padding(
@@ -48,7 +48,7 @@ class ServicesScreen extends HookWidget {
                   child: Row(
                     children: [
                       Icon(
-                        IconData(int.parse(element['icon']!),
+                        IconData(int.parse(category['icon']!),
                             fontFamily: 'MaterialIcons'),
                         color: Colors.orange.shade300,
                         size: 30,
@@ -56,14 +56,8 @@ class ServicesScreen extends HookWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      Text(
-                        element['title_$locale'],
-                        style: TextStyle(
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .fontSize),
-                      )
+                      Text(category['title_$locale'],
+                          style: Theme.of(context).textTheme.titleMedium!)
                     ],
                   ),
                 ),

@@ -27,13 +27,7 @@ class CompanyTile extends StatelessWidget {
         ],
         Padding(
           padding: const EdgeInsets.only(top: 16),
-          child: Text(
-            title,
-            style: TextStyle(
-                color: Colors.grey.shade800,
-                fontWeight: FontWeight.w500,
-                fontSize: Theme.of(context).textTheme.titleSmall!.fontSize),
-          ),
+          child: Text(title, style: Theme.of(context).textTheme.titleMedium!),
         ),
       ],
     );

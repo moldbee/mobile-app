@@ -65,27 +65,29 @@ class CompanyFaqScreen extends HookWidget {
               children: faqs.value
                   .map<AccordionSection>((faq) => getItem(
                       question: faq['question_${localize!.localeName}'],
-                      answer: faq['answer_${localize.localeName}']))
+                      answer: faq['answer_${localize.localeName}'],
+                      context: context))
                   .toList(),
             ),
     );
   }
 }
 
-AccordionSection getItem({question, answer}) {
+AccordionSection getItem({question, answer, context}) {
   return AccordionSection(
     header: Text(
       question,
-      style:
-          TextStyle(color: Colors.grey.shade800, fontWeight: FontWeight.w500),
+      style: Theme.of(context)
+          .textTheme
+          .titleMedium!
+          .copyWith(color: Colors.grey.shade800),
     ),
     content: Row(
       children: [
         Expanded(
-          child: Text(
-            answer,
-            textAlign: TextAlign.left,
-          ),
+          child: Text(answer,
+              textAlign: TextAlign.left,
+              style: Theme.of(context).textTheme.titleMedium),
         )
       ],
     ),

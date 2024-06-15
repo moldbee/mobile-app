@@ -30,10 +30,8 @@ class SettingsScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        getAppLoc(context)!.language,
-                        style: const TextStyle(fontSize: 14),
-                      ),
+                      child: Text(getAppLoc(context)!.language,
+                          style: Theme.of(context).textTheme.bodyLarge),
                     ),
                     TextButton(
                       onPressed: () {
@@ -56,10 +54,8 @@ class SettingsScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        getAppLoc(context)!.contacts,
-                        style: const TextStyle(fontSize: 14),
-                      ),
+                      child: Text(getAppLoc(context)!.contacts,
+                          style: Theme.of(context).textTheme.bodyLarge),
                     ),
                     TextButton(
                       onPressed: () {
@@ -76,10 +72,8 @@ class SettingsScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        getAppLoc(context)!.share,
-                        style: const TextStyle(fontSize: 14),
-                      ),
+                      child: Text(getAppLoc(context)!.share,
+                          style: Theme.of(context).textTheme.bodyLarge),
                     ),
                     TextButton(
                       onPressed: () {},
@@ -94,10 +88,8 @@ class SettingsScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        getAppLoc(context)!.version,
-                        style: const TextStyle(fontSize: 14),
-                      ),
+                      child: Text(getAppLoc(context)!.version,
+                          style: Theme.of(context).textTheme.bodyLarge),
                     ),
                     TextButton(
                       onPressed: () {},

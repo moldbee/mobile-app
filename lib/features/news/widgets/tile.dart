@@ -77,19 +77,11 @@ class NewsTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: Text(
-                        title,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .fontSize,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey.shade800),
-                      ),
+                      child: Text(title,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.titleMedium!),
                     ),
                     NewTime(
                       time: createdAt,
@@ -119,9 +111,7 @@ class NewTime extends StatelessWidget {
     return Text(
       timeago.format(DateTime.parse(time),
           locale: getAppLoc(context)!.localeName),
-      style: TextStyle(
-          color: mutedColor,
-          fontSize: Theme.of(context).textTheme.titleSmall!.fontSize),
+      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: mutedColor),
     );
   }
 }

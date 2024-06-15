@@ -61,24 +61,24 @@ class CompanyServicesScreen extends HookWidget {
                           children: [
                             Expanded(
                                 child: Text(
-                                    priceItem['title_${localize.localeName}'])),
+                              priceItem['title_${localize.localeName}'],
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            )),
                             Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              decoration: BoxDecoration(
-                                  color: Colors.orange.shade400,
-                                  borderRadius: BorderRadius.circular(50)),
-                              child: Text(
-                                '${priceItem['price']} lei',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .fontSize),
-                              ),
-                            )
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                                decoration: BoxDecoration(
+                                    color: Colors.orange.shade400,
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: Text(
+                                  '${priceItem['price']} lei',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .apply(
+                                          color: Colors.white,
+                                          fontWeightDelta: 1),
+                                ))
                           ],
                         ),
                       );

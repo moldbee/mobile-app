@@ -39,10 +39,12 @@ class ContactsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      item.title,
-                      style: const TextStyle(fontSize: 18),
-                    ),
+                    Text(item.title,
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Colors.grey.shade800,
+                                  fontWeight: FontWeight.w500,
+                                )),
                     Icon(
                       item.icon,
                       size: 32,

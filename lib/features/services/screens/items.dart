@@ -21,7 +21,9 @@ class ServicesCompaniesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(category['title_$locale']),
+        title: Text(
+          category['title_$locale'],
+        ),
       ),
       body: GridView.count(
           childAspectRatio: 5 / 3,

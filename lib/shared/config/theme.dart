@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_city/shared/widgets/themed_text.dart';
 
 // Theme needs hot restart
 
@@ -49,8 +48,7 @@ ThemeData getThemeData(BuildContext context) {
         checkColor: const WidgetStatePropertyAll(Colors.white)),
     dialogTheme: DialogTheme(
         elevation: 0,
-        titleTextStyle: TextStyle(
-            fontSize: TextType.subtitle, color: Colors.grey.shade600)),
+        titleTextStyle: TextStyle(fontSize: 16, color: Colors.grey.shade600)),
     tabBarTheme: TabBarTheme(
       dividerColor: Colors.transparent,
       labelStyle: const TextStyle(fontSize: 16),
