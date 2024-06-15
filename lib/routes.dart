@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/controller.dart';
 import 'package:smart_city/features/news/screens/details.dart';
@@ -13,7 +12,7 @@ import 'package:smart_city/features/services/screens/info.dart';
 import 'package:smart_city/features/services/screens/offices.dart';
 import 'package:smart_city/features/services/screens/promotions.dart';
 import 'package:smart_city/features/services/screens/services.dart';
-import 'package:smart_city/features/settings/screens/about.dart';
+import 'package:smart_city/features/settings/screens/contacts.dart';
 import 'package:smart_city/features/settings/screens/settings.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/features/news/screens/news.dart';
@@ -172,9 +171,9 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               pageBuilder: (context, state) =>
                   const MaterialPage(child: SettingsScreen())),
           GoRoute(
-              path: const AboutScreen().route,
+              path: const ContactsScreen().route,
               pageBuilder: (context, state) =>
-                  const MaterialPage(child: AboutScreen())),
+                  const MaterialPage(child: ContactsScreen())),
         ],
       ),
     ],

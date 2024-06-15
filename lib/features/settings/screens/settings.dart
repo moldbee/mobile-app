@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/controller.dart';
-import 'package:smart_city/features/settings/screens/about.dart';
+import 'package:smart_city/features/settings/screens/contacts.dart';
 import 'package:smart_city/l10n/main.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -57,15 +57,15 @@ class SettingsScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        getAppLoc(context)!.about,
+                        getAppLoc(context)!.contacts,
                         style: const TextStyle(fontSize: 14),
                       ),
                     ),
                     TextButton(
                       onPressed: () {
-                        context.push(const AboutScreen().route);
+                        context.push(const ContactsScreen().route);
                       },
-                      child: Text(getAppLoc(context)!.about),
+                      child: Text(getAppLoc(context)!.contacts),
                     ),
                   ],
                 ),

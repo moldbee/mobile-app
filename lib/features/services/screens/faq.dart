@@ -22,7 +22,7 @@ class CompanyFaqScreen extends HookWidget {
       supabase
           .from('services')
           .select('title_${localize!.localeName}, id')
-          .eq('id', id as String)
+          .eq('id', id!)
           .single()
           .then((company) {
         companyName.value = company['title_${localize.localeName}'];
@@ -31,7 +31,7 @@ class CompanyFaqScreen extends HookWidget {
             .from('services_faqs')
             .select(
                 'question_${localize.localeName}, answer_${localize.localeName}, service, id')
-            .eq('service', id as int)
+            .eq('service', id!)
             .then((value) {
           return faqs.value = value;
         });
