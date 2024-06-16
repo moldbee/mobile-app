@@ -5,13 +5,18 @@
       "path": "./"
     },
     {
+      "name": "crawlers",
+      "path": "crawlers"
+    },
+    {
       "name": "supabase-functions",
       "path": "supabase/functions"
     }
   ],
   "settings": {
     "files.exclude": {
-      "supabase/functions/": true
+      "supabase/functions/": true,
+      "crawlers/": true
     }
   }
 }

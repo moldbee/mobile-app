@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -12,8 +13,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
-  // await dotenv.load(fileName: ".env.prod");
-  await dotenv.load(fileName: '.env.dev');
+  if (kDebugMode) {
+    await dotenv.load(fileName: '.env.dev');
+  } else {
+    await dotenv.load(fileName: ".env.prod");
+  }
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL']!,
