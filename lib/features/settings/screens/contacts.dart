@@ -60,7 +60,7 @@ class ContactsScreen extends StatelessWidget {
                       Icon(
                         item.icon,
                         size: 32,
-                        color: Colors.grey,
+                        color: Theme.of(context).primaryColor,
                       )
                     ],
                   ),

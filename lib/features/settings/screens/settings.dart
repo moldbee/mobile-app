@@ -31,7 +31,7 @@ class SettingsScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(getAppLoc(context)!.language,
-                          style: Theme.of(context).textTheme.bodyLarge),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ),
                     TextButton(
                       onPressed: () {
@@ -55,7 +55,7 @@ class SettingsScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(getAppLoc(context)!.contacts,
-                          style: Theme.of(context).textTheme.bodyLarge),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ),
                     TextButton(
                       onPressed: () {
@@ -73,7 +73,7 @@ class SettingsScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(getAppLoc(context)!.share,
-                          style: Theme.of(context).textTheme.bodyLarge),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ),
                     TextButton(
                       onPressed: () {},
@@ -89,7 +89,7 @@ class SettingsScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(getAppLoc(context)!.version,
-                          style: Theme.of(context).textTheme.bodyLarge),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ),
                     TextButton(
                       onPressed: () {},

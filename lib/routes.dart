@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/controller.dart';
+import 'package:smart_city/features/auth/screens/auth.dart';
 import 'package:smart_city/features/news/screens/details.dart';
 import 'package:smart_city/features/services/screens/company_services.dart';
 import 'package:smart_city/features/services/screens/contacts.dart';
@@ -14,6 +15,7 @@ import 'package:smart_city/features/services/screens/promotions.dart';
 import 'package:smart_city/features/services/screens/services.dart';
 import 'package:smart_city/features/settings/screens/contacts.dart';
 import 'package:smart_city/features/settings/screens/settings.dart';
+import 'package:smart_city/features/transport/transport.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/features/news/screens/news.dart';
 
@@ -80,6 +82,14 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
                         title: params['title'],
                         createdAt: params['createdAt']));
               }),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+              path: const TransportScreen().route,
+              pageBuilder: (context, state) =>
+                  const MaterialPage(child: TransportScreen())),
         ],
       ),
       StatefulShellBranch(
@@ -162,6 +172,14 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
                   id: state.uri.queryParameters['companyId'],
                 ));
               }),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+              path: const AuthScreen().route,
+              pageBuilder: (context, state) =>
+                  const MaterialPage(child: AuthScreen())),
         ],
       ),
       StatefulShellBranch(

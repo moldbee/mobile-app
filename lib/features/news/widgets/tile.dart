@@ -111,7 +111,8 @@ class NewTime extends StatelessWidget {
     return Text(
       timeago.format(DateTime.parse(time),
           locale: getAppLoc(context)!.localeName),
-      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: mutedColor),
+      style:
+          Theme.of(context).textTheme.bodyMedium!.copyWith(color: mutedColor),
     );
   }
 }

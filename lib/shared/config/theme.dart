@@ -13,6 +13,7 @@ ThemeData getThemeData(BuildContext context) {
         borderRadius: BorderRadius.circular(6),
       ),
     ),
+    primaryColor: Colors.orange.shade300,
     primaryTextTheme: newTextTheme,
     textTheme: newTextTheme,
     segmentedButtonTheme: SegmentedButtonThemeData(

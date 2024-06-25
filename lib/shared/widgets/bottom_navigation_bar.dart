@@ -34,11 +34,39 @@ class CustomBottomNavigationBar extends StatelessWidget {
         ),
         NavigationDestination(
           selectedIcon: Icon(
+            Icons.airport_shuttle_rounded,
+            size: 30,
+            color: bottomNavbarSelectedIconColor,
+          ),
+          icon: Icon(
+            Icons.airport_shuttle_rounded,
+            size: 30,
+            color: bottomNavbarIconColor,
+          ),
+          label: '',
+        ),
+        NavigationDestination(
+          selectedIcon: Icon(
             Icons.widgets_rounded,
             color: bottomNavbarSelectedIconColor,
           ),
           icon: Icon(
             Icons.widgets_rounded,
+            color: bottomNavbarIconColor,
+          ),
+          label: '',
+        ),
+        NavigationDestination(
+          selectedIcon: Icon(
+            Icons.account_circle_rounded,
+            size: 26,
+            weight: 900,
+            color: bottomNavbarSelectedIconColor,
+          ),
+          icon: Icon(
+            Icons.account_circle_rounded,
+            size: 26,
+            weight: 900,
             color: bottomNavbarIconColor,
           ),
           label: '',
