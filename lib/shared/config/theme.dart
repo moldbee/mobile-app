@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-// Theme needs hot restart
-
 ThemeData getThemeData(BuildContext context) {
   final newTextTheme = Theme.of(context).textTheme.apply(
         bodyColor: Colors.grey.shade800,
@@ -23,6 +21,11 @@ ThemeData getThemeData(BuildContext context) {
       )),
     )),
     platform: TargetPlatform.iOS,
+    dividerColor: Colors.grey.shade300,
+    dividerTheme: DividerThemeData(color: Colors.grey.shade300, thickness: .5),
+    searchBarTheme: const SearchBarThemeData(
+        elevation: WidgetStatePropertyAll(1),
+        hintStyle: WidgetStatePropertyAll(TextStyle(color: Colors.grey))),
     filledButtonTheme: FilledButtonThemeData(
         style: ButtonStyle(
             backgroundColor: WidgetStateProperty.all(Colors.orange.shade400),

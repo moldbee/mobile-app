@@ -217,14 +217,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
-  dropdown_search:
-    dependency: transitive
-    description:
-      name: dropdown_search
-      sha256: "55106e8290acaa97ed15bea1fdad82c3cf0c248dd410e651f5a8ac6870f783ab"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.6"
   fake_async:
     dependency: transitive
     description:
@@ -310,14 +302,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.1"
-  flutter_colorpicker:
-    dependency: transitive
-    description:
-      name: flutter_colorpicker
-      sha256: "458a6ed8ea480eb16ff892aedb4b7092b2804affd7e046591fb03127e8d8ef8b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.3"
   flutter_dotenv:
     dependency: "direct main"
     description:
@@ -326,14 +310,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.0"
-  flutter_form_builder:
-    dependency: "direct main"
-    description:
-      name: flutter_form_builder
-      sha256: "447f8808f68070f7df968e8063aada3c9d2e90e789b5b70f3b44e4b315212656"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.3.0"
   flutter_hooks:
     dependency: "direct main"
     description:
@@ -435,14 +411,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.19"
-  flutter_rating_bar:
-    dependency: transitive
-    description:
-      name: flutter_rating_bar
-      sha256: d2af03469eac832c591a1eba47c91ecc871fe5708e69967073c043b2d775ed93
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.1"
   flutter_statusbarcolor_ns:
     dependency: "direct main"
     description:
@@ -464,14 +432,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_typeahead:
-    dependency: transitive
-    description:
-      name: flutter_typeahead
-      sha256: b9942bd5b7611a6ec3f0730c477146cffa4cd4b051077983ba67ddfc9e7ee818
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.8.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -485,22 +445,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "10.7.0"
-  form_builder_extra_fields:
-    dependency: "direct main"
-    description:
-      name: form_builder_extra_fields
-      sha256: "901687417f3f4fd957227f2303314a27c01d5480467a2dfce2c1e43a76558c3f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "10.2.0"
-  form_builder_validators:
-    dependency: "direct main"
-    description:
-      name: form_builder_validators
-      sha256: "475853a177bfc832ec12551f752fd0001278358a6d42d2364681ff15f48f67cf"
-      url: "https://pub.dev"
-    source: hosted
-    version: "10.0.1"
   functions_client:
     dependency: transitive
     description:
@@ -949,14 +893,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-  pointer_interceptor:
-    dependency: transitive
-    description:
-      name: pointer_interceptor
-      sha256: adf7a637f97c077041d36801b43be08559fd4322d2127b3f20bb7be1b9eebc22
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.9.3+7"
   pointycastle:
     dependency: transitive
     description:
@@ -1109,14 +1045,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
-  signature:
-    dependency: transitive
-    description:
-      name: signature
-      sha256: d072a766e9a40496296b7593c0d9dee2abded0bdcfb306d9962d0320a9763395
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.4.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1475,5 +1403,5 @@ packages:
     source: hosted
     version: "2.0.0"
 sdks:
-  dart: ">=3.4.0 <4.0.0"
-  flutter: ">=3.22.0"
+  dart: ">=3.3.0 <4.0.0"
+  flutter: ">=3.19.0"
