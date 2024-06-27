@@ -5,10 +5,6 @@
       "path": "./"
     },
     {
-      "name": "crawlers",
-      "path": "crawlers"
-    },
-    {
       "name": "supabase-functions",
       "path": "supabase/functions"
     },
@@ -19,8 +15,8 @@
   ],
   "settings": {
     "files.exclude": {
+      "tg-spider": true,
       "supabase/functions/": true,
-      "crawlers/": true
     }
   }
 }
