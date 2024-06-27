@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 ThemeData getThemeData(BuildContext context) {
   final newTextTheme = Theme.of(context).textTheme.apply(
         bodyColor: Colors.grey.shade800,
         displayColor: Colors.grey.shade800,
       );
-  return ThemeData(
+  final baseTheme = ThemeData(
     drawerTheme: DrawerThemeData(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6),
@@ -77,6 +78,7 @@ ThemeData getThemeData(BuildContext context) {
     datePickerTheme:
         const DatePickerThemeData(backgroundColor: Colors.white, elevation: 0),
     inputDecorationTheme: InputDecorationTheme(
+        prefixIconColor: Colors.grey.shade300,
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -84,21 +86,21 @@ ThemeData getThemeData(BuildContext context) {
             color: Colors.grey.shade400,
             fontSize: 14,
             fontWeight: FontWeight.w400),
-        hoverColor: Colors.orange.shade300,
+        hoverColor: Colors.orange.shade100,
         focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(color: Colors.red, width: 2)),
         errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(color: Colors.red, width: 2)),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: Colors.orange.shade300, width: 2)),
         enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey.shade400),
-            borderRadius: BorderRadius.circular(10))),
+            borderSide: BorderSide(color: Colors.grey.shade200),
+            borderRadius: BorderRadius.circular(8))),
     useMaterial3: true,
-    iconTheme: IconThemeData(color: Colors.orange.shade500),
+    iconTheme: IconThemeData(color: Colors.orange.shade500, fill: 1),
     navigationBarTheme: NavigationBarThemeData(
         surfaceTintColor: Colors.transparent,
         indicatorColor: Colors.orange.shade300,
@@ -118,5 +120,9 @@ ThemeData getThemeData(BuildContext context) {
             color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500)),
     colorScheme: ColorScheme.fromSwatch(
         primarySwatch: Colors.orange, backgroundColor: Colors.white),
+  );
+
+  return baseTheme.copyWith(
+    textTheme: GoogleFonts.montserratTextTheme(baseTheme.textTheme),
   );
 }
