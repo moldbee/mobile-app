@@ -1,6 +1,6 @@
-import { getClient } from "./client.js";
-import { CHANNELS } from "./constants.js";
-import { Api } from "telegram";
+import { getClient } from './client.js';
+import { CHANNELS } from './constants.js';
+import { Api } from 'telegram';
 
 const scrapeTelegram = async () => {
   const client = await getClient({
@@ -11,16 +11,16 @@ const scrapeTelegram = async () => {
     await client.connect();
   }
 
-  const chat = await client.getInputEntity("zdgmd");
+  const chat = await client.getInputEntity('zdgmd');
 
   // for await (const message of client.iterMessages(chat, { limit: 10 })) {
   //   console.log("Message text is", message.text, message);
   // }
 
   for await (const message of client.iterMessages(chat, {
-    filter: Api.InputMessagesFilterPhotos,
+    limit: 1,
   })) {
-    console.log(message.id, message.photo);
+    console.log(message.id, message.entities);
   }
 };
 
