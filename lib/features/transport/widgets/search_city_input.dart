@@ -68,6 +68,7 @@ class CitySearchInput extends StatelessWidget {
     return TextField(
       keyboardType: TextInputType.none,
       controller: searchController,
+      showCursor: false,
       decoration: InputDecoration(
           hintText: hint, prefixIcon: const Icon(Icons.place_rounded)),
       onTap: () async {

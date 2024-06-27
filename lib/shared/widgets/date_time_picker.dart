@@ -13,6 +13,7 @@ class DateTimePicker extends StatelessWidget {
     final loc = getAppLoc(context);
 
     return TextField(
+      showCursor: false,
       controller: textInputController,
       keyboardType: TextInputType.none,
       decoration: InputDecoration(
