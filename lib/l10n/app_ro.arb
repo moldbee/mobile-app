@@ -75,5 +75,10 @@
   "sureDeleteComment": "Sigur doriți să ștergeți acest comentariu?",
   "sureDeleteAvatar": "Sigur doriți să ștergeți avatarul?",
   "yes": "Da",
-  "no": "Nu"
+  "no": "Nu",
+  "from": "De unde",
+  "to": "Unde",
+  "dateAndTime": "Data si timpul",
+  "search": "Caută",
+  "transport": "Transport"
 }

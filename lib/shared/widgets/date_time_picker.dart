@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:smart_city/l10n/main.dart';
 
 class DateTimePicker extends StatelessWidget {
   const DateTimePicker({super.key, required this.controller});
@@ -9,12 +10,14 @@ class DateTimePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final todayDate = DateTime.now();
     final textInputController = TextEditingController();
+    final loc = getAppLoc(context);
 
     return TextField(
       controller: textInputController,
       keyboardType: TextInputType.none,
-      decoration: const InputDecoration(
-          hintText: 'Date', prefixIcon: Icon(Icons.date_range_rounded)),
+      decoration: InputDecoration(
+          hintText: loc!.dateAndTime,
+          prefixIcon: const Icon(Icons.date_range_rounded)),
       onTap: () async {
         final date = await showDatePicker(
             context: context,

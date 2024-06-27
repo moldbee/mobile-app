@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_city/features/transport/widgets/search_city_input.dart';
+import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/shared/widgets/date_time_picker.dart';
 import 'package:smart_city/shared/widgets/scaffold_body.dart';
 
@@ -17,19 +18,21 @@ class TransportScreen extends StatelessWidget {
       height: 10,
     );
 
+    final loc = getAppLoc(context);
+
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Transport'),
+          title: Text(loc!.transport),
         ),
         body: ScaffoldBody(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               CitySearchInput(
-                  hint: 'From', searchController: fromCityController),
+                  hint: loc.from, searchController: fromCityController),
               spacing,
               CitySearchInput(
-                hint: 'To',
+                hint: loc.to,
                 searchController: toCityController,
               ),
               spacing,
@@ -37,7 +40,7 @@ class TransportScreen extends StatelessWidget {
               spacing,
               FilledButton(
                 onPressed: () {},
-                child: const Text('Search'),
+                child: Text(loc.search),
               )
             ],
           ),
