@@ -1,11 +1,9 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:smart_city/features/transport/widgets/search_city_input.dart';
+import 'package:smart_city/shared/widgets/date_time_picker.dart';
 import 'package:smart_city/shared/widgets/scaffold_body.dart';
 
-class TransportScreen extends HookWidget {
+class TransportScreen extends StatelessWidget {
   const TransportScreen({super.key});
   final route = '/transport';
 
@@ -18,7 +16,6 @@ class TransportScreen extends HookWidget {
     const spacing = SizedBox(
       height: 10,
     );
-    final todayDate = DateTime.now();
 
     return Scaffold(
         appBar: AppBar(
@@ -26,6 +23,7 @@ class TransportScreen extends HookWidget {
         ),
         body: ScaffoldBody(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               CitySearchInput(
                   hint: 'From', searchController: fromCityController),
@@ -35,24 +33,12 @@ class TransportScreen extends HookWidget {
                 searchController: toCityController,
               ),
               spacing,
-              TextField(
-                controller: dateTimeController,
-                keyboardType: TextInputType.none,
-                decoration: const InputDecoration(hintText: 'Date'),
-                onTap: () async {
-                  final date = await showDatePicker(
-                      context: context,
-                      firstDate: todayDate,
-                      lastDate: DateTime(
-                          todayDate.year + 1, todayDate.month, todayDate.day));
-
-                  if (!context.mounted) return;
-
-                  final time = await showTimePicker(
-                      context: context,
-                      initialTime: const TimeOfDay(hour: 06, minute: 00));
-                },
-              ),
+              DateTimePicker(controller: dateTimeController),
+              spacing,
+              FilledButton(
+                onPressed: () {},
+                child: const Text('Search'),
+              )
             ],
           ),
         ));
