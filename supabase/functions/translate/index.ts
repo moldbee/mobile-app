@@ -1,7 +1,7 @@
 import { GTR } from 'https://deno.land/x/gtr/mod.ts';
 import * as base64 from 'https://deno.land/std@0.208.0/encoding/base64.ts';
 
-serve(async (req) => {
+Deno.serve(async (req) => {
   const { text, lang } = await req.json();
   const gtr = new GTR();
 
