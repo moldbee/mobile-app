@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 final cities = [
   'Moldova, Chisinau',
@@ -67,6 +66,7 @@ class CitySearchInput extends StatelessWidget {
     final delegant = CitySearchDelegant();
 
     return TextField(
+      keyboardType: TextInputType.none,
       controller: searchController,
       decoration: InputDecoration(
           hintText: hint, prefixIcon: const Icon(Icons.place_rounded)),
