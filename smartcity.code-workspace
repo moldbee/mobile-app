@@ -11,6 +11,10 @@
     {
       "name": "supabase-functions",
       "path": "supabase/functions"
+    },
+    {
+      "name": "tg-spider",
+      "path": "tg-spider"
     }
   ],
   "settings": {

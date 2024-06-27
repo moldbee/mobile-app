@@ -26,17 +26,17 @@ INSERT INTO "storage"."buckets" ("id", "name", "owner", "created_at", "updated_a
 	('services', 'services', NULL, '2023-10-09 09:45:59.930996+00', '2023-10-09 09:45:59.930996+00', true, false, NULL, NULL, NULL),
 	('events', 'events', NULL, '2023-10-09 09:45:59.930996+00', '2023-10-09 09:45:59.930996+00', true, false, NULL, NULL, NULL);
 
-INSERT INTO public.events (created_at, title_ro, title_ru, date, place_url, place_ru, place_ro, image_url, info_url, price)
-VALUES
-(NOW(), 'Titlu RO 2', 'Название RU 2', CURRENT_DATE - interval '3 day 2 hour', 'http://example.com/place3', 'Место RU 2', 'Loc RO 2', 'https://www.fest.md/files/events/74/image_7468_17_preview.jpg', 'https://balti.md/', '100'),
-(NOW(), 'Titlu RO 3', 'Название RU 3', CURRENT_DATE - interval '1 day 10 hour', 'http://example.com/place3', 'Место RU 3', 'Loc RO 3', 'https://moldovaconcert.md/wp-content/uploads/2023/11/image-4.png', 'https://balti.md/', '300'),
-(NOW(), 'Titlu RO 4', 'Название RU 4', CURRENT_DATE + interval '4 day 2 hour', 'http://example.com/place4', 'Место RU 4', 'Loc RO 4', 'https://www.fest.md/files/events/178/image_17822_1_preview.png', 'https://balti.md/', '100'),
-(NOW(), 'Titlu RO 5', 'Название RU 5', CURRENT_DATE + interval '8 day 15 hour', 'http://example.com/place5', 'Место RU 5', 'Loc RO 5', 'https://www.fest.md/files/events/74/image_7468_17_preview.jpg', 'https://balti.md/', NULL),
-(NOW(), 'Titlu RO 6', 'Название RU 6', CURRENT_DATE + interval '11 day 7 hour', 'http://example.com/place6', 'Место RU 6', 'Loc RO 6', 'https://moldovaconcert.md/wp-content/uploads/2023/11/image-4.png', 'https://balti.md/', '200'),
-(NOW(), 'Titlu RO 7', 'Название RU 7', CURRENT_DATE + interval '1 day 19 hour', 'http://example.com/place7', 'Место RU 7', 'Loc RO 7', 'https://www.fest.md/files/events/178/image_17822_1_preview.png', 'https://balti.md/', NULL),
-(NOW(), 'Titlu RO 8', 'Название RU 8', CURRENT_DATE + interval '15 day 21 hour', 'http://example.com/place8', 'Место RU 8', 'Loc RO 8', 'https://moldovaconcert.md/wp-content/uploads/2023/11/image-4.png', 'https://balti.md/', '100'),
-(NOW(), 'Titlu RO 9', 'Название RU 9', CURRENT_DATE + interval '19 day 10 hour', 'http://example.com/place9', 'Место RU 9', 'Loc RO 9', 'https://www.fest.md/files/events/178/image_17822_1_preview.png', 'https://balti.md/', NULL),
-(NOW(), 'Titlu RO 10', 'Название RU 10', CURRENT_DATE + interval '6 day 7 hour', 'http://example.com/place10', 'Место RU 10', 'Loc RO 10', 'https://www.fest.md/files/events/74/image_7468_17_preview.jpg', 'https://balti.md/', '100');
+-- INSERT INTO public.events (created_at, title_ro, title_ru, date, place_url, place_ru, place_ro, image_url, info_url, price)
+-- VALUES
+-- (NOW(), 'Titlu RO 2', 'Название RU 2', CURRENT_DATE - interval '3 day 2 hour', 'http://example.com/place3', 'Место RU 2', 'Loc RO 2', 'https://www.fest.md/files/events/74/image_7468_17_preview.jpg', 'https://balti.md/', '100'),
+-- (NOW(), 'Titlu RO 3', 'Название RU 3', CURRENT_DATE - interval '1 day 10 hour', 'http://example.com/place3', 'Место RU 3', 'Loc RO 3', 'https://moldovaconcert.md/wp-content/uploads/2023/11/image-4.png', 'https://balti.md/', '300'),
+-- (NOW(), 'Titlu RO 4', 'Название RU 4', CURRENT_DATE + interval '4 day 2 hour', 'http://example.com/place4', 'Место RU 4', 'Loc RO 4', 'https://www.fest.md/files/events/178/image_17822_1_preview.png', 'https://balti.md/', '100'),
+-- (NOW(), 'Titlu RO 5', 'Название RU 5', CURRENT_DATE + interval '8 day 15 hour', 'http://example.com/place5', 'Место RU 5', 'Loc RO 5', 'https://www.fest.md/files/events/74/image_7468_17_preview.jpg', 'https://balti.md/', NULL),
+-- (NOW(), 'Titlu RO 6', 'Название RU 6', CURRENT_DATE + interval '11 day 7 hour', 'http://example.com/place6', 'Место RU 6', 'Loc RO 6', 'https://moldovaconcert.md/wp-content/uploads/2023/11/image-4.png', 'https://balti.md/', '200'),
+-- (NOW(), 'Titlu RO 7', 'Название RU 7', CURRENT_DATE + interval '1 day 19 hour', 'http://example.com/place7', 'Место RU 7', 'Loc RO 7', 'https://www.fest.md/files/events/178/image_17822_1_preview.png', 'https://balti.md/', NULL),
+-- (NOW(), 'Titlu RO 8', 'Название RU 8', CURRENT_DATE + interval '15 day 21 hour', 'http://example.com/place8', 'Место RU 8', 'Loc RO 8', 'https://moldovaconcert.md/wp-content/uploads/2023/11/image-4.png', 'https://balti.md/', '100'),
+-- (NOW(), 'Titlu RO 9', 'Название RU 9', CURRENT_DATE + interval '19 day 10 hour', 'http://example.com/place9', 'Место RU 9', 'Loc RO 9', 'https://www.fest.md/files/events/178/image_17822_1_preview.png', 'https://balti.md/', NULL),
+-- (NOW(), 'Titlu RO 10', 'Название RU 10', CURRENT_DATE + interval '6 day 7 hour', 'http://example.com/place10', 'Место RU 10', 'Loc RO 10', 'https://www.fest.md/files/events/74/image_7468_17_preview.jpg', 'https://balti.md/', '100');
 
 INSERT INTO public.news (category, source, created_at, title_ro, title_ru, description_ro, description_ru, image)
 VALUES
