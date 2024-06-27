@@ -3,22 +3,21 @@ import 'package:intl/intl.dart';
 import 'package:smart_city/l10n/main.dart';
 
 class DateTimePicker extends StatelessWidget {
-  const DateTimePicker({super.key, required this.controller});
+  const DateTimePicker({super.key, required this.controller, this.hint = ''});
   final TextEditingController controller;
+  final String hint;
 
   @override
   Widget build(BuildContext context) {
     final todayDate = DateTime.now();
     final textInputController = TextEditingController();
-    final loc = getAppLoc(context);
 
     return TextField(
       showCursor: false,
       controller: textInputController,
       keyboardType: TextInputType.none,
       decoration: InputDecoration(
-          hintText: loc!.dateAndTime,
-          prefixIcon: const Icon(Icons.date_range_rounded)),
+          hintText: hint, prefixIcon: const Icon(Icons.date_range_rounded)),
       onTap: () async {
         final date = await showDatePicker(
             context: context,
@@ -29,17 +28,10 @@ class DateTimePicker extends StatelessWidget {
 
         if (!context.mounted || date == null) return;
 
-        final time = await showTimePicker(
-            context: context,
-            initialTime: const TimeOfDay(hour: 00, minute: 00));
-
-        if (!context.mounted || time == null) return;
-
-        final dateTime =
-            DateTime(date.year, date.month, date.day, time.hour, time.minute);
+        final dateTime = DateTime(date.year, date.month, date.day);
 
         final formattedDateTime = DateFormat(
-                'dd MMMM, HH:mm, yyyy • EEEE',
+                'dd MMMM, yyyy • EEEE',
                 // ignore: use_build_context_synchronously
                 Localizations.localeOf(context).languageCode)
             .format(dateTime);

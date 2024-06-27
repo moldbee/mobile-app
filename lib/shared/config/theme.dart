@@ -32,6 +32,10 @@ ThemeData getThemeData(BuildContext context) {
             backgroundColor: WidgetStateProperty.all(Colors.orange.shade400),
             textStyle: WidgetStatePropertyAll(
                 GoogleFonts.montserrat(color: Colors.white)))),
+    sliderTheme: const SliderThemeData(
+        showValueIndicator: ShowValueIndicator.always,
+        valueIndicatorTextStyle:
+            TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
     switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.all(Colors.orange.shade300),
         trackColor:

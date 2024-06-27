@@ -78,7 +78,8 @@
   "no": "Nu",
   "from": "De unde",
   "to": "Unde",
-  "dateAndTime": "Data si timpul",
+  "when": "Când",
   "search": "Caută",
-  "transport": "Transport"
-}
+  "transport": "Transport",
+  "human": "Om"
+} 
