@@ -55,6 +55,7 @@
   "nick": "Никнейм",
   "or": "или",
   "googleAuth": "Войти через Google",
+  "appleAuth": "Войти через Apple",
   "agreeTerms": "Я принимаю условия использования",
   "profileEdit": "Редактирование профиля",
   "fieldRequired": "Поле обязательно для заполнения",
@@ -81,5 +82,9 @@
   "when": "Когда",
   "search": "Поиск",
   "transport": "Транспорт",
-  "human": "Человек"
+  "human": "Человек",
+  "wantToAddTicket": "Как добавить маршрут?",
+  "cheaper": "Дешевле", 
+  "faster": "Быстрее",
+  "comfortable": "Комфортнее"
 }

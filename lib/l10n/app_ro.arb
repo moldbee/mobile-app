@@ -55,6 +55,7 @@
   "nick": "Nickname",
   "or": "sau",
   "googleAuth": "Autentificare cu Google",
+  "appleAuth": "Autentificare cu Apple",
   "agreeTerms": "Eu accept termenii de utilizare",
   "profileEdit": "Editarea profilului",
   "fieldRequired": "Câmpul este obligatoriu",
@@ -81,5 +82,10 @@
   "when": "Când",
   "search": "Caută",
   "transport": "Transport",
-  "human": "Om"
+  "human": "Om",
+  "wantToAddTicket": "Cum să adaug rute?",
+  "cheaper": "Ieftin", 
+  "faster": "Rapid",
+  "comfortable": "Comfortabil"
+
 } 
