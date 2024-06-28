@@ -18,11 +18,14 @@ class AuthScreen extends StatelessWidget {
         ),
         body: ScaffoldBody(
           child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Icon(
-                Icons.key_rounded,
+              Icon(
+                Icons.emoji_nature_rounded,
                 size: 50,
+                color: Colors.orange.shade400,
               ),
               const SizedBox(
                 height: 30,

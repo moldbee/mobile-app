@@ -7,7 +7,7 @@ class ScaffoldBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       child: child,
     );
   }

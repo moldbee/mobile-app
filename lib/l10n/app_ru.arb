@@ -54,6 +54,7 @@
   "password": "Пароль",
   "nick": "Никнейм",
   "or": "или",
+  "routes": "Билеты",
   "googleAuth": "Войти через Google",
   "appleAuth": "Войти через Apple",
   "agreeTerms": "Я принимаю условия использования",

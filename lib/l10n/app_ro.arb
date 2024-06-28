@@ -52,6 +52,7 @@
   "signUp": "Înregistrare",
   "email": "E-mail",
   "password": "Parola",
+  "routes": "Bilete",
   "nick": "Nickname",
   "or": "sau",
   "googleAuth": "Autentificare cu Google",
