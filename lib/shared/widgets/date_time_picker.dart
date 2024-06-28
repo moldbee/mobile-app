@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:intl/intl.dart';
-import 'package:smart_city/l10n/main.dart';
 
-class DateTimePicker extends StatelessWidget {
+class DateTimePicker extends HookWidget {
   const DateTimePicker({super.key, required this.controller, this.hint = ''});
   final TextEditingController controller;
   final String hint;
@@ -10,7 +10,7 @@ class DateTimePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final todayDate = DateTime.now();
-    final textInputController = TextEditingController();
+    final textInputController = useTextEditingController();
 
     return TextField(
       showCursor: false,
