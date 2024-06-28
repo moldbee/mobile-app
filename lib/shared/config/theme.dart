@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,15 +13,21 @@ ThemeData getThemeData(BuildContext context) {
         borderRadius: BorderRadius.circular(6),
       ),
     ),
-    primaryColor: Colors.orange.shade300,
+    primaryColor: Colors.orange.shade400,
     primaryTextTheme: newTextTheme,
+    visualDensity: VisualDensity.adaptivePlatformDensity,
     textTheme: newTextTheme,
     segmentedButtonTheme: SegmentedButtonThemeData(
+        selectedIcon: const Icon(
+          Icons.done_rounded,
+          color: Colors.white,
+        ),
         style: ButtonStyle(
-      textStyle: WidgetStateProperty.all(const TextStyle(
-        color: Colors.white,
-      )),
-    )),
+            enableFeedback: true,
+            surfaceTintColor: const WidgetStatePropertyAll(Colors.red),
+            side: const WidgetStatePropertyAll(BorderSide.none),
+            textStyle: WidgetStatePropertyAll(GoogleFonts.montserrat(
+                color: Colors.white, fontWeight: FontWeight.w500)))),
     platform: TargetPlatform.iOS,
     dividerColor: Colors.grey.shade300,
     dividerTheme: DividerThemeData(color: Colors.grey.shade300, thickness: .5),
@@ -29,9 +36,10 @@ ThemeData getThemeData(BuildContext context) {
         hintStyle: WidgetStatePropertyAll(TextStyle(color: Colors.grey))),
     filledButtonTheme: FilledButtonThemeData(
         style: ButtonStyle(
+            foregroundColor: const WidgetStatePropertyAll(Colors.white),
             backgroundColor: WidgetStateProperty.all(Colors.orange.shade400),
-            textStyle: WidgetStatePropertyAll(
-                GoogleFonts.montserrat(color: Colors.white)))),
+            textStyle: WidgetStatePropertyAll(GoogleFonts.montserrat(
+                color: Colors.white, fontWeight: FontWeight.w500)))),
     sliderTheme: const SliderThemeData(
         showValueIndicator: ShowValueIndicator.always,
         valueIndicatorTextStyle:
@@ -79,10 +87,15 @@ ThemeData getThemeData(BuildContext context) {
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)))),
-    datePickerTheme:
-        const DatePickerThemeData(backgroundColor: Colors.white, elevation: 0),
+    datePickerTheme: const DatePickerThemeData(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      todayBorder: BorderSide.none,
+    ),
+    cupertinoOverrideTheme: const NoDefaultCupertinoThemeData(
+        primaryColor: Colors.orange, applyThemeToAll: true),
     inputDecorationTheme: InputDecorationTheme(
-        prefixIconColor: Colors.grey.shade300,
+        prefixIconColor: Colors.grey.shade400,
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         floatingLabelBehavior: FloatingLabelBehavior.always,
