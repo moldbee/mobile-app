@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_city/l10n/main.dart';
+import 'package:smart_city/shared/widgets/scaffold_body.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key, this.id});
@@ -9,14 +10,13 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final locales = getAppLoc(context);
+    final loc = getAppLoc(context);
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(locales!.signIn),
+          title: Text(loc!.signIn),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 160),
+        body: ScaffoldBody(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -30,7 +30,7 @@ class AuthScreen extends StatelessWidget {
               OutlinedButton.icon(
                   icon: const Icon(FontAwesomeIcons.google),
                   onPressed: () {},
-                  label: const Text('Sign in using Google')),
+                  label: Text(loc.googleAuth)),
               const SizedBox(
                 height: 10,
               ),
@@ -38,7 +38,7 @@ class AuthScreen extends StatelessWidget {
                   iconAlignment: IconAlignment.start,
                   icon: const Icon(FontAwesomeIcons.apple),
                   onPressed: () {},
-                  label: const Text('Sign in using Google'))
+                  label: Text(loc.appleAuth))
             ],
           ),
         ));
