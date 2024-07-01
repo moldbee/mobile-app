@@ -66,6 +66,7 @@ class CitySearchInput extends StatelessWidget {
     final delegant = CitySearchDelegant();
 
     return TextField(
+      onTapOutside: (event) => FocusScope.of(context).unfocus(),
       keyboardType: TextInputType.none,
       controller: searchController,
       showCursor: false,

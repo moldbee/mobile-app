@@ -16,6 +16,7 @@ class DateTimePicker extends HookWidget {
       showCursor: false,
       controller: textInputController,
       keyboardType: TextInputType.none,
+      onTapOutside: (event) => FocusScope.of(context).unfocus(),
       decoration: InputDecoration(
           hintText: hint, prefixIcon: const Icon(Icons.date_range_rounded)),
       onTap: () async {

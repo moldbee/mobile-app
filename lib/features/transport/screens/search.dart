@@ -10,31 +10,30 @@ class RouteCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Text(
+          'Chisinau - Bucharest',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        Wrap(
+          spacing: 5,
+          direction: Axis.horizontal,
+          alignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             Text(
-              'Chisinau - Bucharest',
-              style: Theme.of(context).textTheme.titleMedium,
+              '6 august 19:30',
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
-            Wrap(
-              spacing: 5,
-              children: [
-                Icon(
-                  Icons.timelapse_sharp,
-                  color: Colors.grey.shade400,
-                ),
-                Text(
-                  '10h',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                )
-              ],
+            const Icon(Icons.arrow_forward_rounded),
+            Text(
+              '6 august 22:30',
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],
         ),
-        const SizedBox(
-          height: 20,
-        ),
+        // const SizedBox(
+        //   height: 20,
+        // ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

@@ -73,6 +73,7 @@ dependencies:
   accordion: ^2.6.0
   teledart: ^0.6.1
   google_fonts: ^6.2.1
+  flutter_osm_plugin: ^1.0.5
 dev_dependencies:
   flutter_test:
     sdk: flutter
