@@ -1,8 +1,10 @@
 import fastify from 'fastify';
+import { infogari } from './modules/transport/adapters/infogari';
 
 const server = fastify();
 
 server.get('/ping', async (request, reply) => {
+  await infogari.search('chisinau', 'iasi');
   return 'hog\n';
 });
 
