@@ -11,6 +11,10 @@
     {
       "name": "tg-spider",
       "path": "tg-spider"
+    },
+    {
+      "name": "neuron",
+      "path": "neuron"
     }
   ],
   "settings": {
