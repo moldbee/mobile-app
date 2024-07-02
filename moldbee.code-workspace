@@ -20,6 +20,7 @@
   "settings": {
     "files.exclude": {
       "tg-spider": true,
+      "neuron": true,
       "supabase/functions/": true,
     }
   }
