@@ -63,6 +63,13 @@ export class InfogariAdapter {
 
     const formattedRoutesOutput = makeObservable<FormattedRoute[]>([]);
 
+    page.setRequestInterception(true);
+
+    page.on('request', (req) => {
+      if (!req.url().includes(this.baseUrl)) return req.abort();
+      req.continue();
+    });
+
     page.on('response', async (res) => {
       if (res.request().url().includes('/coursedetails')) {
         const routeFromApi: Course = await res.json();
