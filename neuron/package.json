@@ -1,13 +1,14 @@
 {
   "name": "neuron",
   "version": "1.0.0",
-  "main": "index.ts",
+  "exports": "./index.ts",
+  "type": "module",
   "scripts": {
-    "dev": "nodemon --watch . index.ts",
+    "dev": "nodemon --watch . ./index.ts",
     "build": "tsc -p tsconfig.json"
   },
-  "execMap": {
-    "ts": "ts-node"
+  "engines": {
+    "node": ">=16.0.0"
   },
   "keywords": [],
   "author": "",
@@ -15,10 +16,13 @@
   "description": "",
   "dependencies": {
     "@crawlee/puppeteer": "^3.10.5",
+    "@types/lodash": "^4.17.6",
     "axios": "^1.7.2",
     "crawlee": "^3.10.5",
     "dayjs": "^1.11.11",
     "fastify": "^4.28.1",
+    "lodash": "^4.17.21",
+    "mobx": "^6.12.5",
     "node-cron": "^3.0.3",
     "playwright": "^1.45.0",
     "puppeteer": "^22.12.1"
@@ -27,6 +31,7 @@
     "@types/node": "^20.14.9",
     "esm": "^3.2.25",
     "ts-node": "^10.9.2",
+    "tsx": "^4.16.0",
     "typescript": "^5.5.3"
   }
 }
