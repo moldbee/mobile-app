@@ -1,11 +1,13 @@
 import fastify from 'fastify';
-import { infogari } from './modules/transport/adapters/infogari';
+import { InfogariAdapter } from 'modules/transport/adapters/infogari.js';
 
 const server = fastify();
 
 server.get('/ping', async (request, reply) => {
-  await infogari.search('chisinau', 'iasi');
-  return 'hog\n';
+  const infogari = new InfogariAdapter('ru');
+  const data = await infogari.search('chisinau', 'berlin');
+  console.log('🚀 ~ server.get ~ data:', data);
+  return JSON.stringify(data);
 });
 
 server.listen({ port: 8080 }, (err, address) => {
