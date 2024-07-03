@@ -1,8 +1,9 @@
-import { getClient } from './client.js';
-import { CHANNELS } from './constants.js';
-import { Api } from 'telegram';
+import { getClient } from "./client.js";
+// import cron from "node-cron";
+// import winston from "winston";
+import { scrapeAgoraNews } from "./adapters/agoramd/telegram.js";
 
-const scrapeTelegram = async () => {
+const scrapePoint = async () => {
   const client = await getClient({
     // connectionRetries: 5,
   });
@@ -11,17 +12,20 @@ const scrapeTelegram = async () => {
     await client.connect();
   }
 
-  const chat = await client.getInputEntity('zdgmd');
-
-  // for await (const message of client.iterMessages(chat, { limit: 10 })) {
-  //   console.log("Message text is", message.text, message);
-  // }
-
-  for await (const message of client.iterMessages(chat, {
-    limit: 1,
-  })) {
-    console.log(message.id, message.entities);
-  }
+  scrapeAgoraNews({ client });
 };
 
-scrapeTelegram();
+scrapePoint();
+
+// // import { Telegraf, Telegram } from "telegraf";
+
+// // const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
+
+// // const random = async () => {
+// //   console.log(
+// //     await new Telegram(process.env.TELEGRAM_BOT_TOKEN).getFileLink(
+// //       "5471996504035156505"
+// //     )
+// //   );
+// // };
+// // random();

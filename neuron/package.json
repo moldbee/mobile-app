@@ -16,6 +16,8 @@
   "description": "",
   "dependencies": {
     "@crawlee/puppeteer": "^3.10.5",
+    "@google/generative-ai": "^0.14.1",
+    "@langchain/google-genai": "^0.0.21",
     "@types/lodash": "^4.17.6",
     "axios": "^1.7.2",
     "crawlee": "^3.10.5",

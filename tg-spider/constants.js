@@ -1,8 +1,17 @@
 export const CHANNELS = {
-  agora: { telegram_link: "https://t.me/s/agoramd" },
-  zdg: { telegram_link: "https://t.me/s/zdgmd" },
-  realitatea: { telegram_link: "https://t.me/s/realitateamd" },
-  point: { telegram_link: "https://t.me/s/PointNews" },
-  protv: { telegram_link: "https://t.me/s/protvchisinauofficial" },
-  tv8: { telegram_link: "https://t.me/s/tv8md" },
+  agora: { telegram: { link: "https://t.me/s/agoramd", username: "agoramd" } },
+  zdg: { telegram: { link: "https://t.me/s/zdgmd", username: "zdgmd" } },
+  realitatea: {
+    telegram: { link: "https://t.me/s/realitateamd", username: "" },
+  },
+  protv: {
+    telegram: { link: "https://t.me/s/protvchisinauofficial", username: "" },
+  },
+  tv8: { telegram: { link: "https://t.me/s/tv8md", username: "" } },
+};
+
+export const initialScrapingDetails = {
+  totalNewsThreshold: 100,
+  channelNewsThreshold: 25,
+  searchForAllMedia: 10,
 };
