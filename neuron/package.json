@@ -18,11 +18,13 @@
     "@crawlee/puppeteer": "^3.10.5",
     "@google/generative-ai": "^0.14.1",
     "@langchain/google-genai": "^0.0.21",
+    "@types/jsdom": "^21.1.7",
     "@types/lodash": "^4.17.6",
     "axios": "^1.7.2",
     "crawlee": "^3.10.5",
     "dayjs": "^1.11.11",
     "fastify": "^4.28.1",
+    "jsdom": "^24.1.0",
     "lodash": "^4.17.21",
     "node-cron": "^3.0.3",
     "puppeteer": "^22.12.1"

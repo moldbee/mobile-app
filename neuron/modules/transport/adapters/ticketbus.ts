@@ -1,5 +1,0 @@
-class TicketBusAdapter {
-  constructor() {}
-
-  search() {}
-}

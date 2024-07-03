@@ -1,29 +1,35 @@
 import axios from 'axios';
-import { launchPuppeteer, sleep } from 'crawlee';
-import { makeObservable } from 'mobx';
-import { FormattedRoute } from 'modules/transport/types.js';
-import { waitFor } from 'utils/wait-for.js';
-
-const selectors = {
-  routeCard: '.results__block-course',
-};
-
-const browser = await launchPuppeteer({
-  useChrome: true,
-  launchOptions: {
-    headless: false,
-  },
-});
+import { JSDOM } from 'jsdom';
 
 export class InfogariAdapter {
   locale: 'ro' | 'ru';
   localeForUrl: string;
-  baseUrl: string;
+  headers: any;
+  csrf: {
+    cookie: string | null | undefined;
+    header: string | null | undefined;
+  };
 
   constructor(locale: 'ro' | 'ru') {
     this.locale = locale;
+    this.csrf = {
+      cookie: null,
+      header: null,
+    };
     this.localeForUrl = this.locale === 'ru' ? 'ru' : '';
-    this.baseUrl = 'https://infogari.md';
+    this.headers = {
+      Host: 'infogari.md',
+      'User-Agent':
+        'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:127.0) Gecko/20100101 Firefox/127.0',
+      Accept: '*/*',
+      'Accept-Language': 'en-US,en;q=0.5',
+      'Accept-Encoding': 'gzip, deflate, br, zstd',
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      'X-Requested-With': 'XMLHttpRequest',
+      Origin: 'https://infogari.md',
+      Connection: 'keep-alive',
+      Referer: 'https://infogari.md/',
+    };
   }
 
   // search works only for latin citiy name
@@ -35,92 +41,117 @@ export class InfogariAdapter {
         q: name,
         which: which,
       },
-      {
-        headers: {
-          'User-Agent':
-            'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:127.0) Gecko/20100101 Firefox/127.0',
-          Accept: '*/*',
-          'Accept-Language': 'en-US,en;q=0.5',
-          'Accept-Encoding': 'gzip, deflate, br, zstd',
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          'X-Requested-With': 'XMLHttpRequest',
-          Origin: 'https://infogari.md',
-          Connection: 'keep-alive',
-          Referer: 'https://infogari.md/',
-        },
-      }
+      { headers: this.headers }
     );
 
     return response.data[0].id;
   }
 
-  async search(from: string, to: string) {
-    const [fromId, toId, page] = await Promise.all([
-      await this.getIdOptionOfCity(from, 'departure'),
-      await this.getIdOptionOfCity(to, 'arrival'),
-      await browser.newPage(),
-    ]);
+  async getBackendDataFromPage(url: string) {
+    const response = await axios.get(url);
 
-    const formattedRoutesOutput = makeObservable<FormattedRoute[]>([]);
+    const jsdom = new JSDOM(response.data);
 
-    page.setRequestInterception(true);
+    this.csrf = {
+      header: jsdom.window.document
+        .querySelector('meta[name="csrf-token"]')
+        ?.getAttribute('content'),
+      // @ts-ignore
+      cookie: response?.headers['set-cookie']?.at(1).split(';').at(0) + ';',
+    };
 
-    page.on('request', (req) => {
-      if (!req.url().includes(this.baseUrl)) return req.abort();
-      req.continue();
+    let backendData: any;
+    jsdom.window.document.querySelectorAll('script').forEach((script) => {
+      if (!script.textContent?.includes('renderBookATicketWizardComponent'))
+        return;
+
+      const getDataFromBackend = new Function(
+        'jQuery',
+        'renderBookATicketWizardComponent',
+        'document',
+        'backendData',
+        script.textContent
+      );
+
+      getDataFromBackend(
+        (func: any) => {
+          return func();
+        },
+        (arg: any, jsObject: any) => (backendData = jsObject),
+        jsdom.window.document,
+        backendData
+      );
     });
 
-    page.on('response', async (res) => {
-      if (res.request().url().includes('/coursedetails')) {
-        const routeFromApi: Course = await res.json();
+    return backendData;
+  }
+
+  async search(from: string, to: string) {
+    const [fromId, toId] = await Promise.all([
+      await this.getIdOptionOfCity(from, 'departure'),
+      await this.getIdOptionOfCity(to, 'arrival'),
+    ]);
+
+    const backendData = await this.getBackendDataFromPage(
+      `https://infogari.md/book/${this.localeForUrl}/site/search?from=${fromId}&to=${toId}&date=05-07-2024&passengers=1`
+    );
+    const coursesPromises = backendData.results.blocks.left.courses.list.map(
+      async ({
+        courseId,
+        segmentId,
+      }: {
+        segmentId: string;
+        courseId: string;
+      }) => {
+        console.log(this.csrf);
+        const { data: courseDataFromBackend } = await axios.post<Course>(
+          `https://infogari.md/${this.locale}/site/coursedetails`,
+          { courseId, segmentId },
+          {
+            headers: {
+              'X-CSRF-Token': this.csrf.header,
+              Cookie: this.csrf.cookie,
+              ...this.headers,
+            },
+          }
+        );
+
+        console.log(courseDataFromBackend);
+
         const formattedRoute = {
           from: {
-            adress: routeFromApi.from.name,
+            adress: courseDataFromBackend.from.name,
           },
           to: {
-            adress: routeFromApi.to.name,
+            adress: courseDataFromBackend.to.name,
           },
+          price: courseDataFromBackend.prices.offers[0].amount,
           transport: {
-            image: this.baseUrl + routeFromApi.comfort.car.img,
+            image:
+              'https://infogari.md' + courseDataFromBackend.comfort.car.img,
             comforts: {
-              wifi: routeFromApi.comfort.car.conviniences.some(
+              wifi: courseDataFromBackend.comfort.car.conviniences.some(
                 (conv) => conv.shortName === 'WiFi'
               ),
-              tv: routeFromApi.comfort.car.conviniences.some(
+              tv: courseDataFromBackend.comfort.car.conviniences.some(
                 (conv) => conv.shortName === 'TV'
               ),
-              refrigerator: routeFromApi.comfort.car.conviniences.some(
+              refrigerator: courseDataFromBackend.comfort.car.conviniences.some(
                 (conv) => conv.shortName === 'Frigider'
               ),
-              food: routeFromApi.comfort.car.conviniences.some(
+              food: courseDataFromBackend.comfort.car.conviniences.some(
                 (conv) => conv.shortName === 'Masa'
               ),
             },
           },
-          company: routeFromApi.provider.name,
+          company: courseDataFromBackend.provider.name,
         };
 
-        formattedRoutesOutput.push(formattedRoute);
+        return formattedRoute;
       }
-    });
-
-    await page.goto(
-      `https://infogari.md/book/${this.localeForUrl}/site/search?from=${fromId}&to=${toId}&date=03-07-2024&passengers=1`
     );
 
-    await page.waitForSelector(selectors.routeCard);
-    const routeCards = (await page.$$(selectors.routeCard)).reverse();
-
-    for (const routeCard of routeCards) {
-      await routeCard.scrollIntoView();
-      await routeCard.click();
-      await sleep(200);
-    }
-
-    return await waitFor(
-      formattedRoutesOutput.length === routeCards.length,
-      formattedRoutesOutput
-    );
+    return await Promise.all(coursesPromises);
   }
 }
 
