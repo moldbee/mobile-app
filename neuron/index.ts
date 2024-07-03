@@ -7,7 +7,7 @@ server.get('/ping', async (request, reply) => {
   const infogari = new InfogariAdapter('ro');
   try {
     const data = await infogari.search('chisinau', 'iasi');
-    return JSON.stringify(data);
+    return data;
   } catch (e) {
     console.log(e);
     return 'error';
