@@ -4,6 +4,7 @@ create table "public"."transport_cities" (
     "created_at" timestamp with time zone not null default now(),
     "title_ru" text,
     "title_ro" text,
+    "country_code" text,
     "alias" text
 );
 
