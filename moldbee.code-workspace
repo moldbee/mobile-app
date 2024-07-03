@@ -1,12 +1,16 @@
 {
   "folders": [
     {
-      "name": "app",
+      "name": "root",
       "path": "./"
     },
     {
-      "name": "supabase-functions",
-      "path": "supabase/functions"
+      "name": "app",
+      "path": "app"
+    },
+    {
+      "name": "supabase",
+      "path": "supabase"
     },
     {
       "name": "tg-spider",
@@ -18,10 +22,6 @@
     }
   ],
   "settings": {
-    "files.exclude": {
-      "tg-spider": true,
-      "neuron": true,
-      "supabase/functions/": true,
-    }
+    "files.exclude": {}
   }
 }
