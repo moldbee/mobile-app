@@ -1,0 +1,14 @@
+io.flutter.plugins.urllauncher.url_launcher_android-browser-1.5.0-0 /home/xndp109/.gradle/caches/transforms-3/02ae28fa74a2cab2c24b0e909ffb4e49/transformed/browser-1.5.0/res
+io.flutter.plugins.urllauncher.url_launcher_android-jetified-window-java-1.0.0-beta04-1 /home/xndp109/.gradle/caches/transforms-3/128f7549c3f81d242aa9f589ae0024c0/transformed/jetified-window-java-1.0.0-beta04/res
+io.flutter.plugins.urllauncher.url_launcher_android-core-1.10.1-2 /home/xndp109/.gradle/caches/transforms-3/149f6528609bc706e68c3bb84e942ead/transformed/core-1.10.1/res
+io.flutter.plugins.urllauncher.url_launcher_android-lifecycle-runtime-2.3.1-3 /home/xndp109/.gradle/caches/transforms-3/22a68573df9786d274ef2a0cffdf2064/transformed/lifecycle-runtime-2.3.1/res
+io.flutter.plugins.urllauncher.url_launcher_android-jetified-annotation-experimental-1.3.0-4 /home/xndp109/.gradle/caches/transforms-3/8c46f89acade100b4e78a09cb15e0852/transformed/jetified-annotation-experimental-1.3.0/res
+io.flutter.plugins.urllauncher.url_launcher_android-jetified-window-1.0.0-beta04-5 /home/xndp109/.gradle/caches/transforms-3/af57bbf1db2f2efb49b62e9468110ecb/transformed/jetified-window-1.0.0-beta04/res
+io.flutter.plugins.urllauncher.url_launcher_android-main-6 /home/xndp109/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.1/android/src/main/res
+io.flutter.plugins.urllauncher.url_launcher_android-profile-7 /home/xndp109/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.1/android/src/profile/res
+io.flutter.plugins.urllauncher.url_launcher_android-pngs-8 /home/xndp109/Public/smartcity/build/url_launcher_android/generated/res/pngs/profile
+io.flutter.plugins.urllauncher.url_launcher_android-resValues-9 /home/xndp109/Public/smartcity/build/url_launcher_android/generated/res/resValues/profile
+io.flutter.plugins.urllauncher.url_launcher_android-rs-10 /home/xndp109/Public/smartcity/build/url_launcher_android/generated/res/rs/profile
+io.flutter.plugins.urllauncher.url_launcher_android-mergeProfileResources-11 /home/xndp109/Public/smartcity/build/url_launcher_android/intermediates/incremental/profile/mergeProfileResources/merged.dir
+io.flutter.plugins.urllauncher.url_launcher_android-mergeProfileResources-12 /home/xndp109/Public/smartcity/build/url_launcher_android/intermediates/incremental/profile/mergeProfileResources/stripped.dir
+io.flutter.plugins.urllauncher.url_launcher_android-merged_res-13 /home/xndp109/Public/smartcity/build/url_launcher_android/intermediates/merged_res/profile

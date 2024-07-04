@@ -1,0 +1,28 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.moldova.baltimore.app-mergeDebugResources-24:/values-v31/values-v31.xml",
+            "map": [
+                {
+                    "source": "/home/xndp109/Public/smartcity/android/app/src/main/res/values-v31/styles.xml",
+                    "from": {
+                        "startLines": "3,16",
+                        "startColumns": "4,4",
+                        "startOffsets": "173,954",
+                        "endLines": "9,18",
+                        "endColumns": "12,12",
+                        "endOffsets": "603,1118"
+                    },
+                    "to": {
+                        "startLines": "2,9",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,490",
+                        "endLines": "8,11",
+                        "endColumns": "12,12",
+                        "endOffsets": "485,654"
+                    }
+                }
+            ]
+        }
+    ]
+}

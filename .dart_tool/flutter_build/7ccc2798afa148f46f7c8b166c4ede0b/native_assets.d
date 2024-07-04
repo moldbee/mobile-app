@@ -1,0 +1,1 @@
+ /home/xndp109/Public/smartcity/.dart_tool/flutter_build/7ccc2798afa148f46f7c8b166c4ede0b/native_assets.yaml: 

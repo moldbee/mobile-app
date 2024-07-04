@@ -1,0 +1,34 @@
+[
+    {
+        "merged": "dev.fluttercommunity.plus.share.share_plus-merged_res-12:/layout/ime_secondary_split_test_activity.xml",
+        "source": "dev.fluttercommunity.plus.share.share_plus-core-1.12.0-3:/layout/ime_secondary_split_test_activity.xml"
+    },
+    {
+        "merged": "dev.fluttercommunity.plus.share.share_plus-merged_res-12:/layout/notification_action.xml",
+        "source": "dev.fluttercommunity.plus.share.share_plus-core-1.12.0-3:/layout/notification_action.xml"
+    },
+    {
+        "merged": "dev.fluttercommunity.plus.share.share_plus-merged_res-12:/layout/notification_template_part_chronometer.xml",
+        "source": "dev.fluttercommunity.plus.share.share_plus-core-1.12.0-3:/layout/notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "dev.fluttercommunity.plus.share.share_plus-merged_res-12:/layout/notification_template_part_time.xml",
+        "source": "dev.fluttercommunity.plus.share.share_plus-core-1.12.0-3:/layout/notification_template_part_time.xml"
+    },
+    {
+        "merged": "dev.fluttercommunity.plus.share.share_plus-merged_res-12:/layout/notification_template_icon_group.xml",
+        "source": "dev.fluttercommunity.plus.share.share_plus-core-1.12.0-3:/layout/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "dev.fluttercommunity.plus.share.share_plus-merged_res-12:/layout/notification_action_tombstone.xml",
+        "source": "dev.fluttercommunity.plus.share.share_plus-core-1.12.0-3:/layout/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "dev.fluttercommunity.plus.share.share_plus-merged_res-12:/layout/custom_dialog.xml",
+        "source": "dev.fluttercommunity.plus.share.share_plus-core-1.12.0-3:/layout/custom_dialog.xml"
+    },
+    {
+        "merged": "dev.fluttercommunity.plus.share.share_plus-merged_res-12:/layout/ime_base_split_test_activity.xml",
+        "source": "dev.fluttercommunity.plus.share.share_plus-core-1.12.0-3:/layout/ime_base_split_test_activity.xml"
+    }
+]
