@@ -1,4 +1,4 @@
-import { CHANNELS, initialScrapingDetails } from "./constants.js";
+import { NEWS_CHANNELS, initialScrapingDetails } from "../constants.js";
 import fsPromise from "fs/promises";
 import fs from "fs";
 import { utils } from "telegram";

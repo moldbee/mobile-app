@@ -1,16 +1,16 @@
-import fastify from 'fastify';
-import { InfogariAdapter } from 'modules/transport/adapters/infogari.js';
+import fastify from "fastify";
+import { InfogariAdapter } from "modules/transport/adapters/infogari.js";
 
 const server = fastify();
 
-server.get('/ping', async (request, reply) => {
-  const infogari = new InfogariAdapter('ro');
+server.get("/ping", async (request, reply) => {
+  const infogari = new InfogariAdapter("ro");
   try {
-    const data = await infogari.search('chisinau', 'iasi');
+    const data = await infogari.search("chisinau", "iasi");
     return data;
   } catch (e) {
     console.log(e);
-    return 'error';
+    return "error";
   }
 });
 

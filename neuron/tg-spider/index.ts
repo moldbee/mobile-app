@@ -1,7 +1,7 @@
+import { scrapeAgoraNews } from "./adapters/agoramd/telegram.js";
 import { getClient } from "./client.js";
 // import cron from "node-cron";
 // import winston from "winston";
-import { scrapeAgoraNews } from "./adapters/agoramd/telegram.js";
 
 const scrapePoint = async () => {
   const client = await getClient({
