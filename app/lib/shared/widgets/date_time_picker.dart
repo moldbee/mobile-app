@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:intl/intl.dart';
 
-class DateTimePicker extends HookWidget {
-  const DateTimePicker({super.key, required this.controller, this.hint = ''});
+class DatePicker extends HookWidget {
+  const DatePicker({super.key, required this.controller, this.hint = ''});
   final TextEditingController controller;
   final String hint;
 
@@ -16,7 +16,6 @@ class DateTimePicker extends HookWidget {
       showCursor: false,
       controller: textInputController,
       keyboardType: TextInputType.none,
-      onTapOutside: (event) => FocusScope.of(context).unfocus(),
       decoration: InputDecoration(
           hintText: hint, prefixIcon: const Icon(Icons.date_range_rounded)),
       onTap: () async {

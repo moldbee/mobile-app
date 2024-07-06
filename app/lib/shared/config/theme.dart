@@ -122,9 +122,8 @@ ThemeData getThemeData(BuildContext context) {
         surfaceTintColor: Colors.transparent,
         indicatorColor: Colors.orange.shade300,
         backgroundColor: Colors.grey.shade900),
-    bottomSheetTheme: const BottomSheetThemeData(
-      elevation: 0,
-    ),
+    bottomSheetTheme: BottomSheetThemeData(
+        elevation: 0, dragHandleColor: Colors.grey.shade300),
     snackBarTheme: const SnackBarThemeData(),
     appBarTheme: AppBarTheme(
         shadowColor: Colors.grey.withOpacity(.2),

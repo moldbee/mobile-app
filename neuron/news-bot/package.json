@@ -1,0 +1,19 @@
+{
+  "name": "news-bot",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "tsc -p tsconfig.json && node ./build/bot.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.10",
+    "express": "^4.19.2",
+    "fastify": "^4.28.1",
+    "node-cron": "^3.0.3",
+    "typescript": "^5.5.3"
+  }
+}

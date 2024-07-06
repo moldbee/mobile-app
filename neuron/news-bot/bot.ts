@@ -15,7 +15,22 @@
 //     console.log("status");
 //   },
 // };
+// Import the framework and instantiate it
 
-setTimeout(() => {}, 2000);
+import Fastify from "fastify";
+const fastify = Fastify({
+  logger: true,
+});
 
-console.log("start");
+// Declare a route
+fastify.get("/", async function handler(request, reply) {
+  return { hello: "world" };
+});
+
+// Run the server!
+try {
+  await fastify.listen({ port: 8080 });
+} catch (err) {
+  fastify.log.error(err);
+  process.exit(1);
+}
