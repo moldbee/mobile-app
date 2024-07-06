@@ -1,53 +1,10 @@
 // ignore_for_file: non_constant_identifier_names, unused_local_variable, constant_identifier_names
 
-import 'dart:convert';
-
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-class City {
-  final String name;
-  final String countryCode;
-  final String asciiName;
-  final String labelEn;
-
-  City({
-    required this.name,
-    required this.countryCode,
-    required this.asciiName,
-    required this.labelEn,
-  });
-
-  factory City.fromJson(Map<String, dynamic> json) {
-    return City(
-      name: json['name'] as String,
-      countryCode: json['country_code'] as String,
-      asciiName: json['ascii_name'] as String,
-      labelEn: json['label_en'] as String,
-    );
-  }
-}
-
-class CityResponse {
-  final int totalCount;
-  final List<City> results;
-
-  CityResponse({
-    required this.totalCount,
-    required this.results,
-  });
-
-  factory CityResponse.fromJson(Map<String, dynamic> json) {
-    var resultsJson = json['results'] as List;
-    List<City> resultsList = resultsJson.map((i) => City.fromJson(i)).toList();
-
-    return CityResponse(
-      totalCount: json['total_count'] as int,
-      results: resultsList,
-    );
-  }
-}
+import 'package:smart_city/l10n/main.dart';
+import 'package:smart_city/main.dart';
+import 'package:smart_city/shared/helpers/replace_romanian_chars.dart';
 
 class CitySearchDelegant extends SearchDelegate {
   @override
@@ -81,20 +38,18 @@ class CitySearchDelegant extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    Future<List<City>> fetchData() async {
-      final response = await http.get(Uri.parse(
-          'https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?select=name, country_code, ascii_name, label_en, alternate_names, population&where=search(name, "$query") OR search(alternate_names, "$query")&order_by=population DESC&limit=30&lang=eu&refine=timezone:"Europe"'));
+    final loc = getAppLoc(context);
 
-      if (response.statusCode == 200) {
-        final body = jsonDecode(response.body);
-        CityResponse cityResponse = CityResponse.fromJson(body);
-        return cityResponse.results;
-      } else {
-        throw Exception('Failed to load data');
-      }
+    Future<List> fetchData() async {
+      final response = await supabase
+          .from('transport_cities')
+          .select('title_ru, title_ro, country_code')
+          .or('title_ru.ilike.%${replaceRomanianChars(query)}%, title_ro.ilike.%${replaceRomanianChars(query)}%');
+
+      return response;
     }
 
-    return FutureBuilder<List<City>>(
+    return FutureBuilder<List>(
         future: fetchData(),
         builder: (context, snapshot) {
           ListView children;
@@ -102,10 +57,12 @@ class CitySearchDelegant extends SearchDelegate {
             children = ListView.separated(
                 itemBuilder: (context, index) {
                   final item = snapshot.data![index];
-                  final flag = CountryFlag.fromCountryCode(item.countryCode);
+                  final title = item['title_${loc!.localeName}'];
+                  final flag =
+                      CountryFlag.fromCountryCode(item['country_code']);
                   return InkWell(
                     onTap: () {
-                      close(context, '${item.countryCode}, ${item.name}');
+                      close(context, title);
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -125,7 +82,7 @@ class CitySearchDelegant extends SearchDelegate {
                             width: 15,
                           ),
                           Text(
-                            item.name,
+                            title,
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ],
@@ -163,7 +120,6 @@ class CitySearchInput extends StatelessWidget {
     final delegant = CitySearchDelegant();
 
     return TextField(
-      onTapOutside: (event) => FocusScope.of(context).unfocus(),
       keyboardType: TextInputType.none,
       controller: searchController,
       showCursor: false,

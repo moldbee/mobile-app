@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/transport/screens/how_to_add_route.dart';
-import 'package:smart_city/features/transport/screens/search.dart';
+import 'package:smart_city/features/transport/screens/search_tickets.dart';
 import 'package:smart_city/features/transport/widgets/search_city_input.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/shared/widgets/date_time_picker.dart';
@@ -41,7 +41,7 @@ class TransportScreen extends HookWidget {
                 searchController: toCityController,
               ),
               spacing,
-              DateTimePicker(
+              DatePicker(
                 controller: dateTimeController,
                 hint: loc.when,
               ),

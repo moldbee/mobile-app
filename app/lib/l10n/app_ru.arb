@@ -1,5 +1,6 @@
 {
   "event_details": "Детали события",
+  "ticket_details": "Подробности маршрута",
   "addresses": "Адреса",
   "contacts": "Контакты",
   "price_list" : "Прайс-лист",
