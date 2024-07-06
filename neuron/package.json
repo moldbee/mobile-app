@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --watch . ./index.ts",
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "news_bot": "npx tsc -p ./news-bot/tsconfig.json && pm2 start --log-type json -l ./news-bot/pm2_logs.json ./news-bot/build/bot.js --no-autorestart"
   },
   "engines": {
     "node": ">=16.0.0"
@@ -32,10 +33,11 @@
   },
   "devDependencies": {
     "@types/node": "^20.14.9",
+    "@types/node-cron": "^3.0.11",
     "esm": "^3.2.25",
     "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
-    "tsx": "^4.16.0",
+    "tsx": "^4.16.2",
     "typescript": "^5.5.3"
   }
 }
