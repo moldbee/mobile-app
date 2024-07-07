@@ -16,7 +16,6 @@ class RoutesScreen extends StatelessWidget {
         title: Text(loc!.routes),
       ),
       body: ListView.separated(
-          shrinkWrap: true,
           padding: const EdgeInsets.all(10),
           itemCount: items.length,
           itemBuilder: (context, index) => const RouteTicketCard(),

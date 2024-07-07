@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, unused_local_variable, constant_identifier_names
 
-import 'package:country_flags/country_flags.dart';
+import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/main.dart';
@@ -58,8 +58,7 @@ class CitySearchDelegant extends SearchDelegate {
                 itemBuilder: (context, index) {
                   final item = snapshot.data![index];
                   final title = item['title_${loc!.localeName}'];
-                  final flag =
-                      CountryFlag.fromCountryCode(item['country_code']);
+
                   return InkWell(
                     onTap: () {
                       close(context, title);
@@ -76,7 +75,7 @@ class CitySearchDelegant extends SearchDelegate {
                                     Border.all(color: Colors.grey.shade300)),
                             height: 15,
                             width: 25,
-                            child: flag,
+                            child: Flag.fromString(item['country_code']),
                           ),
                           const SizedBox(
                             width: 15,

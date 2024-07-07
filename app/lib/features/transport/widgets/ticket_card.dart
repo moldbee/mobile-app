@@ -1,4 +1,3 @@
-import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_city/features/transport/widgets/ticket_details.dart';
@@ -27,16 +26,18 @@ class RouteTicketCard extends StatelessWidget {
                     alignment: WrapAlignment.center,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      CountryFlag.fromCountryCode(
-                        'MD',
+                      Image.network(
+                        'https://flagsapi.com/MD/flat/64.png',
                         width: 20,
-                        height: 12,
                       ),
                       Text(
                         'Chisinaul',
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ],
+                  ),
+                  const SizedBox(
+                    height: 8,
                   ),
                   Text(
                     '6 august 19:30',
@@ -46,7 +47,7 @@ class RouteTicketCard extends StatelessWidget {
                         .copyWith(color: Colors.grey),
                   ),
                   const SizedBox(
-                    height: 6,
+                    height: 10,
                   ),
                   Wrap(
                     spacing: 5,
@@ -92,12 +93,14 @@ class RouteTicketCard extends StatelessWidget {
                         'Rome',
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      CountryFlag.fromCountryCode(
-                        'IT',
+                      Image.network(
+                        'https://flagsapi.com/IT/flat/64.png',
                         width: 20,
-                        height: 12,
                       ),
                     ],
+                  ),
+                  const SizedBox(
+                    height: 8,
                   ),
                   Text(
                     '6 august 19:30',
@@ -107,7 +110,7 @@ class RouteTicketCard extends StatelessWidget {
                         .copyWith(color: Colors.grey),
                   ),
                   const SizedBox(
-                    height: 6,
+                    height: 10,
                   ),
                   Container(
                     padding:
