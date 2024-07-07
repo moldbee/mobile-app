@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --watch . ./index.ts",
-    "build": "tsc -p tsconfig.json",
-    "news_bot": "npx tsc -p ./news-bot/tsconfig.json && pm2 start --log-type json -l ./news-bot/pm2_logs.json ./news-bot/build/bot.js --no-autorestart"
+    "build": "tsc -p tsconfig.json"
   },
   "engines": {
     "node": ">=16.0.0"

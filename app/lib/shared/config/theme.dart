@@ -15,7 +15,7 @@ ThemeData getThemeData(BuildContext context) {
     ),
     primaryColor: Colors.orange.shade400,
     primaryTextTheme: newTextTheme,
-    visualDensity: VisualDensity.adaptivePlatformDensity,
+    visualDensity: VisualDensity.standard,
     textTheme: newTextTheme,
     segmentedButtonTheme: SegmentedButtonThemeData(
         selectedIcon: const Icon(
@@ -117,7 +117,7 @@ ThemeData getThemeData(BuildContext context) {
             borderSide: BorderSide(color: Colors.grey.shade200),
             borderRadius: BorderRadius.circular(8))),
     useMaterial3: true,
-    iconTheme: IconThemeData(color: Colors.orange.shade500, fill: 1),
+    iconTheme: IconThemeData(color: Colors.grey.shade400, fill: 1),
     navigationBarTheme: NavigationBarThemeData(
         surfaceTintColor: Colors.transparent,
         indicatorColor: Colors.orange.shade300,
