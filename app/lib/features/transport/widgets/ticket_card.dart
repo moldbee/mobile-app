@@ -40,10 +40,10 @@ class RouteTicketCard extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    '6 august 19:30',
+                    '26 august 19:30',
                     style: Theme.of(context)
                         .textTheme
-                        .bodyLarge!
+                        .bodyMedium!
                         .copyWith(color: Colors.grey),
                   ),
                   const SizedBox(
@@ -70,7 +70,9 @@ class RouteTicketCard extends StatelessWidget {
               ),
               const Column(
                 children: [
-                  Text('32h 30m'),
+                  Text(
+                    '32h 30m',
+                  ),
                   RotatedBox(
                     quarterTurns: 1,
                     child: Icon(
@@ -106,7 +108,7 @@ class RouteTicketCard extends StatelessWidget {
                     '6 august 19:30',
                     style: Theme.of(context)
                         .textTheme
-                        .bodyLarge!
+                        .bodyMedium!
                         .copyWith(color: Colors.grey),
                   ),
                   const SizedBox(

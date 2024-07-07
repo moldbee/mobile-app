@@ -15,6 +15,7 @@ import 'package:smart_city/features/services/screens/promotions.dart';
 import 'package:smart_city/features/services/screens/services.dart';
 import 'package:smart_city/features/settings/screens/contacts.dart';
 import 'package:smart_city/features/settings/screens/settings.dart';
+import 'package:smart_city/features/transport/screens/book_ticket.dart';
 import 'package:smart_city/features/transport/screens/how_to_add_route.dart';
 import 'package:smart_city/features/transport/screens/search_tickets.dart';
 import 'package:smart_city/features/transport/screens/transport.dart';
@@ -87,29 +88,32 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
               }),
         ],
       ),
-      StatefulShellBranch(
-        routes: [
-          GoRoute(
-              path: const TransportScreen().route,
-              pageBuilder: (context, state) =>
-                  const MaterialPage(child: TransportScreen())),
-          GoRoute(
-              name: const HowToAddRouteScreen().route,
-              path: const HowToAddRouteScreen().route,
-              pageBuilder: (context, state) =>
-                  const MaterialPage(child: HowToAddRouteScreen())),
-          GoRoute(
-              name: const RoutesScreen().route,
-              path: const RoutesScreen().route,
-              pageBuilder: (context, state) =>
-                  const MaterialPage(child: RoutesScreen())),
-          GoRoute(
-              name: const TicketDetailsScreen().route,
-              path: const TicketDetailsScreen().route,
-              pageBuilder: (context, state) =>
-                  const MaterialPage(child: TicketDetailsScreen())),
-        ],
-      ),
+      StatefulShellBranch(routes: [
+        GoRoute(
+            path: const TransportScreen().route,
+            pageBuilder: (context, state) =>
+                const MaterialPage(child: TransportScreen())),
+        GoRoute(
+            name: const HowToAddRouteScreen().route,
+            path: const HowToAddRouteScreen().route,
+            pageBuilder: (context, state) =>
+                const MaterialPage(child: HowToAddRouteScreen())),
+        GoRoute(
+            name: const RoutesScreen().route,
+            path: const RoutesScreen().route,
+            pageBuilder: (context, state) =>
+                const MaterialPage(child: RoutesScreen())),
+        GoRoute(
+            name: const TicketDetailsScreen().route,
+            path: const TicketDetailsScreen().route,
+            pageBuilder: (context, state) =>
+                const MaterialPage(child: TicketDetailsScreen())),
+        GoRoute(
+            name: const BookTicketScreen().route,
+            path: const BookTicketScreen().route,
+            pageBuilder: (context, state) =>
+                const MaterialPage(child: BookTicketScreen())),
+      ]),
       StatefulShellBranch(
         initialLocation: const ServicesScreen().route,
         routes: [
