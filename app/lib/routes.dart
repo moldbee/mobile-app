@@ -17,8 +17,8 @@ import 'package:smart_city/features/settings/screens/contacts.dart';
 import 'package:smart_city/features/settings/screens/settings.dart';
 import 'package:smart_city/features/transport/screens/book_ticket.dart';
 import 'package:smart_city/features/transport/screens/how_to_add_route.dart';
+import 'package:smart_city/features/transport/screens/search_tickets_list.dart';
 import 'package:smart_city/features/transport/screens/search_tickets.dart';
-import 'package:smart_city/features/transport/screens/transport.dart';
 import 'package:smart_city/features/transport/widgets/ticket_details.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/features/news/screens/news.dart';
@@ -90,19 +90,19 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
       ),
       StatefulShellBranch(routes: [
         GoRoute(
-            path: const TransportScreen().route,
+            path: const SearchTicketsScreen().route,
             pageBuilder: (context, state) =>
-                const MaterialPage(child: TransportScreen())),
+                const MaterialPage(child: SearchTicketsScreen())),
         GoRoute(
             name: const HowToAddRouteScreen().route,
             path: const HowToAddRouteScreen().route,
             pageBuilder: (context, state) =>
                 const MaterialPage(child: HowToAddRouteScreen())),
         GoRoute(
-            name: const RoutesScreen().route,
-            path: const RoutesScreen().route,
+            name: const TicketsListScreen().route,
+            path: const TicketsListScreen().route,
             pageBuilder: (context, state) =>
-                const MaterialPage(child: RoutesScreen())),
+                const MaterialPage(child: TicketsListScreen())),
         GoRoute(
             name: const TicketDetailsScreen().route,
             path: const TicketDetailsScreen().route,

@@ -7,18 +7,34 @@ class BookTicketScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fullName = useTextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Booking'),
       ),
-      body: const Column(
-        children: [
-          ListTile(
-            title: Text('Hello world'),
-            leading: Icon(Icons.abc),
-            subtitle: TextField(),
-          )
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  Flexible(
+                    child: TextField(
+                      controller: fullName,
+                      decoration: const InputDecoration(hintText: 'Full name'),
+                    ),
+                  ),
+                  TextField(
+                    controller: fullName,
+                    decoration: const InputDecoration(hintText: 'Full name'),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
