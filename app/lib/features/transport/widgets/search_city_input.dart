@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names, unused_local_variable, constant_identifier_names
 
-import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_city/l10n/main.dart';
 import 'package:smart_city/main.dart';
@@ -69,13 +68,9 @@ class CitySearchDelegant extends SearchDelegate {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.grey.shade300)),
-                            height: 15,
+                          Image.network(
+                            'https://flagsapi.com/${item['country_code']}/flat/64.png',
                             width: 25,
-                            child: Flag.fromString(item['country_code']),
                           ),
                           const SizedBox(
                             width: 15,
