@@ -1,14 +1,14 @@
+import fastify from "fastify";
 import EventEmitter from "node:events";
+
+type Status = "stopped" | "running";
 
 export class NewsBot extends EventEmitter {
   static #instance: NewsBot;
-  public variable: number = 0;
+  public botProcess: Status = "stopped";
 
   private constructor() {
     super();
-    this.on("start", () => this.start());
-    this.on("stop", () => this.stop());
-    this.on("status", () => this.status());
   }
 
   public static get instance(): NewsBot {
@@ -31,14 +31,54 @@ export class NewsBot extends EventEmitter {
     return this;
   }
 
-  start() {
-    this.emit("custom", this.variable);
-    this.variable = 10;
+  async start() {
+    this.botProcess = "running";
   }
-  stop() {
-    console.log("start");
+
+  async stop() {
+    this.botProcess = "stopped";
   }
-  status() {
-    console.log("start");
+
+  async status() {
+    return this.botProcess;
   }
 }
+
+const server = fastify();
+
+server.get("/status", async (request, reply) => {
+  try {
+    return await NewsBot.instance.status();
+  } catch (e) {
+    console.log(e);
+    return "error";
+  }
+});
+
+server.get("/start", async (request, reply) => {
+  try {
+    await NewsBot.instance.start();
+    return await NewsBot.instance.status();
+  } catch (e) {
+    console.log(e);
+    return "error";
+  }
+});
+
+server.get("/stop", async (request, reply) => {
+  try {
+    await NewsBot.instance.stop();
+    return await NewsBot.instance.status();
+  } catch (e) {
+    console.log(e);
+    return "error";
+  }
+});
+
+server.listen({ port: 4321 }, (err, address) => {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+  }
+  console.log(`Server listening at ${address}`);
+});

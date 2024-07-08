@@ -14,6 +14,7 @@ ThemeData getThemeData(BuildContext context) {
       ),
     ),
     primaryColor: Colors.orange.shade400,
+    listTileTheme: ListTileThemeData(iconColor: Colors.grey.shade400),
     primaryTextTheme: newTextTheme,
     visualDensity: VisualDensity.standard,
     textTheme: newTextTheme,
