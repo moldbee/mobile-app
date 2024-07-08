@@ -9,8 +9,9 @@ interface ScrapePage {
 const manageNodes = (node: any) => {
   for (const prop in node) {
     if (prop.startsWith("title")) {
-      const title = _.findKey(node[prop], (value, key) =>
-        key.startsWith("title")
+      const title = _.findKey(
+        node[prop],
+        (value, key) => key.startsWith("title") && !key.startsWith("titleimg")
       );
 
       const subtitle = _.findKey(node[prop], (value, key) =>
@@ -23,6 +24,19 @@ const manageNodes = (node: any) => {
     }
 
     if (prop.startsWith("node")) {
+      const paragraph = _.findKey(node[prop], (value, key) =>
+        key.startsWith("paragraph")
+      );
+    }
+
+    if (prop.startsWith("quote")) {
+      const content = _.findKey(node[prop], (value, key) =>
+        key.startsWith("content")
+      );
+
+      const author = _.findKey(node[prop], (value, key) =>
+        key.startsWith("author")
+      );
     }
 
     if (prop.startsWith("image")) {

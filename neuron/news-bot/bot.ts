@@ -1,36 +1,44 @@
-// import { MyEmitter } from "./singleton.js";
+import EventEmitter from "node:events";
 
-// interface BotCommands {
-//   [key: string]: Function;
-// }
+export class NewsBot extends EventEmitter {
+  static #instance: NewsBot;
+  public variable: number = 0;
 
-// export const botCommands: BotCommands = {
-//   start: async () => {
-//     console.log(MyEmitter.instance.randomG);
-//   },
-//   stop: () => {
-//     console.log((MyEmitter.instance.setrandom = 2));
-//   },
-//   status: () => {
-//     console.log("status");
-//   },
-// };
-// Import the framework and instantiate it
+  private constructor() {
+    super();
+    this.on("start", () => this.start());
+    this.on("stop", () => this.stop());
+    this.on("status", () => this.status());
+  }
 
-import Fastify from "fastify";
-const fastify = Fastify({
-  logger: true,
-});
+  public static get instance(): NewsBot {
+    if (!NewsBot.#instance) {
+      NewsBot.#instance = new NewsBot();
+    }
 
-// Declare a route
-fastify.get("/", async function handler(request, reply) {
-  return { hello: "world" };
-});
+    return NewsBot.#instance;
+  }
 
-// Run the server!
-try {
-  await fastify.listen({ port: 8080 });
-} catch (err) {
-  fastify.log.error(err);
-  process.exit(1);
+  on(eventName: string | symbol, listener: (...args: any[]) => void) {
+    const currentEvents = this.eventNames();
+
+    if (!(currentEvents.length && currentEvents.includes(eventName))) {
+      super.on(eventName, listener);
+    } else {
+      console.warn("Event already defined");
+    }
+
+    return this;
+  }
+
+  start() {
+    this.emit("custom", this.variable);
+    this.variable = 10;
+  }
+  stop() {
+    console.log("start");
+  }
+  status() {
+    console.log("start");
+  }
 }
